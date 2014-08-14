@@ -1,0 +1,50 @@
+
+/* # Clases para facture en html
+================================================== */
+
+.pager{
+	display: none;
+	/*
+	height: 842px;
+    width: 595px;
+    */
+    font-family: Verdana, "Geneva", sans-serif;
+    height: 420mm; width: 297mm;
+}
+
+.roundo{
+	border: 1px solid #666;
+	-moz-border-radius: 15px;
+	border-radius: 15px;
+}
+
+.clear {
+    clear: both;
+    height: 0px;
+    overflow: hidden;
+}
+
+.headero{
+	width: 277mm;
+	padding: 10px;
+}
+.headerol{
+	width: 184mm;
+	padding: 10px;
+	float: left;
+}
+.headeror{
+	width: 92mm;
+	padding: 10px;
+	float: left;
+}
+
+.bodo{
+	width: 277mm;
+	padding: 10px;
+}
+
+.footo{
+	width: 277mm;
+	padding: 10px;
+}
