@@ -1,5 +1,8 @@
 var loadme;
 console.log('Test 903');
+
+var rando = Math.floor(Math.random() * 6000) + 1;
+
 //EDITABLE
 oTable = $('#dTable').dataTable({
 	
@@ -37,8 +40,31 @@ oTable = $('#dTable').dataTable({
 
 });
 
+function setmissed(qiduser,asist,name,last){
+	$.post( 'clases/profesor/asistio.php?rando='+rando, {
+		qasistio: asist,
+		qiduser: qiduser,
+		qidmateria: $('#qidmat').text(),
+		qidgrupo: $('#qidgrupo').text(),
+		qdate: $('#qyear').text()+'-'+$('#qmonth').text()+'-'+$('#qday').text(),
+	},
+		function(rdata){
+			if (rdata == '1'){
+				if (asist){
+					$.jGrowl(name+' '+last+' '+$('#t_present').text()+' '+$('#qmonth').text()+'-'+$('#qday').text()+'-'+$('#qyear').text());
+				} else {
+					$.jGrowl(name+' '+last+' '+$('#t_notpresent').text()+' '+$('#qmonth').text()+'-'+$('#qday').text()+'-'+$('#qyear').text());
+				}
+			} else {
+				$.jGrowl(name+' '+last+' '+$('#t_present').text()+' '+$('#qmonth').text()+'-'+$('#qday').text()+'-'+$('#qyear').text());
+			}
+	});
+}
 
-
-function missedday(qiduser){
-	console.log('Cambiando dia del user:'+qiduser+' Coman mejillones!!!');
+function missedday(qiduser1,qname1,qlast1){
+	if ($('#che_'+qiduser1).prop('checked')){
+		setmissed(qiduser1,true,qname1,qlast1);
+	} else {
+		setmissed(qiduser1,false,qname1,qlast1);
+	}	
 }

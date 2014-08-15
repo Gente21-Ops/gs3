@@ -1,8 +1,8 @@
 <?php
-
+/*
 error_reporting(E_ALL);
 ini_set('display_errors', '1');
-
+*/
 include("logon.php");
 include('../dict/professor_takelist.php');
 
@@ -32,9 +32,12 @@ include('../dict/professor_takelist.php');
 ?>  
 
 <div id="qidgrupo" style="display:none;"><?php echo $_GET['qcode']; ?></div>
+<div id="qidmat" style="display:none;"><?php echo $_GET['qmat']; ?></div>
 <div id="qday" style="display:none;"><?php echo $day; ?></div>
 <div id="qmonth" style="display:none;"><?php echo $month; ?></div>
 <div id="qyear" style="display:none;"><?php echo $year; ?></div>
+<div id="t_present" style="display:none;"><?php echo $texts['col_asisok']; ?></div>
+<div id="t_notpresent" style="display:none;"><?php echo $texts['col_asisno']; ?></div>
     
     <!-- Main content -->
     <div class="wrapper">

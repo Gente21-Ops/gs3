@@ -28,8 +28,8 @@ ini_set('display_errors', '1');
         $chido[] = $aRow['qiduser'];
         $chido[] = $aRow['qapellidos'];
         $chido[] = $aRow['qnombre'];  
-        $chido[] = '<div class="on_off" onclick="missedday(\''.$aRow['qiduser'].'\'); return false;">
-                        <input type="checkbox" id="check1" checked="checked" name="chbox" />
+        $chido[] = '<div class="on_off" onclick="missedday(\''.$aRow['qiduser'].'\',\''.$aRow['qnombre'].'\',\''.$aRow['qapellidos'].'\'); return false;">
+                        <input type="checkbox" id="che_'.$aRow['qiduser'].'" checked="checked" name="chbox" />
                     </div>';
         //$aRow['qidgrupos'];
 
