@@ -40,5 +40,5 @@ oTable = $('#dTable').dataTable({
 
 
 function missedday(qiduser){
-	console.log('Cambiando dia del user:'+qiduser);
+	console.log('Cambiando dia del user:'+qiduser+' Coman mejillones!!!');
 }
