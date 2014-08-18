@@ -26,7 +26,6 @@ include('../dict/profesor_grupos.php');
 
                 <div id="dyn2" class="shownpars">
 
-                    <a class="tOptions act" title="Options"><img src="images/icons/options" alt="" /></a>
                     <table cellpadding="0" cellspacing="0" border="0" class="dTable" id="dTable">
                     <thead>
                     <tr>

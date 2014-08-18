@@ -26,12 +26,13 @@ include('dict/main.php');
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js"></script>
 
 <script type="text/javascript" src="js/plugins/charts/excanvas.min.js"></script>
+<!--
 <script type="text/javascript" src="js/plugins/charts/jquery.flot.js"></script>
 <script type="text/javascript" src="js/plugins/charts/jquery.flot.orderBars.js"></script>
 <script type="text/javascript" src="js/plugins/charts/jquery.flot.pie.js"></script>
 <script type="text/javascript" src="js/plugins/charts/jquery.flot.resize.js"></script>
 <script type="text/javascript" src="js/plugins/charts/jquery.sparkline.min.js"></script>
-
+-->
 <script type="text/javascript" src="js/plugins/tables/jquery.dataTables.js"></script>
 <script type="text/javascript" src="js/plugins/tables/jquery.sortable.js"></script>
 <script type="text/javascript" src="js/plugins/tables/jquery.resizable.js"></script>
@@ -63,11 +64,16 @@ include('dict/main.php');
 <script type="text/javascript" src="js/plugins/ui/jquery.tipsy.js"></script>
 <script type="text/javascript" src="js/plugins/ui/jquery.progress.js"></script>
 <script type="text/javascript" src="js/plugins/ui/jquery.timeentry.min.js"></script>
+
+<!--
 <script type="text/javascript" src="js/plugins/ui/jquery.colorpicker.js"></script>
+-->
 <script type="text/javascript" src="js/plugins/ui/jquery.jgrowl.js"></script>
 <script type="text/javascript" src="js/plugins/ui/jquery.fancybox.js"></script>
+<!--
 <script type="text/javascript" src="js/plugins/ui/jquery.fileTree.js"></script>
 <script type="text/javascript" src="js/plugins/ui/jquery.sourcerer.js"></script>
+-->
 
 <script type="text/javascript" src="js/plugins/others/jquery.fullcalendar.js"></script>
 <script type="text/javascript" src="js/plugins/others/jquery.elfinder.js"></script>
@@ -79,6 +85,8 @@ include('dict/main.php');
 
 <script type="text/javascript" src="js/charts/chart.js"></script>
 <script type="text/javascript" src="js/charts/hBar_side.js"></script>
+
+<script type="text/javascript" src="js/plugins/jquery.blockUI.js"></script>
 
  </head>
 

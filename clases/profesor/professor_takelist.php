@@ -17,19 +17,34 @@ ini_set('display_errors', '1');
                 ORDER BY users.apellidos ASC";
 
     //echo $elsql;
+    $eldato = $_GET['qyear'].'-'.$_GET['qmonth'].'-'.$_GET['qday'];
     
     $sqlt = $con->query($elsql); 
     //print_r(expression);
     $output['aaData'] = [];
     while ($aRow = $sqlt->fetch_assoc()) { 
 
+        //I look for faltas, this is an unefficient process!!
+        $elsql2 = "SELECT idFaltas FROM faltas WHERE idUsers = '".$aRow['qiduser']."' 
+                    AND idMaterias = '".$_GET['qidmat']."' 
+                    AND idGrupos = '".$_GET['qidgrupo']."' 
+                    AND fecha LIKE '".$eldato."%'";
+        //echo $elsql2;
+        $sqlt2 = $con->query($elsql2);
+        $faltas = 'checked';
+        if(mysqli_num_rows($sqlt2) > 0){
+            $faltas = '';
+        }
+
         $chido = [];
 
         $chido[] = $aRow['qiduser'];
         $chido[] = $aRow['qapellidos'];
         $chido[] = $aRow['qnombre'];  
-        $chido[] = '<div class="on_off" onclick="missedday(\''.$aRow['qiduser'].'\',\''.$aRow['qnombre'].'\',\''.$aRow['qapellidos'].'\'); return false;">
-                        <input type="checkbox" id="che_'.$aRow['qiduser'].'" checked="checked" name="chbox" />
+        $chido[] = '<div class="on_off" 
+                        onclick="missedday(\''.$aRow['qiduser'].'\',\''.$aRow['qnombre'].'\',\''.$aRow['qapellidos'].'\'); 
+                        return false;">
+                        <input type="checkbox" id="che_'.$aRow['qiduser'].'" '.$faltas.' name="chbox" />
                     </div>';
         //$aRow['qidgrupos'];
 

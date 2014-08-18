@@ -12,6 +12,15 @@ include('../dict/professor_takelist.php');
     $breads = $texts['title'].'^professor_takelist';
     include('top.php');
 
+    //locales para calendario
+    if ($_SESSION['qlen'] == 'es'){
+        echo '<script src="http://jquery-ui.googlecode.com/svn/tags/latest/ui/i18n/jquery.ui.datepicker-es.js"></script>';
+    } else if ($_SESSION['qlen'] == 'fr'){
+        echo '<script src="http://jquery-ui.googlecode.com/svn/tags/latest/ui/i18n/jquery.ui.datepicker-fr.js"></script>';
+    } else {
+        echo '<script src="http://jquery-ui.googlecode.com/svn/tags/latest/ui/i18n/jquery.ui.datepicker-en-GB.js"></script>';
+    }
+
     $day = 0;
     $month = 0;
     $year = 0;
@@ -38,6 +47,7 @@ include('../dict/professor_takelist.php');
 <div id="qyear" style="display:none;"><?php echo $year; ?></div>
 <div id="t_present" style="display:none;"><?php echo $texts['col_asisok']; ?></div>
 <div id="t_notpresent" style="display:none;"><?php echo $texts['col_asisno']; ?></div>
+<div id="qlang" style="display:none;"><?php echo $_SESSION['qlen']; ?></div>
     
     <!-- Main content -->
     <div class="wrapper">
@@ -47,11 +57,21 @@ include('../dict/professor_takelist.php');
             
             <!-- Table with opened toolbar -->
             <div class="widget">
-                <div class="whead"><h6><?php echo $texts['tabletitle']." ".$day."/".$month."/".$year; ?> </h6><div class="clear"></div></div>                
+                <div class="whead">
+                    <h6>
+                        <?php echo $texts['tabletitle']." ".$day."/".$month."/".$year; ?>
+                    </h6>
+                    <h6 style="float:right; margin-right:33px;"></h6>
+
+                    <div class="clear"></div>
+                </div>                
 
                 <div id="dyn2" class="shownpars">
-
-                    <a class="tOptions act" title="Options"><img src="images/icons/options" alt="" /></a>
+                    <div class="formRow">
+                        
+                        <div class="grid9"><?php echo $texts['anotherday']; ?> &nbsp; <input type="text" class="datepicker" value="<?php echo $year.'-'.$month.'-'.$day; ?>" /></div><div class="clear"></div>
+                    </div>
+                    
                     <table cellpadding="0" cellspacing="0" border="0" class="dTable" id="dTable">
                     <thead>
                     <tr>

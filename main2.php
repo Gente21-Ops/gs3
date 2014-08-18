@@ -92,6 +92,8 @@ include('dict/main.php');
 <script type="text/javascript" src="js/jquery.alerts.js"></script>
 <link href="css/jquery.alerts.css" rel="stylesheet" type="text/css" />
 
+<script type="text/javascript" src="js/plugins/jquery.blockUI.js"></script>
+
 <!--
 <script type="text/javascript" src="js/charts/chart.js"></script>
 

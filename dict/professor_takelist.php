@@ -7,7 +7,7 @@ if($_SESSION['qlen'] == "es"){
     $texts = array(
     "title" => "Asistencias", 
 	"tabletitle" => "Toma de lista para el d&iacute;a ",
-	"anotherday" => "Seleccionar otro d&iacute;a",
+	"anotherday" => "Seleccionar otra fecha",
 	"col_apellidos" => "Apellidos",
 	"col_nombre" => "Nombre (s)",
 	"col_asistio" => "Presente",
@@ -17,7 +17,7 @@ if($_SESSION['qlen'] == "es"){
 	$texts = array(
 	"title" => "Attendance", 
 	"tabletitle" => "Attendance for the day ",
-	"anotherday" => "Select a different day",
+	"anotherday" => "Pick a different day",
 	"col_apellidos" => "Last Name",
 	"col_nombre" => "Name",
 	"col_asistio" => "Present",
