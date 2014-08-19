@@ -12,14 +12,12 @@ ini_set('display_errors', '1');
     $texts = array(
         "asistencias" => "Asistencias",
         "tareas" => "Tareas de ", 
-        "calif" => "Calificaciones",
-        "alumnos" => "Lista");
+        "calif" => "Calificaciones");
     } else if($_SESSION['qlen'] == "en"){
         $texts = array(
         "asistencias" => "Attendance",
         "tareas" => "Group's assigments",
-        "calif" => "Grades", 
-        "alumnos" => "Student's list");
+        "calif" => "Grades");
     } else if($_SESSION['qlen'] == "fr"){
         $texts = array(
         "asistencias" => "Asistencias",
@@ -67,10 +65,7 @@ ini_set('display_errors', '1');
                                     <a href="#" onclick="assignme(\'professor_takelist.php?qcode='.$bRow['qidgrupo'].'&qmat='.$aRow['qidmat'].'\',\'content\'); return false;" title=""><span class="icos-copypaste"></span>'.$texts['tareas'].' '.$bRow['qnombre'].'</a>
                                 </li>
                                 <li>
-                                    <a href="#" onclick="assignme(\'professor_takelist.php?qcode='.$bRow['qidgrupo'].'&qmat='.$aRow['qidmat'].'\',\'content\'); return false;" title=""><span class="icos-users"></span>'.$texts['alumnos'].' '.$bRow['qnombre'].'</a>
-                                </li>
-                                <li>
-                                    <a href="#" onclick="assignme(\'professor_takelist.php?qcode='.$bRow['qidgrupo'].'&qmat='.$aRow['qidmat'].'\',\'content\'); return false;" title=""><span class="icos-stats"></span>'.$texts['calif'].' '.$bRow['qnombre'].'</a>
+                                    <a href="#" onclick="assignme(\'professor_takegrades.php?qcode='.$bRow['qidgrupo'].'&qmat='.$aRow['qidmat'].'\',\'content\'); return false;" title=""><span class="icos-stats"></span>'.$texts['calif'].' '.$bRow['qnombre'].'</a>
                                 </li>
                             </ul>';
 
