@@ -33,13 +33,15 @@ ini_set('display_errors', '1');
                     AND idMaterias = '".$_GET['qidmat']."' 
                     AND idGrupos = '".$_GET['qidgrupo']."' 
                     AND idParciales = '".$row3['idParciales']."'";
-        echo $elsql2;
+        //echo $elsql2;
         $sqlt2 = $con->query($elsql2);
         $row2 = mysqli_fetch_assoc($sqlt2);
-        $faltas = 'checked';
+        $calo = 'checked';
 
-        if(mysqli_num_rows($sqlt2) > 0){
-            $faltas = '';
+        if($sqlt2->num_rows === 0){
+            $calo = '0';
+        } else {
+            $calo = $row2['calificacion'];
         }
 
         $chido = [];
@@ -47,8 +49,14 @@ ini_set('display_errors', '1');
         $chido[] = $aRow['qiduser'];
         $chido[] = $aRow['qapellidos'];
         $chido[] = $aRow['qnombre'];  
-        $chido[] = '<input type="text" value="'.$row2['calificaciones'].'" />';
-        //$aRow['qidgrupos'];
+        $chido[] = '<div class="formRow" style="border-bottom:0; padding:0;">
+                        <div class="grid3">
+                            <input type="text" name="regular" placeholder="0.00" value="'.$calo.'" />
+                        </div>
+                        <div class="grid3">
+                            <a href="#" class="buttonS bDefault opt" data-toggle="dropdown"><span class="icos-check"></span></a>
+                        </div>
+                    </div> ';
 
         $output['aaData'][] = $chido;
           

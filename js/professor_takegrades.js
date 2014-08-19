@@ -1,5 +1,5 @@
 var loadme;
-console.log('Test 649');
+console.log('Test 7738');
 
 var rando = Math.floor(Math.random() * 6000) + 1;
 var elano = new Date().getFullYear();
@@ -16,6 +16,10 @@ oTable = $('#dTable').dataTable({
 			enableDrag: false 
 		});
 		console.log('Se inicializó');
+
+		/*---stepper starts---*/
+		//$('input[id^="s2_"]').spinner({ stepping: 0.05 });
+		/*---stepper ends-----*/
     },
 	"sPaginationType": "full_numbers",
 	"dom": 'Rlfrtip',
@@ -44,7 +48,7 @@ oTable = $('#dTable').dataTable({
     }] 
 
 });
-
+/*
 function setmissed(qiduser,asist,name,last){
 	$.blockUI();
 	$.post( 'clases/profesor/asistio.php?rando='+rando, {
@@ -94,3 +98,13 @@ $( ".datepicker" ).datepicker({
 	var dater = this.value.split('-');
 	assignme('professor_takelist.php?qcode='+$('#qidgrupo').text()+'&qmat='+$('#qidmat').text()+'&y='+dater[0]+'&m='+dater[1]+'&d='+dater[2],'content'); return false;
 });
+*/
+
+
+/*
+$("button").click(function(e){
+	var ns = $(this).attr('id').match(/(s\d)\-(\w+)$/);
+	if (ns != null)
+		$('#'+ns[1]).spinner( (ns[2] == 'create') ? opts[ns[1]] : ns[2]);
+});
+*/
