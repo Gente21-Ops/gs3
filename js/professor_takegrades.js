@@ -94,26 +94,14 @@ function missedday(qiduser1,qname1,qlast1){
 		setmissed(qiduser1,false,qname1,qlast1);
 	}	
 }
-
-$.datepicker.regional[$('#qlang')];
-$( ".datepicker" ).datepicker({ 
-	defaultDate: +7,
-	showOtherMonths:true,
-	autoSize: true,
-	appendText: '(yyyy-mm-dd)',
-	dateFormat: 'yy-mm-dd',
-	onSelect: function(dateText) {
-    	$(this).change();
-    },
-	changeMonth: true,
-  	changeYear: true,
-  	yearRange: '1930:'+elano,  	
-}).change(function() {
+*/
+//$.datepicker.regional[$('#qlang')];
+$( ".datepicker" ).change(function() {
 	//window.location.href = "index.php?date=" + this.value;
 	var dater = this.value.split('-');
-	assignme('professor_takelist.php?qcode='+$('#qidgrupo').text()+'&qmat='+$('#qidmat').text()+'&y='+dater[0]+'&m='+dater[1]+'&d='+dater[2],'content'); return false;
+	assignme('professor_takegrades.php?qcode='+$('#qidgrupo').text()+'&qmat='+$('#qidmat').text()+'&y='+dater[0]+'&m='+dater[1]+'&d='+dater[2],'content'); return false;
 });
-*/
+
 
 
 /*
