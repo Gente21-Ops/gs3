@@ -26,7 +26,7 @@
 
             <li><a href="#" onclick="assignme('general_calendar','content'); return false;" title="" class="linko"><img src="images/icons/mainnav/calendar.png" alt="" /><span><?php echo $texts['calendario']; ?></span></a></li>
             
-            <li><a href="#" onclick="assignme('students_files','content'); return false;" title="Chido" class="linko"><img src="images/icons/mainnav/files.png" alt="" /><span><?php echo $texts['documentos']; ?></span></a></li>    
+            <li><a href="#" onclick="assignme('professor_files','content'); return false;" title="Chido" class="linko"><img src="images/icons/mainnav/files.png" alt="" /><span><?php echo $texts['documentos']; ?></span></a></li>    
 
             <li><a href="#" onclick="assignme('profesor_config','content'); return false;" title="" class="linko"><img src="images/icons/mainnav/config.png" alt="" /><span><?php echo $texts['configuracion']; ?></span></a></li>            
             
