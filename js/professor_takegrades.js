@@ -96,10 +96,11 @@ function missedday(qiduser1,qname1,qlast1){
 }
 */
 //$.datepicker.regional[$('#qlang')];
-$( ".datepicker" ).change(function() {
+$( ".datepicker" ).on('change', function (e) {
 	//window.location.href = "index.php?date=" + this.value;
-	var dater = this.value.split('-');
-	assignme('professor_takegrades.php?qcode='+$('#qidgrupo').text()+'&qmat='+$('#qidmat').text()+'&y='+dater[0]+'&m='+dater[1]+'&d='+dater[2],'content'); return false;
+	var optionSelected = $("option:selected", this);
+    var valueSelected = this.value;
+	assignme('professor_takegrades.php?qcode='+$('#qidgrupo').text()+'&qmat='+$('#qidmat').text()+'&qparcial='+valueSelected,'content'); return false;
 });
 
 

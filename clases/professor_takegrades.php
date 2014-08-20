@@ -1,19 +1,25 @@
 <?php
-/*
+
 error_reporting(E_ALL);
 ini_set('display_errors', '1');
-*/
+
 require_once('../mysqlcon.php');
 include("logon.php");
+
+
 include('../dict/professor_takegrades.php');
 
     ob_start();
 
+    $elsql4 = "SELECT idParciales FROM parciales WHERE abierto = '1' AND codeEscuelas = '".$_SESSION['qescuelacode']."'";
+    $sqlt4 = $con->query($elsql4);
+    $row4 = mysqli_fetch_assoc($sqlt4);
+
     if(isset($_GET['qparcial'])){
-        $elsql3 = "SELECT idParciales FROM parciales WHERE abierto = '1' AND codeEscuelas = '".$_SESSION['qescuelacode']."'";
-        $sqlt3 = $con->query($elsql3); 
-        $row3 = mysqli_fetch_assoc($sqlt3);
-        echo '<div id="qparcial" style="display:none;">'.$_GET['qparcial'].'</div>';
+        $qparcial = $_GET['qparcial'];
+    } else {
+        $qparcial = $row3['idParciales'];
+        //echo '<div id="qparcial" style="display:none;">'.$_GET['qparcial'].'</div>';
     }
 
     //TOP
@@ -77,7 +83,18 @@ include('../dict/professor_takegrades.php');
                 <div id="dyn2" class="shownpars">
                     <div class="formRow">
                         
-                        <div class="grid9"><?php echo $texts['anotherday']; ?> &nbsp; <input class="datepicker" type="text" value="<?php echo $_SESSION['']; ?>" /></div><div class="clear"></div>
+                        <div class="grid9"><?php echo $texts['anotherday']; ?> &nbsp; 
+
+                        <select class="datepicker"/></div>
+                        <?php
+                        
+                            while($row3){
+                                echo '<option value="$row3">'.$row3.'</option>';
+                            }
+                        ?>
+                        <!--<select class="datepicker" type="text" value="<?php echo $_SESSION['']; ?>" /></div>-->
+
+                        <div class="clear"></div>
                     </div>
                     
                     <table cellpadding="0" cellspacing="0" border="0" class="dTable" id="dTable">
