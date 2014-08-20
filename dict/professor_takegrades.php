@@ -11,7 +11,7 @@ if($_SESSION['qlen'] == "es"){
 	"col_apellidos" => "Apellidos",
 	"col_nombre" => "Nombre (s)",
 	"col_asistio" => "Calificación",
-	"col_asisok" => "si est&aacute; presente el d&iacute;a",
+	"col_asisok" => "tiene calificación de ",
 	"col_asisno" => "no est&aacute; presente el d&iacute;a");
 } else if($_SESSION['qlen'] == "en"){
 	$texts = array(

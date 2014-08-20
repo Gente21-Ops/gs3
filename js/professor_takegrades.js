@@ -17,6 +17,21 @@ oTable = $('#dTable').dataTable({
 		});
 		console.log('Se inicializó');
 
+		$( "input[id^='caja_']" ).change(function() {
+			$.blockUI();
+			$.post( 'clases/profesor/cambiaCalif.php?rando='+rando, {
+				qiduser: $(this).data("iduser"),	
+				qidmateria: $('#qidmat').text(),
+				qidgrupo: $('#qidgrupo').text(),
+				qcalif: $(this).val(),
+				qparcial: $(this).data("parcialuser"),
+			},
+				function(rdata){
+					$.jGrowl($(this).data("nameuser")+'<br>'+$('#t_present').text());
+					$.unblockUI();
+			});
+		});
+		//$(this).data('mike');
 		/*---stepper starts---*/
 		//$('input[id^="s2_"]').spinner({ stepping: 0.05 });
 		/*---stepper ends-----*/

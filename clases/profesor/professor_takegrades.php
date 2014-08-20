@@ -51,13 +51,13 @@ ini_set('display_errors', '1');
         $chido[] = $aRow['qnombre'];  
         $chido[] = '<div class="formRow" style="border-bottom:0; padding:0;">
                         <div class="grid3">
-                            <input type="text" name="regular" placeholder="0.00" value="'.$calo.'" />
-                        </div>
-                        <div class="grid3">
-                            <a href="#" class="buttonS bDefault opt" data-toggle="dropdown"><span class="icos-check"></span></a>
+                            <input id="caja_'.$aRow['qiduser'].'" 
+                            data-iduser="'.$aRow['qiduser'].'" 
+                            data-nameuser="'.$aRow['qnombre'].' '.$aRow['qapellidos'].'" 
+                            data-parcialuser="'.$row3['idParciales'].'" 
+                            type="text" name="qcalif" placeholder="0.00" value="'.$calo.'" />
                         </div>
                     </div> ';
-
         $output['aaData'][] = $chido;
           
     }
