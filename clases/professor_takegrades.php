@@ -3,24 +3,25 @@
 error_reporting(E_ALL);
 ini_set('display_errors', '1');
 
-require_once('../mysqlcon.php');
 include("logon.php");
-
-
 include('../dict/professor_takegrades.php');
+ob_start();
+require_once('mysqlcon.php');
 
-    ob_start();
+    $sql = "SELECT idParciales, nombre FROM parciales WHERE codeEscuelas = '".$_SESSION['qescuelacode']."'";
+    $result = mysqli_query($con,$sql);
 
-    $elsql4 = "SELECT idParciales FROM parciales WHERE abierto = '1' AND codeEscuelas = '".$_SESSION['qescuelacode']."'";
-    $sqlt4 = $con->query($elsql4);
-    $row4 = mysqli_fetch_assoc($sqlt4);
+    $sql2 = "SELECT idParciales, nombre FROM parciales WHERE abierto = '1' AND codeEscuelas = '".$_SESSION['qescuelacode']."'";
+    $result2 = mysqli_query($con,$sql2);
+    $row2 = mysqli_fetch_array($result2, MYSQLI_ASSOC);
 
     if(isset($_GET['qparcial'])){
         $qparcial = $_GET['qparcial'];
-    } else {
-        $qparcial = $row3['idParciales'];
+    } /*else {
+        $row=mysqli_fetch_array($result,MYSQLI_ASSOC);
+        $qparcial = $row4['idParciales'];
         //echo '<div id="qparcial" style="display:none;">'.$_GET['qparcial'].'</div>';
-    }
+    }*/
 
     //TOP
     $breads = $texts['title'].'^professor_takelist';
@@ -35,33 +36,14 @@ include('../dict/professor_takegrades.php');
         echo '<script src="http://jquery-ui.googlecode.com/svn/tags/latest/ui/i18n/jquery.ui.datepicker-en-GB.js"></script>';
     }
 
-    $day = 0;
-    $month = 0;
-    $year = 0;
-
-    date_default_timezone_set($_SESSION['qtimezone']);
-
-    //get M/D/Y
-    if (!isset($_GET['m']) || !isset($_GET['d']) || !isset($_GET['y'])){
-        $day = gmdate('d');
-        $month = gmdate('m');
-        $year = gmdate('Y');
-    } else {
-        $day = $_GET['d'];
-        $month = $_GET['m'];
-        $year = $_GET['y'];
-    }
-
 ?>  
 
 <div id="qidgrupo" style="display:none;"><?php echo $_GET['qcode']; ?></div>
 <div id="qidmat" style="display:none;"><?php echo $_GET['qmat']; ?></div>
-<div id="qday" style="display:none;"><?php echo $day; ?></div>
-<div id="qmonth" style="display:none;"><?php echo $month; ?></div>
-<div id="qyear" style="display:none;"><?php echo $year; ?></div>
 <div id="t_present" style="display:none;"><?php echo $texts['col_asisok']; ?></div>
 <div id="t_notpresent" style="display:none;"><?php echo $texts['col_asisno']; ?></div>
 <div id="qlang" style="display:none;"><?php echo $_SESSION['qlen']; ?></div>
+<div id="qparcial" style="display:none;"><?php echo $_GET['qparcial']; ?></div>
     
     <!-- Main content -->
     <div class="wrapper">
@@ -85,13 +67,25 @@ include('../dict/professor_takegrades.php');
                         
                         <div class="grid9"><?php echo $texts['anotherday']; ?> &nbsp; 
 
-                        <select class="datepicker"/></div>
-                        <?php
+                            <select class="datepicker">
+                            <?php
+                                //echo "caca";
+
+                                while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) {
+                                    if(isset($_GET['qparcial'])){
+                                        if($_GET['qparcial'] == $row['idParciales']){
+                                            echo '<option selected value="'.$row['idParciales'].'">'.$row['nombre'].'</option>';
+                                        } else {
+                                            echo '<option value="'.$row['idParciales'].'">'.$row['nombre'].'</option>';
+                                        }
+                                    } else {
+                                        echo '<option value="'.$row['idParciales'].'">'.$row['nombre'].'</option>';
+                                    }
+                                }
+                            ?>
+                            </select>
+                        </div>
                         
-                            while($row3){
-                                echo '<option value="$row3">'.$row3.'</option>';
-                            }
-                        ?>
                         <!--<select class="datepicker" type="text" value="<?php echo $_SESSION['']; ?>" /></div>-->
 
                         <div class="clear"></div>

@@ -20,9 +20,16 @@ ini_set('display_errors', '1');
     //$eldato = $_GET['qyear'].'-'.$_GET['qmonth'].'-'.$_GET['qday'];
     $sqlt = $con->query($elsql); 
 
-    $elsql3 = "SELECT idParciales FROM parciales WHERE abierto = '1' AND codeEscuelas = '".$_SESSION['qescuelacode']."'";
-    $sqlt3 = $con->query($elsql3); 
-    $row3 = mysqli_fetch_assoc($sqlt3);
+    if(strlen($_GET['qparcial'])>0){
+        $elsql3 = "SELECT idParciales FROM parciales WHERE idParciales = '".$_GET['qparcial']."' AND codeEscuelas = '".$_SESSION['qescuelacode']."'";
+        $sqlt3 = $con->query($elsql3); 
+        $row3 = mysqli_fetch_assoc($sqlt3);
+    } else {
+        $elsql3 = "SELECT idParciales FROM parciales WHERE abierto = '1' AND codeEscuelas = '".$_SESSION['qescuelacode']."'";
+        $sqlt3 = $con->query($elsql3); 
+        $row3 = mysqli_fetch_assoc($sqlt3);
+    }
+    
 
     //print_r(expression);
     $output['aaData'] = [];

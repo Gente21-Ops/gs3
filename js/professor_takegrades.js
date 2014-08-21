@@ -42,7 +42,8 @@ oTable = $('#dTable').dataTable({
 	"sDom": '<"H"fl>t<"F"ip>',
 	"sAjaxSource": 'clases/profesor/professor_takegrades.php?qidgrupo='+
 		$('#qidgrupo').text()+
-		'&qidmat='+$('#qidmat').text(),
+		'&qidmat='+$('#qidmat').text()+
+		'&qparcial='+$('#qparcial').text(),
 	"fnRowCallback": function( nRow, aData, iDisplayIndex, iDisplayIndexFull ) {
 		$(nRow).attr('id', aData[0]);
 		return nRow;
