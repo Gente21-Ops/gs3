@@ -18,6 +18,7 @@ oTable = $('#dTable').dataTable({
 		console.log('Se inicializó');
 
 		$( "input[id^='caja_']" ).change(function() {
+			var nombre = $(this).data("nameuser");
 			$.blockUI();
 			$.post( 'clases/profesor/cambiaCalif.php?rando='+rando, {
 				qiduser: $(this).data("iduser"),	
@@ -27,7 +28,8 @@ oTable = $('#dTable').dataTable({
 				qparcial: $(this).data("parcialuser"),
 			},
 				function(rdata){
-					$.jGrowl($(this).data("nameuser")+'<br>'+$('#t_present').text());
+					//alert(nombre+" "+$('#qidgrupo').text()+" "+rdata);
+					$.jGrowl(nombre+'<br>'+$('#t_present').text()+" "+rdata);
 					$.unblockUI();
 			});
 		});

@@ -76,6 +76,9 @@ if ($chunks < 2 && file_exists($targetDir . DIRECTORY_SEPARATOR . $fileName)) {
 }
 
 $filePath = $targetDir . DIRECTORY_SEPARATOR . $fileName;
+
+$filePath = str_replace('\\', '/', $filePath);
+
 echo $filePath;
 
 // Create target dir
@@ -109,7 +112,6 @@ if (isset($_SERVER["CONTENT_TYPE"]))
 // Handle non multipart uploads older WebKit versions didn't support multipart in HTML5
 if (strpos($contentType, "multipart") !== false)
 {
-	echo "h";
 	if (isset($_FILES['file']['tmp_name']) && is_uploaded_file($_FILES['file']['tmp_name']))
 	{
 		// Open temp file
