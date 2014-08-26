@@ -49,11 +49,17 @@
         /*        IF I'M A STUDENT I GET THE GROUP      */
         //still doesn't solve the problem of having multiple groups
         if ($row['qtipo'] == '2'){
-            $sqlstud = "SELECT qidgrupo FROM map_grupos WHERE idUsers = '".$row['idUsers']."'";
-            $resstud = mysql_query($sqlstud);
+            $sqlstud = "SELECT idGrupos FROM map_grupos WHERE idUsers = '".$row['idUsers']."'";
+            $resstud = mysql_query($sqlstud) or die(mysql_error());
             $rowstud = mysql_fetch_assoc($resstud);
-            $_SESSION['qidgrupo'] = $rowstud['qidgrupo'];
+            $_SESSION['qidgrupo'] = $rowstud['idGrupos'];
         }
+
+        //Obtener ciclo activo de la escuela
+        $queryCiclo = "SELECT idCiclos FROM ciclos WHERE activo = '1' AND codeEscuelas = '".$qcodescuela."'";
+        $resCiclo = mysql_query($queryCiclo) or die(mysql_error());
+        $rowCiclo = mysql_fetch_assoc($resCiclo);
+        $_SESSION['qciclo'] = $rowCiclo['idCiclos'];
 
         $_SESSION['idUsers'] = $row['idUsers'];
         $_SESSION['tipo'] = $row['qtipo'];

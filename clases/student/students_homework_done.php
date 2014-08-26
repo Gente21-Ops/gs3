@@ -35,9 +35,10 @@ INNER JOIN tareas_status ON (tareas_status.code = tareas.code)
 WHERE tareas.idGrupos = '".$qgrupo."' AND (tareas_status.status = '1' OR tareas_status.status = '3') AND tareas_status.idAlumno = '".$qalumno."' 
 ORDER BY qmatname ASC, tareas.fechaEntrega ASC";
 
-    //echo $elsql."<br><br>";
+    echo $elsql."<br><br>";
     $sqlt = $con->query($elsql); 
    
+   $output['aaData'] = [];
     while ($aRow = $sqlt->fetch_assoc()) {
         $row = array();
 
