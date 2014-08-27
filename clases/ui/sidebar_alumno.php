@@ -47,7 +47,7 @@
             
             <li><a href="#" onclick="assignme('students_files','content'); return false;" title="Chido" class="linko"><img src="images/icons/mainnav/files.png" alt="" /><span><?php echo $texts['documentos']; ?></span></a></li>
             
-            <li><a href="#" onclick="assignme('admin_students_a','content'); return false;" title="" class="linko"><img src="images/icons/mainnav/statistics.png" alt="" /><span><?php echo $texts['estadisticas']; ?></span></a></li>
+            <li><a href="#" onclick="assignme('students_faltas','content'); return false;" title="" class="linko"><img src="images/icons/mainnav/statistics.png" alt="" /><span><?php echo $texts['estadisticas']; ?></span></a></li>
 
             <li><a href="#" onclick="assignme('students_config','content'); return false;" title="" class="linko"><img src="images/icons/mainnav/config.png" alt="" /><span><?php echo $texts['configuracion']; ?></span></a></li>            
             

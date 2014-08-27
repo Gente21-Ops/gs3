@@ -10,10 +10,10 @@
                 <a href="" class="redImg"><img src="images/icons/quickstats/user.png" alt="" /></a>
                 <div class="floatR"><strong class="blue"><?php require_once('student/faltas_alumno.php'); ?></strong><span>faltas</span></div>
             </li>
-            <li>
+            <!--<li>
                 <a href="" class="greenImg"><img src="images/icons/quickstats/money.png" alt="" /></a>
                 <div class="floatR"><strong class="blue"><?php require_once('student/saldo_alumno.php'); ?></strong><span>saldo</span></div>
-            </li>
+            </li>-->
         </ul>
         <div class="clear"></div>
     </div>
