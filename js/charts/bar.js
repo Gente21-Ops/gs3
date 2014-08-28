@@ -66,7 +66,7 @@ $(function () {
 
     });
 
- 
+
 //add tooltip event
 $("#placeholder1").bind("plothover", function (event, pos, item) {
     if (item) {

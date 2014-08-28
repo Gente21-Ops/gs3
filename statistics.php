@@ -1,22 +1,14 @@
 <?php
+error_reporting(E_ALL);
 include("clases/logon.php");
-
+include('dict/students.php');
 
     ob_start();
-    require_once('clases/connection.php');
 
-    mysql_query('SET CHARACTER SET utf8');
-    mysql_query('SET NAMES "utf8"');
-
-
-/*$result_faltas = mysql_query("SELECT COUNT(1) FROM faltas WHERE idUsers = '".$_SESSION['idUsers']."'");
-    $row_faltas = mysql_fetch_array($result_faltas);
-
-    $total_faltas = $row_faltas[0];
-    echo $total_faltas;*/
-//error_reporting(0); 
-require_once('clases/student/faltas_alumno.php');
-?>
+    //TOP
+    $breads = $texts['title'].'^students_faltas';
+    include('top.php');
+?>  
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>

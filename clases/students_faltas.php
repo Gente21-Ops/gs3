@@ -6,9 +6,9 @@ include('../dict/students.php');
     ob_start();
 
     //TOP
-    $breads = $texts['title'].'^admin_students_a';
+    $breads = $texts['title'].'^students_faltas';
     include('top.php');
-?>  
+?>
 
 
 <div id="deldialog" style="display:none;"><strong><?php echo $texts['deldialog']; ?></strong></div>
@@ -22,11 +22,10 @@ include('../dict/students.php');
         <div class="fluid">        
             
             <!-- Bars chart -->
-            <div class="widget grid6 chartWrapper">
+            <div class="widget grid12 chartWrapper">
                 <div class="whead"><h6>Vertican bars</h6><div class="clear"></div></div>
-                <div class="body"><div class="bars" id="placeholder1"></div></div>
+                <div class="body"><div class="bars" id="placeholder"></div></div>
             </div>
-
 
         </div>
         

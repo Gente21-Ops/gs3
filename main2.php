@@ -25,22 +25,6 @@ include('dict/main.php');
 
 <script type="text/javascript" src="js/jquery.easing.1.3.min.js"></script>
 
-<script type="text/javascript" src="js/plugins/charts/excanvas.min.js"></script>
-<script type="text/javascript" src="js/plugins/charts/jquery.flot.js"></script>
-<script type="text/javascript" src="js/plugins/charts/jquery.flot.orderBars.js"></script>
-<script type="text/javascript" src="js/plugins/charts/jquery.flot.pie.js"></script>
-<script type="text/javascript" src="js/plugins/charts/jquery.flot.resize.js"></script>
-<script type="text/javascript" src="js/plugins/charts/jquery.sparkline.min.js"></script>
-
-<script type="text/javascript" src="js/charts/chart.js"></script>
-<script type="text/javascript" src="js/charts/bar.js"></script>
-<script type="text/javascript" src="js/charts/hBar.js"></script>
-<script type="text/javascript" src="js/charts/updating.js"></script>
-<script type="text/javascript" src="js/charts/pie.js"></script>
-<script type="text/javascript" src="js/charts/chart_side.js"></script>
-<script type="text/javascript" src="js/charts/bar_side.js"></script>
-<script type="text/javascript" src="js/charts/hBar_side.js"></script>
-
 
 <!-- Lets add the nano scroller IF FF OR CHROME -->
 <script src="js/jquery.nanoscroller.js" type="text/javascript" charset="utf-8" async defer></script>
@@ -109,6 +93,25 @@ include('dict/main.php');
 <link href="css/jquery.alerts.css" rel="stylesheet" type="text/css" />
 
 <script type="text/javascript" src="js/plugins/jquery.blockUI.js"></script>
+
+<script type="text/javascript" src="js/plugins/charts/excanvas.min.js"></script>
+<script type="text/javascript" src="js/plugins/charts/jquery.flot.js"></script>
+<script type="text/javascript" src="js/plugins/charts/jquery.flot.orderBars.js"></script>
+<script type="text/javascript" src="js/plugins/charts/jquery.flot.pie.js"></script>
+<script type="text/javascript" src="js/plugins/charts/jquery.flot.resize.js"></script>
+<script type="text/javascript" src="js/plugins/charts/jquery.sparkline.min.js"></script>
+<script type="text/javascript" src="/js/plugins/charts/jquery.flot.time.js"></script>
+<script type="text/javascript" src="js/plugins/charts/jquery.flot.axislabels.js"></script>
+<script type="text/javascript" src="js/plugins/charts/  jquery.flot.symbol.js"></script>
+
+<script type="text/javascript" src="js/charts/chart.js"></script>
+<script type="text/javascript" src="js/charts/bar.js"></script>
+<script type="text/javascript" src="js/charts/hBar.js"></script>
+<script type="text/javascript" src="js/charts/updating.js"></script>
+<script type="text/javascript" src="js/charts/pie.js"></script>
+<script type="text/javascript" src="js/charts/chart_side.js"></script>
+<script type="text/javascript" src="js/charts/bar_side.js"></script>
+<script type="text/javascript" src="js/charts/hBar_side.js"></script>
 
 <!--
 <script type="text/javascript" src="js/charts/chart.js"></script>
