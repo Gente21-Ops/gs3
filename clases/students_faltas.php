@@ -11,6 +11,8 @@ include('../dict/students.php');
 ?>
 
 
+
+
 <div id="deldialog" style="display:none;"><strong><?php echo $texts['deldialog']; ?></strong></div>
 <div id="deltitle" style="display:none;"><?php echo $texts['deltitle']; ?></div>
 <div id="qlango" style="display:none;"><?php echo $_SESSION['qlen']; ?></div>

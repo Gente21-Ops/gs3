@@ -18,7 +18,11 @@ include('dict/main.php');
 <link href="css/styles.css" rel="stylesheet" type="text/css" />
 <!--[if IE]> <link href="css/ie.css" rel="stylesheet" type="text/css"> <![endif]-->
 
-<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7/jquery.min.js"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js" type="text/javascript"></script>
+
+<script type="text/javascript" src="js/plugins/charts/jquery.flot.js"></script>
+<script type="text/javascript" src="js/plugins/charts/jquery.flot.categories.js"></script>  
+<!--<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7/jquery.min.js"></script>-->
 <script type="text/javascript" src="js/plugins/forms/ui.spinner.js"></script>
 <script type="text/javascript" src="js/plugins/forms/jquery.mousewheel.js"></script> 
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js"></script>
@@ -26,22 +30,11 @@ include('dict/main.php');
 <script type="text/javascript" src="js/jquery.easing.1.3.min.js"></script>
 
 
+
+
 <!-- Lets add the nano scroller IF FF OR CHROME -->
 <script src="js/jquery.nanoscroller.js" type="text/javascript" charset="utf-8" async defer></script>
 <link href="css/nanoscroller.css" rel="stylesheet" type="text/css" />
- 
-
-<!--
-<script type="text/javascript" src="js/plugins/charts/excanvas.min.js"></script>
-
-
-<script type="text/javascript" src="js/plugins/charts/jquery.flot.js"></script>
-<script type="text/javascript" src="js/plugins/charts/jquery.flot.orderBars.js"></script>
-<script type="text/javascript" src="js/plugins/charts/jquery.flot.pie.js"></script>
-<script type="text/javascript" src="js/plugins/charts/jquery.flot.resize.js"></script>
-
-<script type="text/javascript" src="js/plugins/charts/jquery.sparkline.min.js"></script>
--->
 
 <script type="text/javascript" src="js/plugins/forms/autogrowtextarea.js"></script>
 <script type="text/javascript" src="js/plugins/forms/jquery.uniform.js"></script>
@@ -94,16 +87,6 @@ include('dict/main.php');
 
 <script type="text/javascript" src="js/plugins/jquery.blockUI.js"></script>
 
-<script type="text/javascript" src="js/plugins/charts/excanvas.min.js"></script>
-<script type="text/javascript" src="js/plugins/charts/jquery.flot.js"></script>
-<script type="text/javascript" src="js/plugins/charts/jquery.flot.orderBars.js"></script>
-<script type="text/javascript" src="js/plugins/charts/jquery.flot.pie.js"></script>
-<script type="text/javascript" src="js/plugins/charts/jquery.flot.resize.js"></script>
-<script type="text/javascript" src="js/plugins/charts/jquery.sparkline.min.js"></script>
-<script type="text/javascript" src="/js/plugins/charts/jquery.flot.time.js"></script>
-<script type="text/javascript" src="js/plugins/charts/jquery.flot.axislabels.js"></script>
-<script type="text/javascript" src="js/plugins/charts/  jquery.flot.symbol.js"></script>
-
 <script type="text/javascript" src="js/charts/chart.js"></script>
 <script type="text/javascript" src="js/charts/bar.js"></script>
 <script type="text/javascript" src="js/charts/hBar.js"></script>
@@ -112,6 +95,16 @@ include('dict/main.php');
 <script type="text/javascript" src="js/charts/chart_side.js"></script>
 <script type="text/javascript" src="js/charts/bar_side.js"></script>
 <script type="text/javascript" src="js/charts/hBar_side.js"></script>
+
+<script type="text/javascript" src="js/plugins/charts/excanvas.min.js"></script>
+
+<script type="text/javascript" src="js/plugins/charts/jquery.flot.orderBars.js"></script>
+<script type="text/javascript" src="js/plugins/charts/jquery.flot.pie.js"></script>
+<script type="text/javascript" src="js/plugins/charts/jquery.flot.resize.js"></script>
+<script type="text/javascript" src="js/plugins/charts/jquery.sparkline.min.js"></script>
+<script type="text/javascript" src="js/plugins/charts/jquery.flot.time.js"></script>
+<script type="text/javascript" src="js/plugins/charts/jquery.flot.axislabels.js"></script>
+<script type="text/javascript" src="js/plugins/charts/jquery.flot.symbol.js"></script>
 
 <!--
 <script type="text/javascript" src="js/charts/chart.js"></script>
