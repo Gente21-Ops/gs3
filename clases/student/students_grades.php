@@ -12,7 +12,7 @@ $JsonArray = array();
             AND idUsers = '".$_SESSION['idUsers']."' AND idParciales = '1'";
         $result7 = $con->query($elsql7);*/
 
-        $elsql7 = "SELECT DISTINCT idMaterias AS qmaterias FROM faltas WHERE idCiclos = '".$_SESSION['qciclo']."'
+        $elsql7 = "SELECT DISTINCT idMaterias AS qmaterias FROM calificaciones WHERE idCiclos = '".$_SESSION['qciclo']."'
             AND idUsers = '".$_SESSION['idUsers']."' AND idParciales = '1'";
         $result7 = $con->query($elsql7);
         
@@ -28,7 +28,7 @@ $JsonArray = array();
         
             
         while ($aRow7 = $result7->fetch_assoc()) { 
-            $elsql8 = "SELECT COUNT(idMaterias) as total FROM faltas WHERE idCiclos = '".$_SESSION['qciclo']."'
+            $elsql8 = "SELECT calificacion as qcalif FROM calificaciones WHERE idCiclos = '".$_SESSION['qciclo']."'
             AND idUsers = '".$_SESSION['idUsers']."' AND idParciales = '1' AND idMaterias = '".$aRow7['qmaterias']."'";
             $result8 = $con->query($elsql8);
 
@@ -41,7 +41,7 @@ $JsonArray = array();
             while ($aRow8 = $result8->fetch_assoc()) { 
                 //$JsonArray[] = array( $aRow7['qmaterias'] => $aRow8['total'] );
                 //$data1[] = array ($aRow7['qmaterias'], $aRow8['total']);
-                $JsonArray[] = array( $row9['nombre'], $aRow8['total'] );
+                $JsonArray[] = array( $row9['nombre'], $aRow8['qcalif'] );
             }
         }
 /*

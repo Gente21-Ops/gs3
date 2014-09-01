@@ -9,7 +9,8 @@ if($_SESSION['qlen'] == "es"){
 	"tareas" => "Tareas",
 	"calendario" => "Calendario",
 	"documentos" => "Documentos",
-	"estadisticas" => "Estad&iacute;sticas",
+	"estadisticas" => "Asistencias",
+	"calificaciones" => "Calificaciones",
 	"configuracion" => "Configuraci&oacute;n");
 } else if($_SESSION['qlen'] == "en"){
 	$texts = array(
@@ -17,7 +18,8 @@ if($_SESSION['qlen'] == "es"){
 	"tareas" => "Homeworks",
 	"calendario" => "Calendar",
 	"documentos" => "Documents",
-	"estadisticas" => "Statistics",
+	"estadisticas" => "Attendance",
+	"calificaciones" => "Grades",
 	"configuracion" => "Settings");
 } else if($_SESSION['qlen'] == "fr"){
 	$texts = array();

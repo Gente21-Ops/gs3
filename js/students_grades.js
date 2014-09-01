@@ -12,7 +12,7 @@ if ($('#qlango').text() == 'es'){
 }
 
 $.ajax({
-    url: "clases/student/students_faltas.php",
+    url: "clases/student/students_grades.php",
     method: 'GET',
     dataType: 'json',
     success: onOutboundReceived
@@ -39,7 +39,7 @@ function onOutboundReceived(datos) {
                 axisLabelPadding: 10
             },
             yaxis: {
-                axisLabel: "Número de faltas",
+                axisLabel: "Calificación",
                 axisLabelUseCanvas: true,
                 axisLabelFontSizePixels: 14,
                 //axisLabelFontFamily: 'Verdana, Arial',

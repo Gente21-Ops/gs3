@@ -28,7 +28,7 @@ if($_SESSION['qlen'] == "es"){
 	"f_direccion" => "Direcci&oacute;n",
 	"f_telefono" => "Tel&eacute;fono",
 	"f_email" => "Email",
-	"table_attendance" => "Asistencias por materia"
+	"table_grades" => "Calificaciones"
 	);
 } else if($_SESSION['qlen'] == "en"){
 	$texts = array(
@@ -55,7 +55,7 @@ if($_SESSION['qlen'] == "es"){
 	"f_direccion" => "Address",
 	"f_telefono" => "Telephone number",
 	"f_email" => "Email",
-	"table_attendance" => "Attendance by subject"
+	"table_grades" => "Grades"
 	);
 } else if($_SESSION['qlen'] == "fr"){
 	$texts = array(

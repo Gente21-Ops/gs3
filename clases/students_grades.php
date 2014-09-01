@@ -1,12 +1,12 @@
 <?php
 error_reporting(E_ALL);
 include("logon.php");
-include('../dict/students_faltas.php');
+include('../dict/students_grades.php');
 
     ob_start();
 
     //TOP
-    $breads = $texts['title'].'^students_faltas';
+    $breads = $texts['title'].'^students_grades';
     include('top.php');
 ?>
 
@@ -25,7 +25,7 @@ include('../dict/students_faltas.php');
             
             <!-- Bars chart -->
             <div class="widget grid12 chartWrapper">
-                <div class="whead"><h6><?php echo $texts['table_attendance']; ?></h6><div class="clear"></div></div>
+                <div class="whead"><h6><?php echo $texts['table_grades']; ?></h6><div class="clear"></div></div>
                 <div class="body"><div class="bars" id="placeholder"></div></div>
             </div>
 
