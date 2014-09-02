@@ -50,7 +50,7 @@ $( "#sendo" ).click(function(e) {
 //init de plupload
 var uploader = new plupload.Uploader({
 	runtimes : 'html5',
-	browse_button: 'browse', // this can be an id of a DOM element or the DOM element itself
+	browse_button: 'browser', // this can be an id of a DOM element or the DOM element itself
 	//drop_element : 'jalo',
 	max_file_size : '20mb',
 	multi_selection : false,

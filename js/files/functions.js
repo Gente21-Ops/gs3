@@ -63,11 +63,7 @@ $(function() {
 	//------KEYPRESS LISTENER--//
 	console.log('COMAN OSTIONES!!!');    
 
-	//===== NANO SCROLLER =====//
-	if ($(".nano")[0]){
-    	$(".nano").nanoScroller();
-	}
-    //===== NANO SCROLLER =====//
+	
 
 
     //----- USER HOVER --------//
@@ -120,32 +116,12 @@ $(function() {
 	);
 	
 	
-	//===== Autocomplete =====//
-	
-	var availableTags = [ "ActionScript", "AppleScript", "Asp", "BASIC", "C", "C++", "Clojure", "COBOL", "ColdFusion", "Erlang", "Fortran", "Groovy", "Haskell", "Java", "JavaScript", "Lisp", "Perl", "PHP", "Python", "Ruby", "Scala", "Scheme" ];
-	$( ".ac" ).autocomplete({
-	source: availableTags,
-	minLength: 0,
-	});	
-
 
 	$( ".acInventario" ).autocomplete({
 	source: '/gs3b/clases/general/arrayInventario.php',
 	minLength: 0,
 	});	
 
-	//===== jQuery file tree =====//
-	
-	$('.filetree').fileTree({
-        root: '../images/',
-        script: 'php/jqueryFileTree.php',
-        expandSpeed: 200,
-        collapseSpeed: 200,
-        multiFolder: true
-    }, function(file) {
-        alert(file);
-    });
-	
 	
 	//===== Sortable columns =====//
 	
@@ -175,37 +151,7 @@ $(function() {
 	$('.dropdown-toggle').dropdown();
 	
 	
-	//===== Animated progress bars (ID dependency) =====//
-	
-	var percent = $('#bar1').attr('title');
-	$('#bar1').animate({width: percent},1000);
-	
-	var percent = $('#bar2').attr('title');
-	$('#bar2').animate({width: percent},1000);
 
-	var percent = $('#bar3').attr('title');
-	$('#bar3').animate({width: percent},1000);
-
-	var percent = $('#bar4').attr('title');
-	$('#bar4').animate({width: percent},1000);
-
-	var percent = $('#bar5').attr('title');
-	$('#bar5').animate({width: percent},1000);
-
-	var percent = $('#bar6').attr('title');
-	$('#bar6').animate({width: percent},1000);
-	
-	var percent = $('#bar7').attr('title');
-	$('#bar7').animate({width: percent},1000);
-	
-	var percent = $('#bar8').attr('title');
-	$('#bar8').animate({width: percent},1000);
-	
-	var percent = $('#bar9').attr('title');
-	$('#bar9').animate({width: percent},1000);
-
-	var percent = $('#bar10').attr('title');
-	$('#bar10').animate({width: percent},1000);
 
 
 	//===== Fancybox =====//
@@ -214,25 +160,6 @@ $(function() {
 	'padding': 2
 	});
 	
-	
-	//===== Color picker =====//
-	
-	$('#cPicker').ColorPicker({
-		color: '#e62e90',
-		onShow: function (colpkr) {
-			$(colpkr).fadeIn(500);
-			return false;
-		},
-		onHide: function (colpkr) {
-			$(colpkr).fadeOut(500);
-			return false;
-		},
-		onChange: function (hsb, hex, rgb) {
-			$('#cPicker div').css('backgroundColor', '#' + hex);
-		}
-	});
-	
-	$('#flatPicker').ColorPicker({flat: true});
 
 
 	//===== Time picker =====//
@@ -387,94 +314,6 @@ $(function() {
 
 
 
-	//===== File uploader =====//
-	/*
-	$("#uploader").pluploadQueue({
-		runtimes : 'html5,html4',
-		url : 'php/upload.php',
-		max_file_size : '100kb',
-		unique_names : true,
-		filters : [
-			{title : "Image files", extensions : "jpg,jpeg,gif,png,PNG,JPG,JPEG"}
-		]
-	});
-	*/
-	
-	//===== Wizards =====//
-	
-	$("#wizard1").formwizard({
-		formPluginEnabled: true, 
-		validationEnabled: false,
-		focusFirstInput : false,
-		disableUIStyles : true,
-	
-		formOptions :{
-			success: function(data){$("#status1").fadeTo(500,1,function(){
-				$(this).html("<span>Form was submitted!</span>").fadeTo(5000, 0);
-			})},
-			beforeSubmit: function(data){$("#w1").html("<span>Form was submitted with ajax. Data sent to the server: " + $.param(data) + "</span>");},
-			resetForm: true
-		}
-	});
-	/*
-	$("#wizardp").formwizard({
-		formPluginEnabled: true, 
-		validationEnabled: true,
-		focusFirstInput : false,
-		disableUIStyles : false,
-	
-		formOptions :{
-			success: function(data){$("#status1").fadeTo(500,1,function(){
-				$(this).html("<span>Form was submitted!</span>").fadeTo(5000, 0);
-			})},
-			beforeSubmit: function(data){$("#w1").html("<span>Form was submitted with ajax. Data sent to the server: " + $.param(data) + "</span>");},
-			resetForm: true
-		},
-		validationOptions : {
-			rules: {
-				qbank: "required",
-				email: { required: true, email: true }
-			},
-			messages: {
-				qbank: "Error",
-				email: { required: "Please specify your email", email: "Correct format is name@domain.com" }
-			}
-		}
-	});
-	*/
-	
-	$("#wizard2").formwizard({ 
-		formPluginEnabled: true,
-		validationEnabled: true,
-		focusFirstInput : false,
-		disableUIStyles : true,
-	
-		formOptions :{
-			success: function(data){$("#status2").fadeTo(500,1,function(){ $(this).html("<span>Form was submitted!</span>").fadeTo(5000, 0); })},
-			beforeSubmit: function(data){$("#w2").html("<span>Form was submitted with ajax. Data sent to the server: " + $.param(data) + "</span>");},
-			dataType: 'json',
-			resetForm: true
-		},
-		validationOptions : {
-			rules: {
-				bazinga: "required",
-				email: { required: true, email: true }
-			},
-			messages: {
-				bazinga: "Bazinga. This note is editable",
-				email: { required: "Please specify your email", email: "Correct format is name@domain.com" }
-			}
-		}
-	});
-	
-	$("#wizard3").formwizard({
-		formPluginEnabled: false, 
-		validationEnabled: false,
-		focusFirstInput : false,
-		disableUIStyles : true
-	});
-	
-	
 	
 	//===== WYSIWYG editor =====//
 	
@@ -587,16 +426,7 @@ $(function() {
 	});
 	
 	
-	//===== Easy tabs =====//
-	//this is disabled becuase we are not using the tabs
-	/*
-	$('#tab-container').easytabs({
-		animationSpeed: 300,
-		collapsible: false,
-		tabActiveClass: "clicked"
-	});
-	*/
-	
+
 	
 	//===== Tabs =====//
 		
@@ -619,22 +449,6 @@ $(function() {
 	$("div[class^='widget']").contentTabs(); //Run function on any div with class name of "Content Tabs"
 
 
-	//===== Dynamic data table =====//
-	
-	
-
-	/*
-	oTable3 = $('.tablo').dataTable({
-		"bJQueryUI": false,
-		"bAutoWidth": true,
-		"bPaginate": false,
-		"sAjaxSource": "/gs3b/clases/student/tabla_pagos.php",
-		//no mostrar filtro de búsqueda
-		"bFilter": false,
-		//no mostrar cuenta de "entries"
-		"sDom": '<"top">rt<"bottom"flp><"clear">'
-	});
-	*/
 	
 	oTable2 = $('.dTable2').dataTable({
 		"bJQueryUI": false,
@@ -752,78 +566,7 @@ $(function() {
         
 	});
 
-/*
-	//==============EJEMPLO============//
 
-	var editor; // use a global for the submit and return data rendering in the examples
- 
-    // Create the form
-    editor = new $.fn.dataTable.Editor( {
-        "ajaxUrl": "/gs3b/clases/general/inventario.php",
-        "domTable": "#dTable2",
-        "fields": [ {
-                "label": "Nombre:",
-                "name": "name"
-            }, {
-                "label": "Descripcion:",
-                "name": "description"
-            }, {
-                "label": "Cantidad:",
-                "name": "cantidad"
-            }, {
-                "label": "Valor:",
-                "name": "valor"
-            }
-        ]
-    } );
- 
-    // New record
-    $('a.editor_create').on('click', function (e) {
-        e.preventDefault();
- 
-        editor.create(
-            'Create new record',
-            { "label": "Add", "fn": function () { editor.submit() } }
-        );
-    } );
- 
-    // Edit record
-    $('#dTable2').on('click', 'a.editor_edit', function (e) {
-        e.preventDefault();
- 
-        editor.edit(
-            $(this).parents('tr')[0],
-            'Edit record',
-            { "label": "Update", "fn": function () { editor.submit() } }
-        );
-    } );
- 
-    // Delete a record (without asking a user for confirmation)
-    $('#dTable2').on('click', 'a.editor_remove', function (e) {
-        e.preventDefault();
- 
-        editor.remove( $(this).parents('tr')[0], '123', false, false );
-        editor.submit();
-    } );
- 
-    // DataTables init
-    $('#dTable2').dataTable( {
-        "sDom": "Tfrtip",
-        "sAjaxSource": "/gs3b/clases/general/inventario.php",
-        "aoColumns": [
-            { "mData": "nombre" },
-            { "mData": "descripcion" },
-            { "mData": "cantidad" },
-            { "mData": "valor", "sClass": "center" },
-            {
-                "mData": null,
-                "sClass": "center",
-                "sDefaultContent": '<a href="" class="editor_edit">Edit</a> / <a href="" class="editor_remove">Delete</a>'
-            }
-        ]
-    } );
-*/
-	//==============EJEMPLO============//
 
 	//===== Dynamic table toolbars =====//		
 	
@@ -901,12 +644,6 @@ $(function() {
 	$('#breadcrumbs').xBreadcrumbs();
 	
 	
-		//===== Sparklines =====//
-	/*
-	$('.balBars').sparkline(
-	'html', {type: 'bar', barColor: '#db6464', height: '18px'}
-	 );
-	 */
 
 	//===== User nav dropdown =====//		
 	
@@ -928,60 +665,6 @@ $(function() {
 	$('.tipE').tipsy({gravity: 'e',fade: true, html:true});
 	
 	
-	
-
-	//alert("hola ");
-
-
-
-	//===== Spinner options =====//
-	
-	var itemList = [
-		{url: "http://ejohn.org", title: "John Resig"},
-		{url: "http://bassistance.de/", title: "J&ouml;rn Zaefferer"},
-		{url: "http://snook.ca/jonathan/", title: "Jonathan Snook"},
-		{url: "http://rdworth.org/", title: "Richard Worth"},
-		{url: "http://www.paulbakaus.com/", title: "Paul Bakaus"},
-		{url: "http://www.yehudakatz.com/", title: "Yehuda Katz"},
-		{url: "http://www.azarask.in/", title: "Aza Raskin"},
-		{url: "http://www.karlswedberg.com/", title: "Karl Swedberg"},
-		{url: "http://scottjehl.com/", title: "Scott Jehl"},
-		{url: "http://jdsharp.us/", title: "Jonathan Sharp"},
-		{url: "http://www.kevinhoyt.org/", title: "Kevin Hoyt"},
-		{url: "http://www.codylindley.com/", title: "Cody Lindley"},
-		{url: "http://malsup.com/jquery/", title: "Mike Alsup"}
-	];
-
-	var opts = {
-		's1': {decimals:2},
-		's2': {stepping: 0.25},
-		's3': {currency: '$'},
-		's4': {},
-		's5': {
-			//
-			// Two methods of adding external items to the spinner
-			//
-			// method 1: on initalisation call the add method directly and format html manually
-			init: function(e, ui) {
-				for (var i=0; i<itemList.length; i++) {
-					ui.add('<a href="'+ itemList[i].url +'" target="_blank">'+ itemList[i].title +'</a>');
-				}
-			},
-
-			// method 2: use the format and items options in combination
-			format: '<a href="%(url)" target="_blank">%(title)</a>',
-			items: itemList
-		}
-	};
-
-	for (var n in opts)
-		$("#"+n).spinner(opts[n]);
-
-	$("button").click(function(e){
-		var ns = $(this).attr('id').match(/(s\d)\-(\w+)$/);
-		if (ns != null)
-			$('#'+ns[1]).spinner( (ns[2] == 'create') ? opts[ns[1]] : ns[2]);
-	});
 	
 
 
@@ -1144,80 +827,6 @@ $(function() {
         $('#dialog-message').dialog('open');
         return false;
     });
-	
-	// Datepicker
-    $('.inlinedate').datepicker({
-        inline: true,
-		showOtherMonths:true
-    });
-	
-	$( ".datepicker" ).datepicker({ 
-		defaultDate: +7,
-		showOtherMonths:true,
-		autoSize: true,
-		appendText: '(dd-mm-yyyy)',
-		dateFormat: 'dd-mm-yy',
-		changeMonth: true,
-      	changeYear: true
-	});	
-	
-	$(function() {
-			var dates = $( "#fromDate, #toDate" ).datepicker({
-				defaultDate: "+1w",
-				changeMonth: false,
-				showOtherMonths:true,
-				numberOfMonths: 3,
-				onSelect: function( selectedDate ) {
-					var option = this.id == "fromDate" ? "minDate" : "maxDate",
-						instance = $( this ).data( "datepicker" ),
-						date = $.datepicker.parseDate(
-							instance.settings.dateFormat ||
-							$.datepicker._defaults.dateFormat,
-							selectedDate, instance.settings );
-					dates.not( this ).datepicker( "option", option, date );
-				}
-			});
-		});
-	
-	
-	$( ".uSlider" ).slider(); /* Usual slider */
-	
-	
-	$( ".uRange" ).slider({ /* Range slider */
-		range: true,
-		min: 0,
-		max: 500,
-		values: [ 75, 300 ],
-		slide: function( event, ui ) {
-			$( "#rangeAmount" ).val( "$" + ui.values[ 0 ] + " - $" + ui.values[ 1 ] );
-		}
-	});
-	$( "#rangeAmount" ).val( "$" + $( ".uRange" ).slider( "values", 0 ) +" - $" + $( ".uRange" ).slider( "values", 1 ));
-	
-
-	$( ".uMin" ).slider({ /* Slider with minimum */
-		range: "min",
-		value: 37,
-		min: 1,
-		max: 700,
-		slide: function( event, ui ) {
-			$( "#minRangeAmount" ).val( "$" + ui.value );
-		}
-	});
-	$( "#minRangeAmount" ).val( "$" + $( ".uMin" ).slider( "value" ) );
-
-
-	$( ".uMax" ).slider({ /* Slider with maximum */
-		range: "max",
-		min: 1,
-		max: 100,
-		value: 20,
-		slide: function( event, ui ) {
-			$( "#maxRangeAmount" ).val( ui.value );
-		}
-	});
-	$( "#maxRangeAmount" ).val( $( ".uMax" ).slider( "value" ) );	
-
 
 
 

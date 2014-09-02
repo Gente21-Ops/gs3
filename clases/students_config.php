@@ -49,7 +49,7 @@ include('../dict/students_config.php');
                     <br>
                     
                     <div id="container">
-                        <a href="#" class="buttonM bBlue" id="browse"><span class="icon-camera"></span><span><?php echo $texts['img_but_browse']; ?></span></a>
+                        <a href="#" class="buttonM bBlue" id="browser"><span class="icon-camera"></span><span><?php echo $texts['img_but_browse']; ?></span></a>
                     </div>
 
                     <pre id="console"></pre>

@@ -1,8 +1,6 @@
 
 
-<!--COM SCRIPTS-->
-<script type="text/javascript" src="msgserver/licode/extras/basic_example/public/erizo.js"></script>
-<script type="text/javascript" src="msgserver/licode/extras/basic_example/public/scripts1.js"></script>
+
 
 <!-- Secondary nav -->
     <div class="secNav">
@@ -147,3 +145,19 @@
        </div> 
        <div class="clear"></div>
    </div>
+
+
+
+   <!--COM SCRIPTS-->
+<script type="text/javascript" src="msgserver/licode/extras/basic_example/public/erizo.js"></script>
+<script type="text/javascript" src="msgserver/licode/extras/basic_example/public/scripts1.js"></script>
+
+<script>
+$( document ).ready(function() {
+    //===== NANO SCROLLER =====//
+    if ($(".nano")[0]){
+        $(".nano").nanoScroller();
+    }
+    //===== NANO SCROLLER =====//
+});
+</script>

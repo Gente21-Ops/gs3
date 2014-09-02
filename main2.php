@@ -19,6 +19,8 @@ include('dict/main.php');
 <!--[if IE]> <link href="css/ie.css" rel="stylesheet" type="text/css"> <![endif]-->
 
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js" type="text/javascript"></script>
+<script src="js/jquery-migrate-1.2.1.min.js" type="text/javascript"></script>
+
 <!--<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7/jquery.min.js"></script>-->
 <script type="text/javascript" src="js/plugins/forms/ui.spinner.js"></script>
 <script type="text/javascript" src="js/plugins/forms/jquery.mousewheel.js"></script> 
