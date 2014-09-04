@@ -5,7 +5,7 @@
 //DICCIONARIOS
 if($_SESSION['qlen'] == "es"){
     $texts = array(
-    "title" => "Alumnos", 
+    "title" => "Estadísticas", 
 	"tabletitle" => "Lista completa de alumnos",
 	"tableshow" => "Mostrar",
 	"col_apellidos" => "Apellidos",
@@ -28,11 +28,12 @@ if($_SESSION['qlen'] == "es"){
 	"f_direccion" => "Direcci&oacute;n",
 	"f_telefono" => "Tel&eacute;fono",
 	"f_email" => "Email",
-	"table_attendance" => "Asistencias por materia"
+	"table_attendance" => "Asistencias por materia",
+	"table_grades" => "Calificaciones por materia"
 	);
 } else if($_SESSION['qlen'] == "en"){
 	$texts = array(
-	"title" => "Students", 
+	"title" => "Statistics", 
 	"tabletitle" => "Complete student's list",
 	"tableshow" => "Show",
 	"col_apellidos" => "Last Name",
@@ -55,7 +56,8 @@ if($_SESSION['qlen'] == "es"){
 	"f_direccion" => "Address",
 	"f_telefono" => "Telephone number",
 	"f_email" => "Email",
-	"table_attendance" => "Attendance by subject"
+	"table_attendance" => "Attendance by subject",
+	"table_grades" => "Grades by subject"
 	);
 } else if($_SESSION['qlen'] == "fr"){
 	$texts = array(
