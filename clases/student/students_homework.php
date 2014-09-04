@@ -46,7 +46,6 @@ ORDER BY qmatname ASC, tareas.fechaEntrega ASC";
     $elid = 0;
     $elcode = '0';
 
-
     $output['aaData'] = [];
     while ($aRow = $sqlt->fetch_assoc()) {
         $row = array();
@@ -72,7 +71,6 @@ ORDER BY qmatname ASC, tareas.fechaEntrega ASC";
                 //si no pus solo el valor        
                 $row[] = $aRow[ $aColumns[$i] ];
             }
-
                         
         };
 

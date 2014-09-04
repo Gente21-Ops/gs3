@@ -52,8 +52,8 @@
         
         <div class="breadLinks">
             <ul>
-                <li><a href="#" title=""><i class="icos-list"></i><span>Tareas completadas</span> <strong>(+58)</strong></a></li>
-                <li><a href="#" title=""><i class="icos-check"></i><span>Tareas pendientes</span> <strong>(+12)</strong></a></li>
+                <li><a href="#" title=""><i class="icos-list"></i><span>Tareas completadas</span> <strong>(+<?php require_once('student/tareas_done_alumno.php'); ?>)</strong></a></li>
+                <li><a href="#" title=""><i class="icos-check"></i><span>Tareas pendientes</span> <strong>(+<?php require_once('student/tareas_alumno.php'); ?>)</strong></a></li>
                 <li class="has">
                     <a title="">
                         <i class="icos-money3"></i>
