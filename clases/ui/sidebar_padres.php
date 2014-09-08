@@ -39,13 +39,13 @@
         <!-- Main nav -->
         <ul class="nav" id="navo"> 
 
-            <li><a href="#" onclick="assignme('students_homework','content'); return false;" title="" class="linko"><img src="images/icons/mainnav/homework.png" alt="" /><span><?php echo $texts['tareas']; ?></span></a></li>
+            <li><a href="#" onclick="assignme('parents_homework','content'); return false;" title="" class="linko"><img src="images/icons/mainnav/homework.png" alt="" /><span><?php echo $texts['tareas']; ?></span></a></li>
 
             <li><a href="#" onclick="assignme('general_calendar','content'); return false;" title="" class="linko"><img src="images/icons/mainnav/calendar.png" alt="" /><span><?php echo $texts['calendario']; ?></span></a></li>
                         
-            <li><a href="#" onclick="assignme('students_data','content'); return false;" title="" class="linko"><img src="images/icons/mainnav/statistics.png" alt="" /><span><?php echo $texts['estadisticas']; ?></span></a></li>
+            <li><a href="#" onclick="assignme('parents_data','content'); return false;" title="" class="linko"><img src="images/icons/mainnav/statistics.png" alt="" /><span><?php echo $texts['estadisticas']; ?></span></a></li>
 
-            <li><a href="#" onclick="assignme('students_statistics','content'); return false;" title="" class="linko"><img src="images/icons/mainnav/admins.png" alt="" /><span><?php echo $texts['calificaciones']; ?></span></a></li>
+            <li><a href="#" onclick="assignme('parents_statistics','content'); return false;" title="" class="linko"><img src="images/icons/mainnav/admins.png" alt="" /><span><?php echo $texts['calificaciones']; ?></span></a></li>
 
                 
         </ul>

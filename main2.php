@@ -141,7 +141,7 @@ include('dict/main.php');
     } else if ($_SESSION['tipo'] == '3'){
         require_once('clases/ui/sidebar_admon.php');
     } else if ($_SESSION['tipo'] == '4'){
-        require_once('clases/ui/sidebar_padre.php');
+        require_once('clases/ui/sidebar_padres.php');
     } 
     
 ?>

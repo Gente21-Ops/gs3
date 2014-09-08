@@ -6,9 +6,10 @@
 if($_SESSION['qlen'] == "es"){
     $texts = array(
     "title" => "Datos del Alumno", 
-	"tabletitle_faltas" => "Faltas del parcial ",
-	"tabletitle_grades" => "Asistencias del parcial ",
+	"tabletitle_faltas" => "Asistencias del parcial ",
+	"tabletitle_grades" => "Calificaciones del parcial ",
 	"anotherday" => "Seleccionar otro parcial",
+	"anotherstudent" => "Seleccionar otro alumno",
 	"col_materia" => "Materia",
 	"col_calif" => "Calificación",
 	"col_faltas" => "Faltas",
@@ -31,6 +32,7 @@ if($_SESSION['qlen'] == "es"){
 	"tabletitle_faltas" => "Attendance of mid-term number ",
 	"tabletitle_grades" => "Grades of mid-term number ",
 	"anotherday" => "Select a different day",
+	"anotherstudent" => "Seleccionar otro alumno",
 	"col_materia" => "Subject",
 	"col_calif" => "Grade",
 	"col_faltas" => "Faltas",
