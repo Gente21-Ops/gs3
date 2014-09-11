@@ -39,6 +39,9 @@
         <!-- Main nav -->
         <ul class="nav" id="navo"> 
 
+                <li><a href="#" onclick="assignme('students_msgs','content'); return false;" class="active linko" title=""><img src="images/icons/mainnav/messages.png" alt="" /><span><?php echo $texts['mensajes']; ?></span></a></li>
+
+
             <li><a href="#" onclick="assignme('parents_homework','content'); return false;" title="" class="linko"><img src="images/icons/mainnav/homework.png" alt="" /><span><?php echo $texts['tareas']; ?></span></a></li>
 
             <li><a href="#" onclick="assignme('general_calendar','content'); return false;" title="" class="linko"><img src="images/icons/mainnav/calendar.png" alt="" /><span><?php echo $texts['calendario']; ?></span></a></li>
