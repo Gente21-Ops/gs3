@@ -52,7 +52,26 @@
         
         <div class="breadLinks">
             <ul>
-                <li><a href="#" title=""><i class="icos-list"></i><span>Tareas completadas</span> <strong>(+<?php require_once('student/tareas_done_alumno.php'); ?>)</strong></a></li>
+                <?php
+                    if($_SESSION['tipo'] == 2){
+                        echo '<li><a href="students_homework" title=""><i class="icos-list"></i><span>Tareas completadas</span> <strong>(+';
+                            require_once("student/tareas_done_alumno.php");
+                        echo ')</strong></a></li>';
+
+                        echo '<li><a href="students_homework" title=""><i class="icos-check"></i><span>Tareas pendientes</span> <strong>(+';
+                            require_once("student/tareas_alumno.php");
+                        echo ')</strong></a></li>';
+                    } else if($_SESSION['tipo'] == 4){
+                        echo '<li><a href="parents_homework" title=""><i class="icos-list"></i><span>Tareas completadas</span> <strong>(+';
+                            require_once("student/tareas_done_alumno.php");
+                        echo ')</strong></a></li>';
+
+                        echo '<li><a href="parents_homework" title=""><i class="icos-check"></i><span>Tareas pendientes</span> <strong>(+';
+                            require_once("student/tareas_alumno.php");
+                        echo ')</strong></a></li>';
+                    }
+                ?>
+                <!--<li><a href="#" title=""><i class="icos-list"></i><span>Tareas completadas</span> <strong>(+<?php require_once('student/tareas_done_alumno.php'); ?>)</strong></a></li>
                 <li><a href="#" title=""><i class="icos-check"></i><span>Tareas pendientes</span> <strong>(+<?php require_once('student/tareas_alumno.php'); ?>)</strong></a></li>
                 <li class="has">
                     <a title="">
@@ -65,7 +84,7 @@
                         <li><a href="#" title=""><span class="icos-archive"></span>History</a></li>
                         <li><a href="#" title=""><span class="icos-printer"></span>Print invoices</a></li>
                     </ul>
-                </li>
+                </li>-->
             </ul>
              <div class="clear"></div>
         </div>

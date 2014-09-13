@@ -12,11 +12,16 @@ require_once('../mysqlcon.php');
     //el id del alumno
 
     //VARS
-    $qgrupo = $_SESSION['qidgrupo'];
-    $qalumno = $_SESSION['idUsers'];
+    /*$qgrupo = $_SESSION['qidgrupo'];    */
+    $qalumno = $_GET['qestudiante'];
 
+    $elsql = "SELECT idGrupos FROM map_grupos WHERE idUsers = '".$qalumno."'";
 
-    $sql5 = "SELECT idEstudiante";
+    $sqlt = $con->query($elsql);
+    $row2 = $sqlt->fetch_assoc();
+
+    $qgrupo = $row2['idGrupos'];
+    //sql5 = "SELECT idEstudiante";
 
     //DICCIONARIO el diccionario de los botones va aquí (since I can't access the dict from here)
     if($_SESSION['qlen'] == "es"){

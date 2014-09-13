@@ -20,9 +20,12 @@ oTable = $('#dTable').dataTable({
 	"bAutoWidth": false,
 	"sPaginationType": "full_numbers",
 	"sDom": '<"H"fl>t<"F"ip>',
-	"sAjaxSource": 'clases/parent/parents_homework.php',
+	"sAjaxSource": 'clases/parent/parents_homework.php?qestudiante='+$('#qestudiante').text(),
 	"oLanguage": {
         "sUrl": qlen
+    },
+    "fnInitComplete": function(oSettings, json) {
+      $.unblockUI();
     },
 	"fnRowCallback": function( nRow, aData, iDisplayIndex, iDisplayIndexFull ) {
 		$(nRow).attr('id', aData[0]);
@@ -44,9 +47,6 @@ oTable = $('#dTable').dataTable({
     },
     {
     	sName: "qmatname"
-    },
-    {
-    	sName: "qstatus"
     }] 
 
 });
@@ -60,7 +60,7 @@ oTable = $('#dTable_done').dataTable({
 	"bAutoWidth": false,
 	"sPaginationType": "full_numbers",
 	"sDom": '<"H"fl>t<"F"ip>',
-	"sAjaxSource": 'clases/parent/parents_homework_done.php',
+	"sAjaxSource": 'clases/parent/parents_homework_done.php?qestudiante='+$('#qestudiante').text(),
 	"oLanguage": {
         "sUrl": qlen
     },
@@ -102,3 +102,9 @@ oTable = $('#dTable_done').dataTable({
 
 
 
+$( ".studentpicker" ).on('change', function (e) {
+    $.blockUI();
+    var optionSelected = $("option:selected", this);
+    var valueSelected = this.value;
+    assignme('parents_homework.php?qestudiante='+valueSelected,'content'); return false;
+});

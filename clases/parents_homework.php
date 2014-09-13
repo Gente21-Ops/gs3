@@ -1,7 +1,7 @@
 <?php
 error_reporting(E_ALL);
 include("logon.php");
-include('../dict/students_homework.php');
+include('../dict/parents_homework.php');
 
     ob_start();
     require_once('connection.php');
@@ -9,14 +9,26 @@ include('../dict/students_homework.php');
     mysql_query('SET NAMES "utf8"');
 
     //TOP
-    $breads = $texts['title'].'^students_homework';
+    $breads = $texts['title'].'^parents_homework';
     include('top.php');
+
+    if(!isset($_GET['qestudiante'])){
+        $result = mysqli_query($con,"SELECT idEstudiante FROM map_familiares WHERE idFamiliar = '".$_SESSION['idUsers']."'");
+        $row = mysqli_fetch_assoc($result);
+        $qestudiante = $row['idEstudiante'];
+    } else {
+        $qestudiante = $_GET['qestudiante'];
+    }
+
+    /////menu options "students"
+    $student = "";
+    $studentSel = "";
 ?>  
 
 <div id="deldialog" style="display:none;"><strong><?php echo $texts['deldialog']; ?></strong></div>
 <div id="deltitle" style="display:none;"><?php echo $texts['deltitle']; ?></div>
 <div id="qlango" style="display:none;"><?php echo $_SESSION['qlen']; ?></div>
-<div id="qlango" style="display:none;"><?php echo $_SESSION['qlen']; ?></div>
+<div id="qestudiante" style="display:none;"><?php echo $qestudiante; ?></div>
     
     <!-- Main content -->
     <div class="wrapper">
@@ -26,7 +38,40 @@ include('../dict/students_homework.php');
             
             <!-- Table with opened toolbar -->
             <div class="widget">
-                <div class="whead"><h6><?php echo $texts['tabletitle']; ?></h6><div class="clear"></div></div>
+                <div class="whead"><h6><?php echo $texts['tabletitle']; ?>
+                    <select class="studentpicker">
+                    <?php
+                        $result2 = mysqli_query($con,"SELECT 
+                                users.idUsers, 
+                                users.nombre, 
+                                users.apellidos, 
+                                map_familiares.idFamiliares 
+                                FROM users, map_familiares 
+                                WHERE users.codeEscuelas = '".$_SESSION['qescuelacode']."' 
+                                AND map_familiares.idEstudiante = users.idUsers 
+                                AND map_familiares.idFamiliar = ".$_SESSION['idUsers']);
+
+                        if(isset($_GET['qestudiante'])){
+                            while ($row3 = mysqli_fetch_array($result2)) {
+                                if($_GET['qestudiante'] == $row3['idUsers']){
+                                    $studentSel .= '<option selected value="'.$row3['idUsers'].'">'.$row3['nombre'].' '.$row3['apellidos'].'</option>';
+                                } else {
+                                    $studentSel .= '<option value="'.$row3['idUsers'].'">'.$row3['nombre'].' '.$row3['apellidos'].'</option>';
+                                }
+                            }
+                            echo $studentSel;
+                        } else {
+                            while ($row3 = mysqli_fetch_array($result2)) {
+                                $student .= '<option value="'.$row3['idUsers'].'">'.$row3['nombre'].' '.$row3['apellidos'].'</option>';
+                            }
+                            echo $student;
+                        }
+                    ?>
+                    </select>
+                </h6>
+                    
+                    <div class="clear"></div>
+                </div>
 
                 <div id="dyn2" class="shownpars">
 
@@ -38,7 +83,6 @@ include('../dict/students_homework.php');
                         <th><?php echo $texts['col_fecha']; ?></th>
                         <th><?php echo $texts['col_fechaentrega']; ?></th>
                         <th><?php echo $texts['col_materia']; ?></th>
-                        <th><?php echo $texts['col_correo']; ?></th>
                     </tr>
                     </thead>
                     <tbody>

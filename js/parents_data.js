@@ -4,7 +4,7 @@ console.log('Test 7738');
 //EDITABLE
 oTable = $('#dTable').dataTable({
 	"oLanguage": {
-        sEmptyTable:     "No hay información por el momento.",
+        sEmptyTable: "No hay información por el momento.",
         sZeroRecords: "No hay información por el momento."
     },
 	"bJQueryUI": false,
@@ -13,7 +13,10 @@ oTable = $('#dTable').dataTable({
 	"dom": 'Rlfrtip',
 	"bStateSave": true,
 	"sDom": '<"H"fl>t<"F"ip>',
-	"sAjaxSource": 'clases/student/parents_data_faltas.php?qparcial='+$('#qparcial').text(),
+	"sAjaxSource": 'clases/parent/parents_data_faltas.php?qparcial='+$('#qparcial').text()+'&qestudiante='+$('#qestudiante').text(),
+	"fnInitComplete": function(oSettings, json) {
+      $.unblockUI();
+    },
 	"fnRowCallback": function( nRow, aData, iDisplayIndex, iDisplayIndexFull ) {
 		$(nRow).attr('id', aData[0]);
 		return nRow;
@@ -44,7 +47,7 @@ oTable2 = $('#dTable2').dataTable({
 	"dom": 'Rlfrtip',
 	"bStateSave": true,
 	"sDom": '<"H"fl>t<"F"ip>',
-	"sAjaxSource": 'clases/student/parents_data_grades.php?qparcial='+$('#qparcial').text(),
+	"sAjaxSource": 'clases/parent/parents_data_grades.php?qparcial='+$('#qparcial').text()+'&qestudiante='+$('#qestudiante').text(),
 	"fnRowCallback": function( nRow, aData, iDisplayIndex, iDisplayIndexFull ) {
 		$(nRow).attr('id', aData[0]);
 		return nRow;
@@ -64,21 +67,25 @@ oTable2 = $('#dTable2').dataTable({
 });
 
 $( ".midtermpicker" ).on('change', function (e) {
-	//window.location.href = "index.php?date=" + this.value;
+	$.blockUI();
+
 	var optionSelected = $("option:selected", this);
     var valueSelected = this.value;
-	assignme('parents_data.php?qparcial='+valueSelected,'content'); return false;
+
+    var selects = document.getElementById("studentpicker");
+	var selectedValue = selects.options[selects.selectedIndex].value;
+
+	assignme('parents_data.php?qparcial='+valueSelected+'&qestudiante='+selectedValue,'content'); return false;
 });
 
 $( ".studentpicker" ).on('change', function (e) {
+	$.blockUI();
 
 	var selects = document.getElementById("midtermpicker");
-	var selectedValue = selects.options[selects.selectedIndex].value;// will gives u 2
-	//alert(selectedValue);
-	//window.location.href = "index.php?date=" + this.value;
+	var selectedValue = selects.options[selects.selectedIndex].value;
+
 	var optionSelected = $("option:selected", this);
     var valueSelected = this.value;
 
-
-	assignme('parents_data.php?qparcial='+valueSelected+'&qestudiante='+selectedValue,'content'); return false;
+	assignme('parents_data.php?qparcial='+selectedValue+'&qestudiante='+valueSelected,'content'); return false;
 });

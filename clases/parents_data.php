@@ -8,30 +8,39 @@ include('../dict/students_data.php');
 ob_start();
 require_once('mysqlcon.php');
 
-    (string)$arrayFam = "";
+    /*(string)$arrayFam = "";
     $sql4 = "SELECT idEstudiante, idFamiliar FROM map_familiares WHERE idFamiliar = '".$_SESSION['idUsers']."'";
     $result4 = mysqli_query($con,$sql4);
     while($row4 = mysqli_fetch_array($result4)){
         $arrayFam .= $row4['idEstudiante'].",";
     }
     $arrayFam = rtrim($arrayFam,",");
-    //echo $arrayFam;
+    //echo $arrayFam;*/
 
+    //agarrar nombre de parcial actual para título de tabla
     if(isset($_GET['qparcial'])){
         $sql = "SELECT idParciales, nombre FROM parciales WHERE codeEscuelas = '".$_SESSION['qescuelacode']."' AND idParciales = '".$_GET['qparcial']."'";
         $result = mysqli_query($con,$sql);
-        $row = mysqli_fetch_array($result, MYSQLI_ASSOC);
+        $row = mysqli_fetch_array($result);
 
         $qparcial = $_GET['qparcial'];
         $qparcial_nom = $row['nombre'];
     } else {
         $sql2 = "SELECT idParciales, nombre FROM parciales WHERE abierto = '1' AND codeEscuelas = '".$_SESSION['qescuelacode']."'";
         $result2 = mysqli_query($con,$sql2);
-        $row2 = mysqli_fetch_array($result2, MYSQLI_ASSOC);
+        $row2 = mysqli_fetch_array($result2);
 
         $qparcial = $row2['idParciales'];
         $qparcial_nom = $row2['nombre'];
     }
+
+    /////menu options "months"
+    $months = "";
+    $monthsSel = "";
+
+    /////menu options "students"
+    $student = "";
+    $studentSel = "";
 
     //TOP
     $breads = $texts['title'].'^parents_data';
@@ -46,13 +55,22 @@ require_once('mysqlcon.php');
         echo '<script src="http://jquery-ui.googlecode.com/svn/tags/latest/ui/i18n/jquery.ui.datepicker-en-GB.js"></script>';
     }
 
+    //agarrar idEstudiante para ponerlo en el DOM
+    if(!isset($_GET['qestudiante'])){
+        $result = mysqli_query($con,"SELECT idEstudiante FROM map_familiares WHERE idFamiliar = '".$_SESSION['idUsers']."'");
+        $row = mysqli_fetch_assoc($result);
+        $qestudiante = $row['idEstudiante'];
+    } else {
+        $qestudiante = $_GET['qestudiante'];
+    }
+
 ?>  
 
 <div id="t_present" style="display:none;"><?php echo $texts['col_asisok']; ?></div>
 <div id="t_notpresent" style="display:none;"><?php echo $texts['col_asisno']; ?></div>
 <div id="qlang" style="display:none;"><?php echo $_SESSION['qlen']; ?></div>
 <div id="qparcial" style="display:none;"><?php echo $qparcial; ?></div>
-
+<div id="qestudiante" style="display:none;"><?php echo $qestudiante; ?></div>
     
     <!-- Main content -->
     <div class="wrapper">
@@ -77,22 +95,25 @@ require_once('mysqlcon.php');
                         <div class="grid4"><?php echo $texts['anotherday']; ?>
                             <select id="midtermpicker" class="midtermpicker">
                             <?php
+                                $sql3 = "SELECT idParciales, nombre FROM parciales WHERE codeEscuelas = '".$_SESSION['qescuelacode']."'";
+                                $result3 = mysqli_query($con,$sql3);
                                 if(isset($_GET['qparcial'])){
-                                    $sql3 = "SELECT idParciales, nombre FROM parciales WHERE codeEscuelas = '".$_SESSION['qescuelacode']."'";
-                                    $result3 = mysqli_query($con,$sql3);
                                     while ($row3 = mysqli_fetch_array($result3, MYSQLI_ASSOC)) {
                                         if($_GET['qparcial'] == $row3['idParciales']){
-                                            echo '<option selected value="'.$row3['idParciales'].'">'.$row3['nombre'].'</option>';
+                                            $monthsSel .= '<option selected value="'.$row3['idParciales'].'">'.$row3['nombre'].'</option>';
                                         } else {
-                                            echo '<option value="'.$row3['idParciales'].'">'.$row3['nombre'].'</option>';
+                                            $monthsSel .= '<option value="'.$row3['idParciales'].'">'.$row3['nombre'].'</option>';
                                         }
                                     }
+                                    echo $monthsSel;
                                 } else {
-                                    $sql3 = "SELECT idParciales, nombre FROM parciales WHERE codeEscuelas = '".$_SESSION['qescuelacode']."'";
-                                    $result3 = mysqli_query($con,$sql3);
-                                    while ($row3 = mysqli_fetch_array($result3, MYSQLI_ASSOC)) {
+                                    /*while ($row3 = mysqli_fetch_array($result3, MYSQLI_ASSOC)) {
                                         echo '<option value="'.$row3['idParciales'].'">'.$row3['nombre'].'</option>';
+                                    }*/
+                                    while ($row3 = mysqli_fetch_array($result3, MYSQLI_ASSOC)) {
+                                        $months .= '<option value="'.$row3['idParciales'].'">'.$row3['nombre'].'</option>';
                                     }
+                                    echo $months;
                                 }
                             ?>
                             </select>
@@ -101,35 +122,30 @@ require_once('mysqlcon.php');
                         <div class="grid5"><?php echo $texts['anotherstudent']; ?>
                             <select id="studentpicker" class="studentpicker">
                             <?php
+                                $result2 = mysqli_query($con,"SELECT 
+                                        users.idUsers, 
+                                        users.nombre, 
+                                        users.apellidos, 
+                                        map_familiares.idFamiliares 
+                                        FROM users, map_familiares 
+                                        WHERE users.codeEscuelas = '".$_SESSION['qescuelacode']."' 
+                                        AND map_familiares.idEstudiante = users.idUsers 
+                                        AND map_familiares.idFamiliar = ".$_SESSION['idUsers']);
+
                                 if(isset($_GET['qestudiante'])){
-                                    $arrayFamiliar = explode(",",$arrayFam);
-                                    $i=0;
-                                    //echo $arrayFamiliar[1];
-                                    while($i < count($arrayFamiliar)){
-                                        $sql5 = "SELECT idUsers, nombre, apellidos FROM users WHERE codeEscuelas = '".$_SESSION['qescuelacode']."' 
-                                                AND idUsers = '".$arrayFamiliar[$i]."'";
-                                        $result5 = mysqli_query($con,$sql5);
-                                        while ($row5 = mysqli_fetch_array($result5, MYSQLI_ASSOC)) {
-                                            if($_GET['qestudiante'] == $row5['idUsers']){
-                                                echo '<option selected value="'.$row5['idUsers'].'">'.$row5['nombre'].' '.$row5['apellidos'].'</option>';
-                                            } else {
-                                                echo '<option value="'.$row5['idUsers'].'">'.$row5['nombre'].' '.$row5['apellidos'].'</option>';
-                                            }
+                                    while ($row3 = mysqli_fetch_array($result2)) {
+                                        if($_GET['qestudiante'] == $row3['idUsers']){
+                                            $studentSel .= '<option selected value="'.$row3['idUsers'].'">'.$row3['nombre'].' '.$row3['apellidos'].'</option>';
+                                        } else {
+                                            $studentSel .= '<option value="'.$row3['idUsers'].'">'.$row3['nombre'].' '.$row3['apellidos'].'</option>';
                                         }
                                     }
+                                    echo $studentSel;
                                 } else {
-                                    $arrayFamiliar = explode(",",$arrayFam);
-                                    $i=0;
-                                    //echo $arrayFamiliar[1];
-                                    while($i < count($arrayFamiliar)){
-                                        $sql5 = "SELECT idUsers, nombre, apellidos FROM users WHERE codeEscuelas = '".$_SESSION['qescuelacode']."' 
-                                                AND idUsers = '".$arrayFamiliar[$i]."'";
-                                        $result5 = mysqli_query($con,$sql5);
-                                        while ($row5 = mysqli_fetch_array($result5, MYSQLI_ASSOC)) {
-                                            echo '<option value="'.$row5['idUsers'].'">'.$row5['nombre'].' '.$row5['apellidos'].'</option>';
-                                        }
-                                        $i++;
+                                    while ($row3 = mysqli_fetch_array($result2)) {
+                                        $student .= '<option value="'.$row3['idUsers'].'">'.$row3['nombre'].' '.$row3['apellidos'].'</option>';
                                     }
+                                    echo $student;
                                 }
                             ?>
                             </select>
@@ -175,48 +191,24 @@ require_once('mysqlcon.php');
                             <select class="midtermpicker">
                             <?php
                                 if(isset($_GET['qparcial'])){
-                                    $sql3 = "SELECT idParciales, nombre FROM parciales WHERE codeEscuelas = '".$_SESSION['qescuelacode']."'";
-                                    $result3 = mysqli_query($con,$sql3);
-                                    while ($row3 = mysqli_fetch_array($result3, MYSQLI_ASSOC)) {
-                                        if($_GET['qparcial'] == $row3['idParciales']){
-                                            echo '<option selected value="'.$row3['idParciales'].'">'.$row3['nombre'].'</option>';
-                                        } else {
-                                            echo '<option value="'.$row3['idParciales'].'">'.$row3['nombre'].'</option>';
-                                        }
-                                    }
+                                    echo $monthsSel;
                                 } else {
-                                    $sql3 = "SELECT idParciales, nombre FROM parciales WHERE codeEscuelas = '".$_SESSION['qescuelacode']."'";
-                                    $result3 = mysqli_query($con,$sql3);
-                                    while ($row3 = mysqli_fetch_array($result3, MYSQLI_ASSOC)) {
-                                        echo '<option value="'.$row3['idParciales'].'">'.$row3['nombre'].'</option>';
-                                    }
+                                    echo $months;
                                 }
                             ?>
                             </select>
                         </div>
 
-                        <div class="grid4"><?php echo $texts['anotherstudent']; ?> &nbsp; 
+                        <div class="grid5"><?php echo $texts['anotherstudent']; ?> &nbsp; 
 
-                            <select class="midtermpicker">
-                            <?php
-                                if(isset($_GET['qparcial'])){
-                                    $sql3 = "SELECT idParciales, nombre FROM parciales WHERE codeEscuelas = '".$_SESSION['qescuelacode']."'";
-                                    $result3 = mysqli_query($con,$sql3);
-                                    while ($row3 = mysqli_fetch_array($result3, MYSQLI_ASSOC)) {
-                                        if($_GET['qparcial'] == $row3['idParciales']){
-                                            echo '<option selected value="'.$row3['idParciales'].'">'.$row3['nombre'].'</option>';
-                                        } else {
-                                            echo '<option value="'.$row3['idParciales'].'">'.$row3['nombre'].'</option>';
-                                        }
+                            <select class="studentpicker">
+                                <?php
+                                    if(isset($_GET['qestudiante'])){
+                                        echo $studentSel;
+                                    } else {
+                                        echo $student;
                                     }
-                                } else {
-                                    $sql3 = "SELECT idParciales, nombre FROM parciales WHERE codeEscuelas = '".$_SESSION['qescuelacode']."'";
-                                    $result3 = mysqli_query($con,$sql3);
-                                    while ($row3 = mysqli_fetch_array($result3, MYSQLI_ASSOC)) {
-                                        echo '<option value="'.$row3['idParciales'].'">'.$row3['nombre'].'</option>';
-                                    }
-                                }
-                            ?>
+                                ?>
                             </select>
                         </div>
                         

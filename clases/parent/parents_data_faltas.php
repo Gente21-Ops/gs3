@@ -12,7 +12,7 @@ $result7 = $con->query($elsql7);
 
 
 $elsql7 = "SELECT DISTINCT idMaterias AS qmaterias FROM faltas WHERE idCiclos = '".$_SESSION['qciclo']."'
-    AND idUsers = '2' AND idParciales = '".$_GET['qparcial']."'";
+    AND idUsers = '".$_GET['qestudiante']."' AND idParciales = '".$_GET['qparcial']."'";
 $result7 = $con->query($elsql7);
 
 
@@ -22,7 +22,7 @@ if($result7->num_rows === 0){
     
     while ($aRow7 = $result7->fetch_assoc()) { 
         $elsql8 = "SELECT COUNT(idMaterias) as total FROM faltas WHERE idCiclos = '".$_SESSION['qciclo']."'
-        AND idUsers = '2' AND idParciales = '".$_GET['qparcial']."' AND idMaterias = '".$aRow7['qmaterias']."'";
+        AND idUsers = '".$_GET['qestudiante']."' AND idParciales = '".$_GET['qparcial']."' AND idMaterias = '".$aRow7['qmaterias']."'";
         $result8 = $con->query($elsql8);
 
         $query9 = "SELECT idMaterias, nombre FROM materias WHERE idMaterias = '".$aRow7['qmaterias']."'";
