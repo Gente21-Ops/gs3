@@ -47,6 +47,9 @@ oTable2 = $('#dTable2').dataTable({
 	"dom": 'Rlfrtip',
 	"bStateSave": true,
 	"sDom": '<"H"fl>t<"F"ip>',
+	"fnInitComplete": function(oSettings, json) {
+      $.unblockUI();
+    },
 	"sAjaxSource": 'clases/parent/parents_data_grades.php?qparcial='+$('#qparcial').text()+'&qestudiante='+$('#qestudiante').text(),
 	"fnRowCallback": function( nRow, aData, iDisplayIndex, iDisplayIndexFull ) {
 		$(nRow).attr('id', aData[0]);

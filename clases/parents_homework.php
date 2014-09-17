@@ -83,6 +83,7 @@ include('../dict/parents_homework.php');
                         <th><?php echo $texts['col_fecha']; ?></th>
                         <th><?php echo $texts['col_fechaentrega']; ?></th>
                         <th><?php echo $texts['col_materia']; ?></th>
+                        <th><?php echo $texts['col_correo']; ?></th>
                     </tr>
                     </thead>
                     <tbody>

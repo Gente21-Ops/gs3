@@ -17,7 +17,7 @@ require_once('mysqlcon.php');
     $arrayFam = rtrim($arrayFam,",");
     //echo $arrayFam;*/
 
-    //agarrar nombre de parcial actual para título de tabla
+    //agarrar NOMBRE e ID de parcial para el DOM
     if(isset($_GET['qparcial'])){
         $sql = "SELECT idParciales, nombre FROM parciales WHERE codeEscuelas = '".$_SESSION['qescuelacode']."' AND idParciales = '".$_GET['qparcial']."'";
         $result = mysqli_query($con,$sql);
@@ -32,6 +32,15 @@ require_once('mysqlcon.php');
 
         $qparcial = $row2['idParciales'];
         $qparcial_nom = $row2['nombre'];
+    }
+
+    //agarrar idEstudiante para el DOM
+    if(!isset($_GET['qestudiante'])){
+        $result = mysqli_query($con,"SELECT idEstudiante FROM map_familiares WHERE idFamiliar = '".$_SESSION['idUsers']."'");
+        $row = mysqli_fetch_assoc($result);
+        $qestudiante = $row['idEstudiante'];
+    } else {
+        $qestudiante = $_GET['qestudiante'];
     }
 
     /////menu options "months"
@@ -53,15 +62,6 @@ require_once('mysqlcon.php');
         echo '<script src="http://jquery-ui.googlecode.com/svn/tags/latest/ui/i18n/jquery.ui.datepicker-fr.js"></script>';
     } else {
         echo '<script src="http://jquery-ui.googlecode.com/svn/tags/latest/ui/i18n/jquery.ui.datepicker-en-GB.js"></script>';
-    }
-
-    //agarrar idEstudiante para ponerlo en el DOM
-    if(!isset($_GET['qestudiante'])){
-        $result = mysqli_query($con,"SELECT idEstudiante FROM map_familiares WHERE idFamiliar = '".$_SESSION['idUsers']."'");
-        $row = mysqli_fetch_assoc($result);
-        $qestudiante = $row['idEstudiante'];
-    } else {
-        $qestudiante = $_GET['qestudiante'];
     }
 
 ?>  

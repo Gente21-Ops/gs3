@@ -1,10 +1,11 @@
 <?php
-//echo "SE<br>";
 include("../logon.php");
 require_once('../mysqlcon.php');
 
 error_reporting(E_ALL);
 ini_set('display_errors', '1');
+   
+$JsonArray = array();
 
 $sql2 = "SELECT COUNT(faltas.idMaterias) as total,  materias.nombre, materias.idMaterias 
 FROM materias, faltas 
@@ -17,19 +18,10 @@ ORDER BY faltas.fecha DESC";
 
 $result2 = $con->query($sql2);
 
-$output['aaData'] = [];
-
 while ($row2 = $result2->fetch_assoc()) { 
-
-        $chido = [];
-
-        $chido[] = $row2['idMaterias'];
-        $chido[] = $row2['nombre'];
-        $chido[] = $row2['total'];  
-       
-        $output['aaData'][] = $chido;
+    $JsonArray[] = array( $row2['nombre'], $row2['total'] );
 }
 
-echo json_encode( $output );
+echo json_encode( $JsonArray );
 
 ?>

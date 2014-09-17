@@ -47,7 +47,10 @@ oTable = $('#dTable').dataTable({
     },
     {
     	sName: "qmatname"
-    }] 
+    },
+    {
+        sName: "qstatus"
+    }]  
 
 });
 
