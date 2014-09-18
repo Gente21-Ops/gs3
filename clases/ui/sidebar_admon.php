@@ -3,7 +3,7 @@
 error_reporting(E_ALL); 
 ini_set( 'display_errors','1');
 
-include('dict/sidebar_alumno.php'); ?>
+include('dict/sidebar_admin.php'); ?>
 
 <!-- Sidebar begins -->
 <div id="sidebar">
@@ -55,22 +55,24 @@ include('dict/sidebar_alumno.php'); ?>
 
             <li><a href="#" onclick="assignme('admin_grupos','content'); return false;" title="" class="linko"><img src="images/icons/mainnav/groups.png" alt="" /><span>Grupos</span></a></li>
 
-            <li><a href="#" onclick="assignme('admin_alumnos','content'); return false;" title="" class="linko"><img src="images/icons/mainnav/students.png" alt="" /><span>Alumnos</span></a></li>
+            <li><a href="#" onclick="assignme('admin_students_a','content'); return false;" title="" class="linko"><img src="images/icons/mainnav/students.png" alt="" /><span><?php echo $texts['lista']; ?></span></a></li>
 
             <li><a href="#" onclick="assignme('general_calendar','content'); return false;" title="" class="linko"><img src="images/icons/mainnav/calendar.png" alt="" /><span><?php echo $texts['calendario']; ?></span></a></li>
             
             <li><a href="#" onclick="assignme('admin_materias','content'); return false;" title="Chido" class="linko"><img src="images/icons/mainnav/subjects.png" alt="" /><span>Materias</span></a></li>
             
-            <li><a href="#" onclick="assignme('admin_students_a','content'); return false;" title="" class="linko"><img src="images/icons/mainnav/statistics.png" alt="" /><span><?php echo $texts['estadisticas']; ?></span></a></li>
+            <!--<li><a href="#" onclick="assignme('admin_students_a','content'); return false;" title="" class="linko"><img src="images/icons/mainnav/statistics.png" alt="" /><span><?php echo $texts['estadisticas']; ?></span></a></li>-->
 
             <li><a href="#" onclick="assignme('admin_parents','content'); return false;" title="" class="linko"><img src="images/icons/mainnav/family.png" alt="" /><span>Familiares</span></a></li>
 
             <li><a href="#" onclick="assignme('admin_admon','content'); return false;" title="" class="linko"><img src="images/icons/mainnav/admins.png" alt="" /><span>Administrativos</span></a></li>
 
             <li><a href="#" onclick="assignme('admin_teachers','content'); return false;" title="" class="linko"><img src="images/icons/mainnav/professor.png" alt="" /><span>Profesores</span></a></li>
+            
+            <li><a href="#" onclick="assignme('admin_data','content'); return false;" title="" class="linko"><img src="images/icons/mainnav/statistics.png" alt="" /><span><?php echo $texts['statistics']; ?></span></a></li>
 
             <li><a href="#" onclick="assignme('students_config','content'); return false;" title="" class="linko"><img src="images/icons/mainnav/config.png" alt="" /><span><?php echo $texts['configuracion']; ?></span></a></li>            
-            
+
         </ul>
     </div>
     

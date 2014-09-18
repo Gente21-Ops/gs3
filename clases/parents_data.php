@@ -121,33 +121,33 @@ require_once('mysqlcon.php');
 
                         <div class="grid5"><?php echo $texts['anotherstudent']; ?>
                             <select id="studentpicker" class="studentpicker">
-                            <?php
-                                $result2 = mysqli_query($con,"SELECT 
-                                        users.idUsers, 
-                                        users.nombre, 
-                                        users.apellidos, 
-                                        map_familiares.idFamiliares 
-                                        FROM users, map_familiares 
-                                        WHERE users.codeEscuelas = '".$_SESSION['qescuelacode']."' 
-                                        AND map_familiares.idEstudiante = users.idUsers 
-                                        AND map_familiares.idFamiliar = ".$_SESSION['idUsers']);
+                                <?php
+                                    $result2 = mysqli_query($con,"SELECT 
+                                            users.idUsers, 
+                                            users.nombre, 
+                                            users.apellidos, 
+                                            map_familiares.idFamiliares 
+                                            FROM users, map_familiares 
+                                            WHERE users.codeEscuelas = '".$_SESSION['qescuelacode']."' 
+                                            AND map_familiares.idEstudiante = users.idUsers 
+                                            AND map_familiares.idFamiliar = ".$_SESSION['idUsers']);
 
-                                if(isset($_GET['qestudiante'])){
-                                    while ($row3 = mysqli_fetch_array($result2)) {
-                                        if($_GET['qestudiante'] == $row3['idUsers']){
-                                            $studentSel .= '<option selected value="'.$row3['idUsers'].'">'.$row3['nombre'].' '.$row3['apellidos'].'</option>';
-                                        } else {
-                                            $studentSel .= '<option value="'.$row3['idUsers'].'">'.$row3['nombre'].' '.$row3['apellidos'].'</option>';
+                                    if(isset($_GET['qestudiante'])){
+                                        while ($row3 = mysqli_fetch_array($result2)) {
+                                            if($_GET['qestudiante'] == $row3['idUsers']){
+                                                $studentSel .= '<option selected value="'.$row3['idUsers'].'">'.$row3['nombre'].' '.$row3['apellidos'].'</option>';
+                                            } else {
+                                                $studentSel .= '<option value="'.$row3['idUsers'].'">'.$row3['nombre'].' '.$row3['apellidos'].'</option>';
+                                            }
                                         }
+                                        echo $studentSel;
+                                    } else {
+                                        while ($row3 = mysqli_fetch_array($result2)) {
+                                            $student .= '<option value="'.$row3['idUsers'].'">'.$row3['nombre'].' '.$row3['apellidos'].'</option>';
+                                        }
+                                        echo $student;
                                     }
-                                    echo $studentSel;
-                                } else {
-                                    while ($row3 = mysqli_fetch_array($result2)) {
-                                        $student .= '<option value="'.$row3['idUsers'].'">'.$row3['nombre'].' '.$row3['apellidos'].'</option>';
-                                    }
-                                    echo $student;
-                                }
-                            ?>
+                                ?>
                             </select>
                         </div>
                         
