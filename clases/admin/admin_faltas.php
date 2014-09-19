@@ -6,14 +6,14 @@ require_once('../mysqlcon.php');
 error_reporting(E_ALL);
 ini_set('display_errors', '1');
 
-$sql = "SELECT materias.idMaterias, materias.nombre, calificaciones.calificacion 
-FROM materias, calificaciones 
-WHERE calificaciones.idCiclos = '".$_SESSION['qciclo']."' 
-AND calificaciones.idUsers = '".$_GET['qestudiante']."'  
-AND calificaciones.idParciales = '".$_GET['qparcial']."'  
-AND materias.idMaterias = calificaciones.idMaterias
-GROUP BY materias.nombre
-ORDER BY calificaciones.calificacion DESC";
+$sql = "SELECT COUNT(faltas.idMaterias) as total,  materias.nombre, materias.idMaterias 
+FROM materias, faltas 
+WHERE faltas.idCiclos = '".$_SESSION['qciclo']."' 
+AND faltas.idUsers = '".$_GET['qestudiante']."'  
+AND faltas.idParciales = '".$_GET['qparcial']."'  
+AND materias.idMaterias = faltas.idMaterias 
+GROUP BY materias.nombre 
+ORDER BY faltas.fecha DESC";
 
 $result = $con->query($sql);
 
@@ -25,7 +25,7 @@ while ($row = $result->fetch_assoc()) {
 
     $chido[] = $row['idMaterias'];
     $chido[] = $row['nombre'];
-    $chido[] = $row['calificacion'];  
+    $chido[] = $row['total'];  
    
     $output['aaData'][] = $chido;
 }

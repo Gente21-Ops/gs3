@@ -4,7 +4,7 @@ error_reporting(E_ALL);
 ini_set('display_errors', '1');
 
 include("logon.php");
-include('../dict/students_data.php');
+include('../dict/admin_data.php');
 ob_start();
 require_once('mysqlcon.php');
 
@@ -17,31 +17,32 @@ if(isset($_GET['qparcial'])){
     $qparcial = $_GET['qparcial'];
     $qparcial_nom = $row['nombre'];
 } else {
-    $qparcial = "";
-    $qparcial_nom = "";
+    $sql = "SELECT idParciales, nombre FROM parciales WHERE codeEscuelas = '".$_SESSION['qescuelacode']."'";
+    $result = mysqli_query($con,$sql);
+    $row = mysqli_fetch_array($result);
+
+    $qparcial = $row['idParciales'];
+    $qparcial_nom = $row['nombre'];
 }
 
 //agarrar idEstudiante para el DOM
 if(!isset($_GET['qestudiante'])){
     $qestudiante = "";
 } else {
+    $sql2 = "SELECT nombre, apellidos FROM users WHERE codeEscuelas = '".$_SESSION['qescuelacode']."' AND idUsers = '".$_GET['qestudiante']."'";
+    $result2 = mysqli_query($con,$sql2);
+    $row2 = mysqli_fetch_array($result2);
+
     $qestudiante = $_GET['qestudiante'];
+    $qestudiante_nom = $row2['nombre']." ".$row2['apellidos'];
 }
 
 /////menu options "months"
 $months = "";
 $monthsSel = "";
 
-/////menu options "students"
-$student = "";
-$studentSel = "";
-
-/////menu options "grupos"
-$grupos = "";
-$gruposSel = "";
-
 //TOP
-$breads = $texts['title'].'^admin_grades';
+$breads = $texts['title'].'^admin_faltas';
 include('top.php');
 
 //locales para calendario
@@ -60,7 +61,7 @@ if ($_SESSION['qlen'] == 'es'){
 <div id="qlang" style="display:none;"><?php echo $_SESSION['qlen']; ?></div>
 <div id="qparcial" style="display:none;"><?php echo $qparcial; ?></div>
 <div id="qestudiante" style="display:none;"><?php echo $qestudiante; ?></div>
-    
+
     <!-- Main content -->
     <div class="wrapper">
     
@@ -71,7 +72,7 @@ if ($_SESSION['qlen'] == 'es'){
             <div class="widget">
                 <div class="whead">
                     <h6>
-                        <?php echo $texts['tabletitle_grades']." ".$qparcial_nom; ?>
+                        <?php echo $texts['tabletitle_faltas']." ".$qparcial_nom." ".$texts['tabletitle_grades2']." ".$qestudiante_nom; ?>
                     </h6>
                     <h6 style="float:right; margin-right:33px;"></h6>
 
@@ -80,31 +81,6 @@ if ($_SESSION['qlen'] == 'es'){
 
                 <div id="dyn2" class="shownpars">
                     <div class="formRow">
-
-                        <div class="grid3"><?php echo $texts['anotherday']; ?>
-                            <select id="grouppicker" class="grouppicker">
-                                <?php
-                                    $sql4 = "SELECT idGrupos, nombre FROM grupos WHERE codeEscuelas = '".$_SESSION['qescuelacode']."'";
-                                    $result4 = mysqli_query($con,$sql4);
-                                    if(isset($_GET['qparcial'])){
-                                        while ($row4 = mysqli_fetch_array($result4, MYSQLI_ASSOC)) {
-                                            if($_GET['qparcial'] == $row4['idParciales']){
-                                                $grupoSel .= '<option selected value="'.$row4['idGrupos'].'">'.$row4['nombre'].'</option>';
-                                            } else {
-                                                $grupoSel .= '<option value="'.$row4['idGrupos'].'">'.$row4['nombre'].'</option>';
-                                            }
-                                        }
-                                        echo $grupoSel;
-                                    } else {
-                                        echo '<option value=""></option>';
-                                        while ($row4 = mysqli_fetch_array($result4, MYSQLI_ASSOC)) {
-                                            $grupo .= '<option value="'.$row4['idGrupos'].'">'.$row4['nombre'].'</option>';
-                                        }
-                                        echo $grupo;
-                                    }
-                                ?>
-                            </select>
-                        </div>
 
                         <div class="grid4"><?php echo $texts['anotherday']; ?>
                             <select id="midtermpicker" class="midtermpicker">
@@ -121,37 +97,10 @@ if ($_SESSION['qlen'] == 'es'){
                                     }
                                     echo $monthsSel;
                                 } else {
-                                    echo '<option value=""></option>';
                                     while ($row3 = mysqli_fetch_array($result3, MYSQLI_ASSOC)) {
                                         $months .= '<option value="'.$row3['idParciales'].'">'.$row3['nombre'].'</option>';
                                     }
                                     echo $months;
-                                }
-                            ?>
-                            </select>
-                        </div>
-
-                        <div class="grid5"><?php echo $texts['anotherstudent']; ?>
-                            <select id="studentpicker" class="studentpicker">
-                            <?php
-                                $result2 = mysqli_query($con,"SELECT idUsers, nombre, apellidos FROM users 
-                                        WHERE codeEscuelas = '".$_SESSION['qescuelacode']."' AND tipo = 2");
-
-                                if(isset($_GET['qestudiante'])){
-                                    while ($row3 = mysqli_fetch_array($result2)) {
-                                        if($_GET['qestudiante'] == $row3['idUsers']){
-                                            $studentSel .= '<option selected value="'.$row3['idUsers'].'">'.$row3['nombre'].' '.$row3['apellidos'].'</option>';
-                                        } else {
-                                            $studentSel .= '<option value="'.$row3['idUsers'].'">'.$row3['nombre'].' '.$row3['apellidos'].'</option>';
-                                        }
-                                    }
-                                    echo $studentSel;
-                                } else {
-                                    echo '<option value=""></option>';
-                                    while ($row3 = mysqli_fetch_array($result2)) {
-                                        $student .= '<option value="'.$row3['idUsers'].'">'.$row3['nombre'].' '.$row3['apellidos'].'</option>';
-                                    }
-                                    echo $student;
                                 }
                             ?>
                             </select>
@@ -167,7 +116,7 @@ if ($_SESSION['qlen'] == 'es'){
                     <tr>
                         <th>ID</th>
                         <th><?php echo $texts['col_materia']; ?></th>
-                        <th><?php echo $texts['col_calif']; ?></th>
+                        <th><?php echo $texts['col_faltas']; ?></th>
                     </tr>
                     </thead>
                     </table> 

@@ -35,41 +35,13 @@ oTable2 = $('#dTable2').dataTable({
 
 });
 
-$( ".grouppicker" ).on('change', function (e) {
-	$.blockUI();
-
-	var optionSelected = $("option:selected", this);
-    var valueSelected = this.value;
-
-	assignme('parents_data.php?qgrupo='+valueSelected+'&qestudiante='+selectedValue,'content'); return false;
-});
-
 $( ".midtermpicker" ).on('change', function (e) {
 	$.blockUI();
 
 	var optionSelected = $("option:selected", this);
     var valueSelected = this.value;
 
-    var selects = document.getElementById("studentpicker");
-	var selectedValue = selects.options[selects.selectedIndex].value;
-
-	var selects2 = document.getElementById("grouppicker");
-	var selectedValue2 = selects.options[selects.selectedIndex].value;
-
-	assignme('parents_data.php?qgrupo='+selectedValue2+'&qparcial='+valueSelected+'&qestudiante='+selectedValue,'content'); return false;
+	assignme('admin_grades.php?qparcial='+valueSelected+'&qestudiante='+$('#qestudiante').text(),'content'); return false;
 });
 
-$( ".studentpicker" ).on('change', function (e) {
-	$.blockUI();
 
-	var selects2 = document.getElementById("grouppicker");
-	var selectedValue2 = selects.options[selects.selectedIndex].value;
-
-	var selects = document.getElementById("midtermpicker");
-	var selectedValue = selects.options[selects.selectedIndex].value;
-
-	var optionSelected = $("option:selected", this);
-    var valueSelected = this.value;
-
-	assignme('parents_data.php?qgrupo='+selectedValue2+'&qparcial='+selectedValue+'&qestudiante='+valueSelected,'content'); return false;
-});

@@ -67,7 +67,7 @@ if ($_SESSION['qlen'] == 'es'){
             <div class="widget">
                 <div class="whead">
                     <h6>
-                        <?php echo $texts['tabletitle_group']." ".$row['idGrupos']; ?>
+                        <?php echo $texts['tabletitle_group']." ".$row['nombre']; ?>
                     </h6>
                     <h6 style="float:right; margin-right:33px;"></h6>
 
@@ -109,7 +109,7 @@ if ($_SESSION['qlen'] == 'es'){
                         <th>ID</th>
                         <th><?php echo $texts['col_nombre']; ?></th>
                         <th><?php echo $texts['col_apellido']; ?></th>
-                        <th>Calificaciones</th>
+                        <th style="width:43%">Calificaciones</th>
                     </tr>
                     </thead>
                     <tbody>
