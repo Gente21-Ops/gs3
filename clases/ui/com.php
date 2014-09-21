@@ -147,9 +147,9 @@
 
 
 
-   <!--COM SCRIPTS-->
-<script type="text/javascript" src="msgserver/licode1/extras/basic_example/public/erizo.js"></script>
-<script type="text/javascript" src="msgserver/licode1/extras/basic_example/public/scripts1.js"></script>
+<!--COM SCRIPTS-->
+<script type="text/javascript" src="msgserver/licode2/extras/basic_example/public/erizo.js"></script>
+<script type="text/javascript" src="msgserver/licode2/extras/basic_example/public/scripts1.js"></script> 
 
 <script>
 $( document ).ready(function() {

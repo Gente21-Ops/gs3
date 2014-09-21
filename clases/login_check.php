@@ -78,12 +78,14 @@
         $_SESSION['qstream'] = $row['qstream'];
         $_SESSION['qtimezone'] = $row['qtimezone'];
         
-        $json_string = $row['qfriends'];
+        /*$json_string = $row['qfriends'];
         
         $farray = array();
         $parsed_json = json_decode($json_string, true);
         foreach($parsed_json as $key => $value){ $farray[$key] = $value; }
         $_SESSION['qfriends'] = $farray;        
+        */
+        $_SESSION['qfriends'] = json_encode($row['qfriends']);
 
         if ((int)$_SESSION['tipo'] == 1){ $_SESSION['tipofol'] = "teacher"; } 
         else if ((int)$_SESSION['tipo'] == 2) { $_SESSION['tipofol'] = "student"; } 

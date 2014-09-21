@@ -40,7 +40,7 @@ app.use(function (req, res, next) {
 
 N.API.init(config.nuve.superserviceID, config.nuve.superserviceKey, 'http://localhost:3000/');
 
-var myRoom;
+var myRoom = '';
 
 N.API.getRooms(function (roomlist) {
     "use strict";
@@ -50,7 +50,7 @@ N.API.getRooms(function (roomlist) {
         N.API.createRoom('myRoom', function (roomID) {
             myRoom = roomID._id;
             console.log('Created room ', myRoom);
-        });
+        }, errorCallback, {p2p: true});
     } else {
         myRoom = rooms[0]._id;
         console.log('Using room ', myRoom);

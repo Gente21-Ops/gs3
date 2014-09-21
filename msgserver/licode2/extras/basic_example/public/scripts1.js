@@ -114,9 +114,7 @@ function emoji(qstr){
 
 
 
-window.onload = function () {  
-    
-    
+window.onload = function () { 
 
     //list of connected friends starts
     function conectedfriends(){
@@ -147,7 +145,6 @@ window.onload = function () {
         }
         console.log('Creating friend\'s list');
         $('#myfirends').html(salida);
-        
     }
     //list of connected friends ends
 
@@ -155,6 +152,8 @@ window.onload = function () {
     function getfriends(){
         console.log('>> getting list of friends...');
         $.post( "clases/ui/getfriends.php", function( data ) {
+            console.log('>>Amigos 0:');
+            console.log(data);
             //I get my own data first:
             var who = data.split('^');
             whoiam = who[0];
@@ -166,10 +165,16 @@ window.onload = function () {
             for (var h = 0; h < friends.length; h++){
                 into = [];
                 into = friends[h].split('|');
+                console.log('>>Amigos 1:');
+                console.log(into);
                 var frodos = new Array();
                 frodos[0] = into[0];
                 frodos[1] = into[1];
+                frodos[2] = into[2];
+                frodos[3] = into[3];
                 myfriends[h] = frodos;
+                console.log('>>Amigos 2:');
+                console.log(myfriends);
             }
 
             //IF INIT
@@ -184,13 +189,20 @@ window.onload = function () {
     if (first == 0){ getfriends();  }
 
     //RUNME STARTS
-    function runme(){
+    function runme(){ 
     
-        console.log('Initializing COM client, hello I am ID: '+whoiam);
+        console.log('Initializing COM client at 632, hello I am ID: '+whoiam);
 
+        recording = false;
         var screen = getParameterByName("screen");
-    	localStream = Erizo.Stream({audio: false, video: false, data: true, screen: screen, attributes: {name:whatsmyname,role:whatsmyrole,who:whoiam}});
-
+        var config = {audio: false, video: false, data: true, screen: screen, videoSize: [640, 480, 640, 480]};
+        // If we want screen sharing we have to put our Chrome extension id. The default one only works in our Lynckia test servers.
+        // If we are not using chrome, the creation of the stream will fail regardless.
+        if (screen){
+            config.extensionId = "okeephmleflklcdebijnponpabbmmgeo";
+        }
+        localStream = Erizo.Stream(config);
+        
         var createToken = function(userName, role, callback) {
 
             var req = new XMLHttpRequest();
@@ -199,9 +211,7 @@ window.onload = function () {
 
             req.onreadystatechange = function () {
                 if (req.readyState === 4) {
-                    
                     callback(req.responseText);
-                    console.log('TOKEN CREATED: '+req.responseText);
                 }
             };
 
@@ -210,19 +220,18 @@ window.onload = function () {
             req.send(JSON.stringify(body));
         };
 
-        
-        //createToken("user", "role", function (response) { 
-        createToken(whatsmyname, whatsmyrole, function (response) {
+           
+        createToken("user", "presenter", function (response) {
             var token = response;
-            //var token = myroom;            
             room = Erizo.Room({token: token});
-            //my room 
-            var marrom = room.roomID;
 
-            console.log('EL TOKEN: '+token);
+            console.log('>>TOKEN: '+token);
+            console.log('>>ROOM ID: '+String(room.roomID));
+            console.log(room);
+            console.log('>>-------------------------------------------------');
 
             localStream.addEventListener("access-accepted", function () {
-
+                console.log('>> Access accepted!');
                 var subscribeToStreams = function (streams) {
                     for (var index in streams) {
                         var stream = streams[index];
@@ -233,38 +242,33 @@ window.onload = function () {
                 };
 
                 room.addEventListener("room-connected", function (roomEvent) {
-
+                    console.log('>> Connected to room!');
+                    console.log(roomEvent.streams)
+                    //room.publish(localStream, {maxVideoBW: 300});
                     room.publish(localStream);
                     subscribeToStreams(roomEvent.streams);
                 });
 
                 room.addEventListener("stream-subscribed", function(streamEvent) {
-                    
                     var stream = streamEvent.stream;
+                    console.log('>> Stream suscribed!');
+                    
                     var div = document.createElement('div');
                     div.setAttribute("style", "width: 320px; height: 240px;");
                     div.setAttribute("id", "test" + stream.getID());
 
-                    //I recignize myself:
-                    whoiamid = localStream.getID();
+                    document.body.appendChild(div);
+                    stream.show("test" + stream.getID());
                     
 
-                    console.log('REMOTE STREAM ID: '+stream.getID()+'\nLOCAL STREAM:'+localStream.getID()+'\nI AM '+whoiam+' (ON GS3)  AND ID:'+whoiamid+'\nMY ROOM ID IS:'+marrom);
+                    //I recognize myself:
+                    whoiamid = localStream.getID();
+                    console.log('REMOTE STREAM ID: '+stream.getID()+'\nLOCAL STREAM:'+localStream.getID()
+                        +'\nI AM '+whoiam+' (ON GS3)  AND ID:'+whoiamid);
 
                     //streams list (all users in the room)
                     var lostreams = room.remoteStreams;
-
-                    //get data from all streams
-                    function getStreamData(streamos){
-                        for(var index in streamos) {
-                            console.log(index + " STREAM DATA:");
-                            for(var index1 in streamos[index].getAttributes()) {
-                                //print the info console
-                                console.log(" - "+index1 + " : " + streamos[index].getAttributes()[index1]);
-                            }
-                        }
-                    }
-                    getStreamData(lostreams);
+                    console.log(room.remoteStreams);
 
                     //MSG PROCESSING FUNCTION STARTS
                     stream.addEventListener("stream-data", function(evt){
@@ -284,7 +288,7 @@ window.onload = function () {
                                 }
                             }
                             
-                            //state = evt.msg.qstate;
+                            state = evt.msg.qstate;
                             conectedfriends();
                         } else if (evt.msg.qtype == 1){
                             //console.log('- THIS IS A MSG TO ALL LISTENERS');
@@ -329,19 +333,18 @@ window.onload = function () {
                         
                     });
                     //MSG PROCESSING FUNCTION ENDS
-                  
+                    
+                });
 
-                });            
-               
                 room.addEventListener("stream-added", function (streamEvent) {
+                    console.log('>> Stream Added!');
                     var streams = [];
                     streams.push(streamEvent.stream);
                     subscribeToStreams(streams);
-                    //I identify myself the first time (in order to appear on chat window)
-                    broadcast(0,whoiamid,whoiam,0,whatsmyname,'Inscribeme',state);
                 });
 
                 room.addEventListener("stream-removed", function (streamEvent) {
+                    console.log('>> Stream Removed!');                
                     // Remove stream from DOM
                     var stream = streamEvent.stream;
                     if (stream.elementID !== undefined) {
@@ -350,18 +353,19 @@ window.onload = function () {
                     }
                 });
 
-                //CONSTRUCTOR
                 room.connect();
-                //localStream.show("myVideo");
 
+                /*--------------------OTHER FUNCTIONS STARTS-------------------*/
                 function broadcast(type,mychatid,mygsid,towho,clearname,data,mystate){
                     //FORMAT: data|type|id|gsid|towhom
+                    //console.log('Broadcasting clearname: '+clearname);
+                    /*-----POR AHORA ENVIA LOPS MENSAJES SOLO A TODOS LOS USUARIOS!!!!----*/
                     localStream.sendData({qtype:type,qdata:data,qid:mychatid,qgsid:mygsid,qwho:towho,qname:clearname,qstate:mystate});
                 }
 
                 function msg(qmsg){
                     //when sending a message do I really need to get the friends again?
-                    /*getfriends();*/
+                    getfriends();
     
                     //$('#content').html('<br><strong><span style="font-size:50px">MESSAGE ON OWN WINDOW</span></strong>');
 
@@ -383,7 +387,6 @@ window.onload = function () {
                         msg($('#qinput').val()); 
                     }                    
                 });
-
                 //===== TIMER STARTS =====//    
                 //Increment the idle time counter every minute.
                 var idleInterval = setInterval(timerIncrement, idleseconds); // 1 minute
@@ -412,17 +415,14 @@ window.onload = function () {
                     //console.log('oooooooooooooo TIMER: '+idleTime+ ' - MY STATE: '+state);
                 }
                 //===== TIMER ENDS =====//
+                /*--------------------OTHER FUCNTIONS ENDS---------------------*/
 
-                
+                //localStream.show("myVideo");
 
             });
-            
-            //CONSTRUCTORS
-            localStream.init();
-            
         
+        localStream.init();
         });
-    
 
     //RUNME ENDS
     }

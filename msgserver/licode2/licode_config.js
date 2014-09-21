@@ -4,7 +4,7 @@ var config = {}
  COMMON CONFIGURATION
  It's used by Nuve, ErizoController, ErizoAgent and ErizoJS
 **********************************************************/
-config.rabbit = {}; 
+config.rabbit = {};
 config.rabbit.host = 'localhost'; //default value: 'localhost'
 config.rabbit.port = 5672; //default value: 5672
 config.logger = {};

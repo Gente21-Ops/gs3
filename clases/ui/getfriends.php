@@ -2,8 +2,11 @@
     require_once('../connection.php');
     session_start();
 
-    $namelen = 17;
+    //$namelen = 17;
+    echo json_decode($_SESSION['qfriends'], true);
 
+
+    /*
     $sal = $_SESSION['code']."^";
     foreach ($_SESSION['qfriends'] as $key => $value){
     	if (strlen($value['name']) > $namelen){
