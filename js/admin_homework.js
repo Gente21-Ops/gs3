@@ -20,7 +20,7 @@ oTable = $('#dTable').dataTable({
 	"bAutoWidth": false,
 	"sPaginationType": "full_numbers",
 	"sDom": '<"H"fl>t<"F"ip>',
-	"sAjaxSource": 'clases/parent/admin_homework.php?qestudiante='+$('#qestudiante').text(),
+	"sAjaxSource": 'clases/admin/admin_homework.php?qestudiante='+$('#qestudiante').text(),
 	"oLanguage": {
         "sUrl": qlen
     },
@@ -63,7 +63,7 @@ oTable = $('#dTable_done').dataTable({
 	"bAutoWidth": false,
 	"sPaginationType": "full_numbers",
 	"sDom": '<"H"fl>t<"F"ip>',
-	"sAjaxSource": 'clases/parent/admin_homework_done.php?qestudiante='+$('#qestudiante').text(),
+	"sAjaxSource": 'clases/admin/admin_homework_done.php?qestudiante='+$('#qestudiante').text(),
 	"oLanguage": {
         "sUrl": qlen
     },
