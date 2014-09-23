@@ -2,7 +2,7 @@
 var serverUrl = "http://107.22.250.130:3001/";
 var localStream, room;
 
-var myfriends = new Array();
+var myfriends = {};
 
 //WHO AM I 
 //whoiam is the code for the user
@@ -149,39 +149,12 @@ window.onload = function () {
     //list of connected friends ends
 
     //we get friend's list from server
-    function getfriends(){
+    function getfriends(){ 
         console.log('>> getting list of friends...');
         $.post( "clases/ui/getfriends.php", function( data ) {
-            console.log('>>Amigos 0:');
-            console.log(data);
-            //I get my own data first:
-            var who = data.split('^');
-            whoiam = who[0];
-            whatsmyname = who[3];
-            whatsmyrole = who[4];
-            //alert(whoiam);
-            var friends = who[1].split('~');
-            var into = new Array();
-            for (var h = 0; h < friends.length; h++){
-                into = [];
-                into = friends[h].split('|');
-                console.log('>>Amigos 1:');
-                console.log(into);
-                var frodos = new Array();
-                frodos[0] = into[0];
-                frodos[1] = into[1];
-                frodos[2] = into[2];
-                frodos[3] = into[3];
-                myfriends[h] = frodos;
-                console.log('>>Amigos 2:');
-                console.log(myfriends);
-            }
-
-            //IF INIT
-            if (first == 0){ first = 1; runme(); }
-            
-            //MY SCHOOL
-            myroom = who[2];
+            //new json format
+            myfriends = JSON.parse(data);
+            console.log(myfriends);
         });
     }
 
@@ -278,6 +251,7 @@ window.onload = function () {
                         //2 => simple message broacast to a single listener
                         
                         //console.log('MESSAGE HAS BEEN TRANSMITTED, qtype:'+evt.msg.qtype+' qid:'+evt.msg.qid+' qgsid:'+evt.msg.qgsid+' data:'+evt.msg.qdata+' qstate:'+evt.msg.qstate);
+                        //el mensaje de sincronización solo sirve para ver si existo
                         if (evt.msg.qtype == 0){
                             //console.log('- THIS IS A SYNCRONIZATION MSG');
                             //we look for the friend into the friends array:
