@@ -45,9 +45,9 @@ while ($row = $result->fetch_assoc()) {
     $chido[] = $row['idUsers'];
     $chido[] = $row['nombre'];
     $chido[] = $row['apellidos'];
-    $chido[] = '<a href="#" onclick="assignme(\'admin_grades?qestudiante='.$row['idUsers'].'\',\'content\'); return false;" class="buttonM bGreen"><span class="icon-thumbs-up-2"></span><span>Calificaciones</span></a>
+    $chido[] = '<a href="#" onclick="assignme(\'admin_grades?qestudiante='.$row['idUsers'].'\',\'content\'); return false;" class="buttonM bGreen"><span class="icon-bars"></span><span>Calificaciones</span></a>
     			<a href="#" onclick="assignme(\'admin_faltas?qestudiante='.$row['idUsers'].'\',\'content\'); return false;" class="buttonM bGreen"><span class="icon-thumbs-up-2"></span><span>Faltas</span></a>
-    			<a href="#" onclick="assignme(\'admin_homework?qestudiante='.$row['idUsers'].'\',\'content\'); return false;" class="buttonM bGreen"><span class="icon-thumbs-up-2"></span><span>Tareas</span></a>';
+    			<a href="#" onclick="assignme(\'admin_homework?qestudiante='.$row['idUsers'].'\',\'content\'); return false;" class="buttonM bGreen"><span class="icon-cog"></span><span>Tareas</span></a>';
     $output['aaData'][] = $chido;
 }
 
