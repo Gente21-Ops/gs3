@@ -138,8 +138,7 @@
                 -->
             </div>
             
-            <div class="divider"><span></span></div>                      
-   
+            <div class="divider"><span></span></div> 
             
        </div> 
        <div class="clear"></div>
@@ -149,7 +148,7 @@
 
 <!--COM SCRIPTS-->
 <script type="text/javascript" src="msgserver/licode2/extras/basic_example/public/erizo.js"></script>
-<script type="text/javascript" src="msgserver/licode2/extras/basic_example/public/scripts1.js"></script> 
+<script type="text/javascript" src="msgserver/licode2/extras/basic_example/public/scripts1_631.js?<?php echo(rand(1,100000)); ?>"></script> 
 
 <script>
 $( document ).ready(function() {

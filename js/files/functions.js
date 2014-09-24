@@ -1,10 +1,11 @@
+//global namespace declaration
+var GL = {};
+
+GL.userdata = {};
 
 //global function for simple loading
 function assignme(url,target){
-	//console.log('TRYING TO LOAD FROM ASSIGNME..1125... (URL: '+url+')');
-
 	var cach = Math.floor(Math.random()*8000);
-
 	//let's check if url has params (cache killer goes at the end)
 	var newurl = '';
 	var pars = url.split('?');
@@ -14,18 +15,14 @@ function assignme(url,target){
 	} else {
 		newurl = url + '?c='+cach;
 	}
-
-	$( "#"+target ).load('clases/'+newurl, function(response, status, xhr) {	
-
+	$( "#"+target ).load('clases/'+newurl, function(response, status, xhr) {
 		//exit
 		if (xhr.status == '302'){
 			window.location = "main2.php"
 		}
-
 		//console.log('LOAD STATUS: ' + xhr.status + " " + xhr.statusText)
 		// Update the title and content.
 		var pageData = url.split('.')[0];
-
 		// Create a new history item.
 		history.pushState(pageData, 'TITULILLO', newurl);
 
@@ -39,7 +36,6 @@ function assignme(url,target){
 }
 
 window.addEventListener("popstate", function(e) {
-	
 	//we get the last part
 	var urlo = location.pathname.split('/');
 	console.log('TRYING TO RELOAD FROM: '+urlo[urlo.length - 1]);
@@ -58,13 +54,63 @@ function removeactive(url){
 $(function() {
 
 	//======INIT==============//
-	assignme('students_msgs','content');
+	assignme('students_msgs','content');  
 
-	//------KEYPRESS LISTENER--//
-	console.log('COMAN OSTIONES!!!');    
+	//------------------------GLOBAL ERROR OUTPUT
+	GL.consol = function(msg){
+		if ( window.console && window.console.log ) {
+			console.log(msg);
+		} else {
+			//alert(msg);
+		}
+	}
 
-	
+	//------------------------GETTER/SETTER
+	GL.getter = function(url,params,datatype,callback){
+		GL.consol('Trying to get data from '+url+' with request parameters:');
+		GL.consol(params);
+		$.ajax({
+			url: url,
+			type: 'POST',
+			data: params,
+			async: true,
+			dataType: datatype,
+			success: function(ladata){
+				GL.consol('Returned info:');
+				GL.consol(ladata);
+				callback(ladata);
+			},
+			error: function(xhr, status, error) {
+			  var err = xhr.responseText;
+			  GL.consol(err.Message+' | '+url+' | ');
+			  //GL.consol('ERROR: '+err);
+			  callback(err);
+			}
+		});
+	}
 
+	//------------------------RANDOM NUMBER GENERATOR
+	GL.rando = function(num){
+		return Math.floor(Math.random() * num) + 1;
+	}
+
+	//------------------------GLOBAL USER DATA
+	//I would like to know who am I, thank you very much
+    GL.getter('clases/ui/getmyadata.php',{},'json',returnData);
+    function returnData(param) {
+    	GL.userdata = param;
+    }
+
+    //------------------------TIMESTAMP
+	GL.now = function(num){
+		return Date.now();
+	}
+
+    //-----------------------TODAY'S DATE
+	GL.today = function(num){
+		var d = new Date(), month = d.getMonth()+1, day = d.getDate();
+    	return d.getFullYear()+'/'+(month<10 ? '0' : '')+month+'/'+(day<10 ? '0' : '')+day;
+	}
 
     //----- USER HOVER --------//
   // $("#elusero").tipsy({html: true, gravity: $.fn.tipsy.autoNS });
@@ -852,6 +898,10 @@ $(function() {
 	
 	$("select, .check, .check :checkbox, input:radio, input:file").uniform();
 
+
+/*
+
+*/
 	
 });
 

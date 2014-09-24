@@ -2,22 +2,25 @@
 var serverUrl = "http://107.22.250.130:3001/";
 var localStream, room;
 
-var myfriends = {};
-
 //WHO AM I 
 //whoiam is the code for the user
-var whoiam = "no one";
+var whoiam = GL.userdata.coder;
 //whoiamid is the code from the chat
 var whoiamid = 0;
 var whatsmyname = "";
 var whatsmyrole = 1;
 var myroom = "any school";
 var first = 0;
+var myfriends = {};
 
 //timer vars, state: 1 active, 0 idle
 var idleTime = 0;
 var state = 1;
 var idleseconds = 300000;
+
+//CONNECTED STATUSES
+var c_status = ['status_off', 'status_available', 'status_away'];
+var mystatus = 0;
 
 //emojis
 var emoticons = {
@@ -48,9 +51,15 @@ var emoticons = {
         ";)":"Wink.png",
         ";=)":"Gasp.png",
         ":-O":"Gasp.png",
-        ":=o":"Gasp.png"
+        ":=o":"Gasp.png",
+        ";P":"Crazy.png",
+        "(crazy)":"Crazy.png",
+        "($)":"Money-Mouth.png",
+        "(money)":"Money-Mouth.png",
+        "=B":"Nerd.png",
+        ":B":"Nerd.png",
+        "(nerd)":"Nerd.png"
       }
-
 
 //TIMESTAMP
 function mytime(){
@@ -112,59 +121,64 @@ function emoji(qstr){
     });
 }
 
-
-
-window.onload = function () { 
+window.onload = function () {
 
     //list of connected friends starts
-    function conectedfriends(){
+    function conectedfriends(connectedness){
         //ok so we're gonna create a li per connected friend
         var salida = "";
-        for (var mf=0; mf < myfriends.length; mf++){
-
-            var elstate = 'status_available';
-            if (myfriends[mf][3] == 0){
-                elstate = 'status_away';
-            } else if (myfriends[mf][3] != "undefined" || myfriends[mf][3] == 1){
-                elstate = 'status_available';
-            }
-            console.log('Friend ('+myfriends[mf][0]+') state: '+myfriends[mf][3]);
-
-            //if the peer is connected we show him
-            if (String(myfriends[mf][2]) != "undefined"){
-                salida += "<li id='li_"+myfriends[mf][0]+"' peer='li_"+myfriends[mf][2]+"'><a href='#' title=''><img src='images/users/37/"+myfriends[mf][0]+".jpg' alt='' />"
+        $.each( myfriends, function( key, value ) {
+            salida += "<li id='li_"+value.id+"'><a href='#' title=''><img src='images/users/37/"+value.id+".jpg' alt='' />"
                 +"<span class='contactName'>"
-                +"<strong>"+myfriends[mf][1]+" <span>(5)</span></strong>"
-                +"<i>web &amp; ui designer</i>"
+                +"<strong>"+value.name+" <span></span></strong>"
+                //+"<strong>"+value.name+" <span>(5)</span></strong>"
+                //+"<i>web &amp; ui designer</i>"
+                +"<i>GS user (more data)</i>"
                 +"</span>"
-                +"<span class='"+elstate+"'></span>"
+                +"<span class='status_off' id='lis_"+value.id+"'></span>"
                 +"<span class='clear'></span>"
                 +"</a>"
                 +"</li >";
-            }
-        }
-        console.log('Creating friend\'s list');
+        });        
+        console.log('recreating friend\'s list with data:');
+        GL.consol(myfriends);
         $('#myfirends').html(salida);
-    }
+    } 
     //list of connected friends ends
 
+    //change friend status
+    function changefstat(qid,status){
+        var qtime = GL.now();
+        GL.consol('User '+qid+' Wants to switch his status to:'+status+' at:'+qtime);
+        //cambio su status en la lista de amigos
+        var result = $.grep(myfriends, function(e){ return e.id == qid; });
+        GL.consol(result);
+        //cambio el color
+        $('#lis_'+qid).attr("class",c_status[status]);       
+    }
+
     //we get friend's list from server
-    function getfriends(){ 
-        console.log('>> getting list of friends...');
+    function getfriends(){        
+        console.log('>> getting list of friends at '+GL.now());
         $.post( "clases/ui/getfriends.php", function( data ) {
             //new json format
             myfriends = JSON.parse(data);
             console.log(myfriends);
+            conectedfriends();
         });
+        if (first == 0){
+            runme();
+            first = 1;
+        }
     }
 
     //INIT
-    if (first == 0){ getfriends();  }
+    if (first == 0){ getfriends(); };
 
     //RUNME STARTS
     function runme(){ 
     
-        console.log('Initializing COM client at 632, hello I am ID: '+whoiam);
+        console.log('Initializing COM client at 632');
 
         recording = false;
         var screen = getParameterByName("screen");
@@ -204,7 +218,6 @@ window.onload = function () {
             console.log('>>-------------------------------------------------');
 
             localStream.addEventListener("access-accepted", function () {
-                console.log('>> Access accepted!');
                 var subscribeToStreams = function (streams) {
                     for (var index in streams) {
                         var stream = streams[index];
@@ -215,9 +228,6 @@ window.onload = function () {
                 };
 
                 room.addEventListener("room-connected", function (roomEvent) {
-                    console.log('>> Connected to room!');
-                    console.log(roomEvent.streams)
-                    //room.publish(localStream, {maxVideoBW: 300});
                     room.publish(localStream);
                     subscribeToStreams(roomEvent.streams);
                 });
@@ -237,14 +247,46 @@ window.onload = function () {
                     //I recognize myself:
                     whoiamid = localStream.getID();
                     console.log('REMOTE STREAM ID: '+stream.getID()+'\nLOCAL STREAM:'+localStream.getID()
-                        +'\nI AM '+whoiam+' (ON GS3)  AND ID:'+whoiamid);
+                        +'\nI AM '+GL.userdata.coder+' (ON GS3)  AND ID:'+whoiamid); 
 
                     //streams list (all users in the room)
                     var lostreams = room.remoteStreams;
                     console.log(room.remoteStreams);
 
+                    /*---------------START UP SYNC MSG---------------*/
+                    //I identify myself
+                    broadcast(0,whoiamid,GL.userdata.coder,0,whatsmyname,'',state);
+
+                    /*--------------------OTHER FUNCTIONS STARTS-------------------*/
+                    function broadcast(type,mychatid,mygsid,towho,clearname,data,mystate){
+                        localStream.sendData({
+                            qtype:type,
+                            qdata:data,
+                            qid:mychatid,
+                            qgsid:mygsid,
+                            qwho:towho,
+                            qname:clearname,
+                            qstate:mystate
+                        });
+                    }
+
+                    function msg(qmsg){
+                        //when sending a message do I really need to get the friends again?
+                        //getfriends();                  
+
+                        //envio el mensaje a mi propia ventana desde fuera de los listeners de otr forma la acción se realiza en el otro usuario
+                        localmsg($('#qinput').val());
+                        //send message
+                        broadcast(1,whoiamid,whoiam,0,whatsmyname,qmsg,state);
+
+                        //clear the area
+                        $('textarea#qinput').val('');
+                        //console.log('Pasa mensaje: '+qmsg);
+                    }
+
                     //MSG PROCESSING FUNCTION STARTS
                     stream.addEventListener("stream-data", function(evt){
+                        console.log('Se ha recibido un mensaje del tipo:'+evt.msg.qtype);
                         //FORMAT: data|type|id|gsid|towhom
                         //0 => syncronization message
                         //1 => simple message to all listeners
@@ -253,17 +295,27 @@ window.onload = function () {
                         //console.log('MESSAGE HAS BEEN TRANSMITTED, qtype:'+evt.msg.qtype+' qid:'+evt.msg.qid+' qgsid:'+evt.msg.qgsid+' data:'+evt.msg.qdata+' qstate:'+evt.msg.qstate);
                         //el mensaje de sincronización solo sirve para ver si existo
                         if (evt.msg.qtype == 0){
-                            //console.log('- THIS IS A SYNCRONIZATION MSG');
+                            console.log('- THIS IS A SYNCRONIZATION MSG FROM: '+evt.msg.qgsid+' CURRENT USER:'+GL.userdata.coder);
+
+                            //change user's status to connected
+                            //if it's not me who's sending the message then I take action
+                            if (evt.msg.qgsid != GL.userdata.coder){
+                                changefstat(evt.msg.qgsid,1);
+                            }                            
+
                             //we look for the friend into the friends array:
+                            /*
                             for (var hh = 0; hh < myfriends.length; hh++){
                                 if (myfriends[hh][0] == evt.msg.qgsid){
                                     myfriends[hh][2] = whoiamid;
                                     myfriends[hh][3] = evt.msg.qstate;
                                 }
                             }
-                            
+                            */
+                            /*
                             state = evt.msg.qstate;
                             conectedfriends();
+                            */
                         } else if (evt.msg.qtype == 1){
                             //console.log('- THIS IS A MSG TO ALL LISTENERS');
                             //document.getElementById("sound").innerHTML="<embed src='noerro.mp3' hidden=true autostart=true loop=false>";                          
@@ -329,32 +381,9 @@ window.onload = function () {
 
                 room.connect();
 
-                /*--------------------OTHER FUNCTIONS STARTS-------------------*/
-                function broadcast(type,mychatid,mygsid,towho,clearname,data,mystate){
-                    //FORMAT: data|type|id|gsid|towhom
-                    //console.log('Broadcasting clearname: '+clearname);
-                    /*-----POR AHORA ENVIA LOPS MENSAJES SOLO A TODOS LOS USUARIOS!!!!----*/
-                    localStream.sendData({qtype:type,qdata:data,qid:mychatid,qgsid:mygsid,qwho:towho,qname:clearname,qstate:mystate});
-                }
+                
 
-                function msg(qmsg){
-                    //when sending a message do I really need to get the friends again?
-                    getfriends();
-    
-                    //$('#content').html('<br><strong><span style="font-size:50px">MESSAGE ON OWN WINDOW</span></strong>');
-
-                    //I identify myself
-                    broadcast(0,whoiamid,whoiam,0,whatsmyname,'Inscribeme',state);
-
-                    //envio el mensaje a mi propia ventana desde fuera de los listeners de otr forma la acción se realiza en el otro usuario
-                    localmsg($('#qinput').val());
-                    //send message
-                    broadcast(1,whoiamid,whoiam,0,whatsmyname,qmsg,state);
-
-                    //clear the area
-                    $('textarea#qinput').val('');
-                    //console.log('Pasa mensaje: '+qmsg);
-                }
+                
 
                 $("#elbutto").click(function() {
                     if ($('#qinput').val().length > 1){

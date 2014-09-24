@@ -68,7 +68,7 @@ include('dict/main.php');
 
 <script type="text/javascript" src="js/plugins/ui/jquery.easytabs.min.js"></script>
 <script type="text/javascript" src="js/files/bootstrap.js"></script>
-<script type="text/javascript" src="js/files/functions.js?se=<?php echo rand(10,100); ?>"></script>
+<script type="text/javascript" src="js/files/functions.js?<?php echo rand(10,100); ?>"></script>
 
 <!-- EDITABLE -->
 <script type="text/javascript" src="js/plugins/tables/jquery.dataTables.js"></script>
