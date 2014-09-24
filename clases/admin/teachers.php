@@ -14,6 +14,8 @@ require_once('../mysqlcon.php');
 
     //echo $elsql;
     $sqlt = $con->query($elsql); 
+
+    $output['aaData'] = [];
    
     while ($row = $sqlt->fetch_assoc()) {
         /*$row = array();
@@ -30,7 +32,9 @@ require_once('../mysqlcon.php');
         $chido[] = $row['direccion'];
         $chido[] = $row['telefono'];
         $chido[] = $row['e_mail'];
-
+        $chido[] = '<a href="#" onclick="assignme(\'admin_teachers_subjects?qmaestro='.$row['idUsers'].'\',\'content\'); return false;" class="buttonM bGreen">
+                    <span class="icon-bars"></span><span>Materias</span></a>';
+    
         $output['aaData'][] = $chido;
     }
 

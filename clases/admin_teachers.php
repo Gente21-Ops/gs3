@@ -39,6 +39,7 @@ include('../dict/admin/teachers.php');
                     <th><?php echo $texts['col_dir']; ?></th>
                     <th><?php echo $texts['col_telefono']; ?></th>
                     <th><?php echo $texts['col_correo']; ?></th>
+                    <th><?php echo $texts['col_but']; ?></th>
                 </tr>
                 </thead>
                 <tbody>
