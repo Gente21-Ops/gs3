@@ -41,6 +41,9 @@ oTable = $('.dTable').dataTable({
     },
     {
         sName: "e_mail"
+    },
+    {
+        sName: "buts"
     }] 
 
 

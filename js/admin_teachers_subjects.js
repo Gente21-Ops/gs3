@@ -12,42 +12,32 @@ if ($('#qlango').text() == 'es'){
 
 //EDITABLE
 oTable = $('.dTable').dataTable({
-	
+	"oLanguage": {
+        sEmptyTable:     "No hay información por el momento.",
+        sZeroRecords: "No hay información por el momento."
+    },
 	"bJQueryUI": false,
 	"bAutoWidth": false,
 	"sPaginationType": "full_numbers",
 	"sDom": '<"H"fl>t<"F"ip>',
-	"sAjaxSource": 'clases/admin/teachers.php',
+	"sAjaxSource": 'clases/admin/teachers_subjects.php?qmaestro='+$('#qmaestro').text(),
 	"fnRowCallback": function( nRow, aData, iDisplayIndex, iDisplayIndexFull ) {
 		$(nRow).attr('id', aData[0]);
 		return nRow;
 	},
 	aoColumns: [{
-        sName: "idUsers",
+        sName: "idMaterias",
         bSearchable: false,
         bVisible: false
     },
     {
-        sName: "apellidos"
-    },
-    {
-        sName: "nombre"
-    },  
-    {
-        sName: "telefono"
-    },
-    {
-        sName: "e_mail"
-    },
-    {
-        sName: "direccion"
+        sName: "materias"
     }] 
 
 
 }).makeEditable({
-    sUpdateURL: "clases/admin/teachers_update.php",
-    sAddURL: "clases/admin/teachers_add.php",
-    sDeleteURL: "clases/admin/teachers_delete.php"
+    sAddURL: "clases/admin/teachers_subjects_add.php",
+    sDeleteURL: "clases/admin/teachers_subjects_delete.php"
 });
 
 
