@@ -6,6 +6,7 @@
 if($_SESSION['qlen'] == "es"){
     $texts = array(
     "title" => "Materias", 
+    "materia" => "Materia",
 	"tabletitle" => "Lista completa de materias",
 	"tableshow" => "Mostrar",
 	"col_apellidos" => "Apellidos",
@@ -20,6 +21,7 @@ if($_SESSION['qlen'] == "es"){
 	"tabletitlePar" => "Lista completa de Parciales",
 	"tableshow" => "Mostrar",
 	"col_nombre" => "Nombre(s)",
+	"col_nivel" => "Nivel",
 	"col_descripcion" => "Descripcion",
 	"col_abierto" => "Abierto",
 	"col_limite_pago" => "Limite de pago",
@@ -34,10 +36,12 @@ if($_SESSION['qlen'] == "es"){
 } else if($_SESSION['qlen'] == "en"){
 	$texts = array(
 	"title" => "subjects", 
+	"materia" => "Subject",
 	"tabletitle" => "Complete subjects list",
 	"tableshow" => "Show",
 	"col_apellidos" => "Last Name",
 	"col_nombre" => "Name(s)",
+	"col_nivel" => "Level",
 	"table_mostrando" => "Showing",
 	"table_de" => "of",
 	"table_al" => "to",

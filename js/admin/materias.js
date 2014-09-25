@@ -21,6 +21,9 @@ $(window).on("load", function(){
         },
         {
         	sName: "nombre"
+        },
+        {
+        	sName: "idNiveles"
         }] 
 
 	}).makeEditable({

@@ -14,10 +14,10 @@ session_start();
   */
  
   //calculate user's code
-  $elcode = md5($_REQUEST['nombre'].$_REQUEST['apellidos']);
+  //$elcode = md5($_REQUEST['nombre'].$_REQUEST['apellidos']);
    
   //$stmt = $mysqli->stmt_init();
-  $sql="INSERT INTO materias (nombre) VALUES ('".mysql_real_escape_string($_REQUEST['nombre'])."')";
+  $sql="INSERT INTO materias (nombre, idNiveles) VALUES ('".mysql_real_escape_string($_REQUEST['nombre'])."','".mysql_real_escape_string($_REQUEST['nivel'])."')";
 
   if (!mysqli_query($con,$sql)){
     die('Error: ' . mysqli_error($con));
