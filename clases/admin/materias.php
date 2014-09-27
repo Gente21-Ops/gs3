@@ -1,6 +1,6 @@
 <?php
 
-//include("../logon.php");
+include("../logon.php");
 require_once('../mysqlcon.php');
 //este es un hack relativo a windows:
 //require_once('general/number_format.php');
@@ -12,9 +12,14 @@ require_once('../mysqlcon.php');
     
     $elsql = "SELECT materias.idMaterias as qid, 
     materias.nombre as qnom_materia, 
-    niveles.nombre as qnom_nivel 
-    FROM materias, niveles 
-    WHERE materias.idNiveles = niveles.idNiveles";
+    niveles.nombre as qnom_nivel, 
+    users.nombre as qnombre,
+    users.apellidos as qapellidos 
+    FROM materias, niveles, profesores_mapeo_materias, users 
+    WHERE materias.idNiveles = niveles.idNiveles 
+    AND materias.idMaterias = profesores_mapeo_materias.idMaterias 
+    AND niveles.codeEscuelas = '".$_SESSION['qescuelacode']."' 
+    AND profesores_mapeo_materias.idUsers = users.idUsers";
 
     //echo $elsql;
     $sqlt = $con->query($elsql); 
@@ -33,6 +38,7 @@ require_once('../mysqlcon.php');
         $chido[] = $row['qid'];
         $chido[] = $row['qnom_materia'];
         $chido[] = $row['qnom_nivel'];
+        $chido[] = $row['qnombre']." ".$row['qapellidos'];
 
         $output['aaData'][] = $chido;
     }
