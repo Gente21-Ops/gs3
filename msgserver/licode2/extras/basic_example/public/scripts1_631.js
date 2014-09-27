@@ -229,7 +229,7 @@ window.onload = function () {
 
                 room.addEventListener("room-connected", function (roomEvent) {
                     room.publish(localStream);
-                    subscribeToStreams(roomEvent.streams);
+                    subscribeToStreams(roomEvent.streams); 
                 });
 
                 room.addEventListener("stream-subscribed", function(streamEvent) {
@@ -258,7 +258,7 @@ window.onload = function () {
                     broadcast(0,whoiamid,GL.userdata.coder,0,whatsmyname,'',state);
 
                     /*--------------------OTHER FUNCTIONS STARTS-------------------*/
-                    function broadcast(type,mychatid,mygsid,towho,clearname,data,mystate){
+                    function broadcast(type,mychatid,mygsid,towho,clearname,data,mystate){ 
                         localStream.sendData({
                             qtype:type,
                             qdata:data,
@@ -283,6 +283,41 @@ window.onload = function () {
                         $('textarea#qinput').val('');
                         //console.log('Pasa mensaje: '+qmsg);
                     }
+
+                    $("#elbutto").click(function() {
+                        if ($('#qinput').val().length > 1){
+                            msg($('#qinput').val()); 
+                        }                    
+                    });
+                    //===== TIMER STARTS =====//    
+                    //Increment the idle time counter every minute.
+                    var idleInterval = setInterval(timerIncrement, idleseconds); // 1 minute
+
+                    //Zero the idle timer on mouse movement.
+                    $('body').mousemove(function (e) {
+                        idleTime = 0;
+                    });
+                    $('body').mouseover(function (e) {
+                        idleTime = 0;
+                    });
+                    $('body').keypress(function (e) {
+                        idleTime = 0;
+                    });
+
+                    function timerIncrement() {
+                        idleTime ++;
+                        if (idleTime > 1) {
+                            state = 0;
+                            //conectedfriends();
+                            //window.location.reload();
+                            broadcast(0,whoiamid,whoiam,0,whatsmyname,'Status update to idle',state);
+                        } else {
+                            state = 1;
+                        }
+                        //console.log('oooooooooooooo TIMER: '+idleTime+ ' - MY STATE: '+state);
+                    }
+                    //===== TIMER ENDS =====//
+                    /*--------------------OTHER FUCNTIONS ENDS---------------------*/
 
                     //MSG PROCESSING FUNCTION STARTS
                     stream.addEventListener("stream-data", function(evt){
@@ -317,25 +352,21 @@ window.onload = function () {
                             conectedfriends();
                             */
                         } else if (evt.msg.qtype == 1){
-                            //console.log('- THIS IS A MSG TO ALL LISTENERS');
-                            //document.getElementById("sound").innerHTML="<embed src='noerro.mp3' hidden=true autostart=true loop=false>";                          
+                            //console.log('- THIS IS A MSG TO ALL LISTENERS');                         
+                            
+                            //click sound
                             var clickSound = new Audio('noerro.mp3');
+                            clickSound.play();
 
-                            //we look for the friend into the friends array on order to update state:
-                            for (var hh = 0; hh < myfriends.length; hh++){
-                                if (myfriends[hh][0] == evt.msg.qgsid){
-                                    //I force the state to one, since I am sure that he is passing a msg along
-                                    myfriends[hh][3] = 1;
-                                    
-                                }
-                            }
+                            //say I'm alive
+                            if (evt.msg.qgsid != GL.userdata.coder){ changefstat(evt.msg.qgsid,1); }
+
                             //idleTime we force to zero so the counter starts again
                             idleTime = 0;
                             state = 1;
                             conectedfriends();
 
-                            clickSound.play();
-                            //console.log('Received data '+evt.msg.qdata+' from stream');
+                            
                             //remote message
                             var tstamp = microtime();
                             $("#texto").append('<span class="singlemsg" title="'+mytime()+'"><strong>'+evt.msg.qname+': </strong>'+emoji(evt.msg.qdata)+'</span><span class="singlemsgdate"> </span><br><span class="singlemsgspace bottom5" id="sp'+tstamp+'"><br>&nbsp;<br></span>');
@@ -343,12 +374,7 @@ window.onload = function () {
                             
                             //$(".nano").nanoScroller({ scroll: 'bottom' });
                             $(".nano").nanoScroller();
-                            $(".nano").nanoScroller({ scrollTo: $('#sp'+tstamp)}); 
-                            //
-
-                            //local message
-                            //$("#texto").append('<span class="singlemsg"><strong>'+evt.msg.qname+': </strong>'+evt.msg.qdata+'</span><span class="singlemsgdate"><br>'+mytime()+'</span><span class="singlemsgspace"><br><br></span>').slideDown("slow");
-                            
+                            $(".nano").nanoScroller({ scrollTo: $('#sp'+tstamp)});  
                             
                             //////////THE TWILIGHT ZONE//////////////////////
                             //THIS HAPPENS ON THE OTHER CLIENT'S BROWSER/////
@@ -385,40 +411,7 @@ window.onload = function () {
 
                 
 
-                $("#elbutto").click(function() {
-                    if ($('#qinput').val().length > 1){
-                        msg($('#qinput').val()); 
-                    }                    
-                });
-                //===== TIMER STARTS =====//    
-                //Increment the idle time counter every minute.
-                var idleInterval = setInterval(timerIncrement, idleseconds); // 1 minute
-
-                //Zero the idle timer on mouse movement.
-                $('body').mousemove(function (e) {
-                    idleTime = 0;
-                });
-                $('body').mouseover(function (e) {
-                    idleTime = 0;
-                });
-                $('body').keypress(function (e) {
-                    idleTime = 0;
-                });
-
-                function timerIncrement() {
-                    idleTime ++;
-                    if (idleTime > 1) {
-                        state = 0;
-                        //conectedfriends();
-                        //window.location.reload();
-                        broadcast(0,whoiamid,whoiam,0,whatsmyname,'Status update to idle',state);
-                    } else {
-                        state = 1;
-                    }
-                    //console.log('oooooooooooooo TIMER: '+idleTime+ ' - MY STATE: '+state);
-                }
-                //===== TIMER ENDS =====//
-                /*--------------------OTHER FUCNTIONS ENDS---------------------*/
+               
 
                 //localStream.show("myVideo");
 
