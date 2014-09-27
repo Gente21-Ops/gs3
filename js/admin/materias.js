@@ -21,13 +21,19 @@ $(window).on("load", function(){
         },
         {
         	sName: "nombre"
+        },
+        {
+        	sName: "idNiveles"
+        },
+        {
+        	sName: "qMaestro"
         }] 
 
-	}).makeEditable({
+	})/*.makeEditable({
         sUpdateURL: "clases/admin/materias_update.php",
         sAddURL: "clases/admin/materias_add.php",
         sDeleteURL: "clases/admin/materias_delete.php"
-    });
+    })*/;
 
 
 	//NON-EDITABLE
@@ -40,11 +46,11 @@ $(window).on("load", function(){
 		"sAjaxSource": 'clases/students.php'
 	});
 	*/
-
+/*
 	//select on click
 	$("div.dyn2 > table > tbody > tr").click(function(){
 		alert('chido');
         $(this).closest('table tbody tr').addClass('thisRow');
     });
-
+*/
 });

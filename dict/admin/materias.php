@@ -6,10 +6,12 @@
 if($_SESSION['qlen'] == "es"){
     $texts = array(
     "title" => "Materias", 
+    "materia" => "Materia",
 	"tabletitle" => "Lista completa de materias",
 	"tableshow" => "Mostrar",
 	"col_apellidos" => "Apellidos",
 	"col_nombre" => "Nombre(s)",
+	"col_maestro" => "Maestro",
 	"table_mostrando" => "Inventario",
 	"table_de" => "Inventario",
 	"table_al" => "Inventario",
@@ -20,6 +22,7 @@ if($_SESSION['qlen'] == "es"){
 	"tabletitlePar" => "Lista completa de Parciales",
 	"tableshow" => "Mostrar",
 	"col_nombre" => "Nombre(s)",
+	"col_nivel" => "Nivel",
 	"col_descripcion" => "Descripcion",
 	"col_abierto" => "Abierto",
 	"col_limite_pago" => "Limite de pago",
@@ -34,10 +37,13 @@ if($_SESSION['qlen'] == "es"){
 } else if($_SESSION['qlen'] == "en"){
 	$texts = array(
 	"title" => "subjects", 
+	"materia" => "Subject",
 	"tabletitle" => "Complete subjects list",
 	"tableshow" => "Show",
 	"col_apellidos" => "Last Name",
 	"col_nombre" => "Name(s)",
+	"col_maestro" => "Teacher",
+	"col_nivel" => "Level",
 	"table_mostrando" => "Showing",
 	"table_de" => "of",
 	"table_al" => "to",
