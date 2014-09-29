@@ -1,6 +1,6 @@
 //var serverUrl = "/";
 var serverUrl = "http://107.22.250.130:3001/";
-var localStream, room;
+var localStream, room; 
 
 //WHO AM I 
 //whoiam is the code for the user

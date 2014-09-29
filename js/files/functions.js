@@ -5,6 +5,7 @@ GL.userdata = {};
 
 //global function for simple loading
 function assignme(url,target){
+	console.log('Trying to load: clases/'+url);
 	var cach = Math.floor(Math.random()*8000);
 	//let's check if url has params (cache killer goes at the end)
 	var newurl = '';
