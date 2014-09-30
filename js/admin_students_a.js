@@ -19,7 +19,7 @@ oTable = $('#dTable').dataTable({
 	"bAutoWidth": false,
 	"sPaginationType": "full_numbers",
 	"sDom": '<"H"fl>t<"F"ip>',
-	"sAjaxSource": 'clases/student/students.php',
+	"sAjaxSource": 'clases/admin/students.php',
 	"oLanguage": {
         "sUrl": qlen
     },
@@ -37,15 +37,15 @@ oTable = $('#dTable').dataTable({
     },
     {
     	sName: "nombre"
-    },  
-    {
-    	sName: "telefono"
     },
     {
-    	sName: "e_mail"
+    	sName: "correo"
     },
     {
-    	sName: "direccion"
+    	sName: "familiares"
+    },
+    {
+    	sName: "datos"
     }] 
 
 }).makeEditable({

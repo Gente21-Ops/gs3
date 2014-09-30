@@ -14,20 +14,21 @@ $(window).on("load", function(){
 			$(nRow).attr('id', aData[0]);
 			return nRow;
 		},
-		aoColumns: [{
-            sName: "idMaterias",
-            bSearchable: false,
-			bVisible: false
-        },
-        {
-        	sName: "nombre"
-        },
-        {
-        	sName: "idNiveles"
-        },
-        {
-        	sName: "qMaestro"
-        }] 
+		aoColumns: [
+			{
+	            sName: "idMaterias",
+	            bSearchable: false,
+	        },
+	        {
+	        	sName: "nombre"
+	        },
+	        {
+	        	sName: "idNiveles"
+	        },
+	        {
+	        	sName: "qMaestro"
+	        }
+        ] 
 
 	})/*.makeEditable({
         sUpdateURL: "clases/admin/materias_update.php",

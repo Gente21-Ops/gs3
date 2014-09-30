@@ -19,7 +19,6 @@ include('../dict/admin/materias.php');
 <!-- Main content -->
 <div class="wrapper">
 
-
     <!-- 6 + 6 -->
     <div class="fluid">
     
@@ -34,19 +33,18 @@ include('../dict/admin/materias.php');
             </ul>
 
             <div id="dyn2" class="shownpars">
-
                 <a class="tOptions act" title="Options"><img src="images/icons/options" alt="" /></a>
                 <table cellpadding="0" cellspacing="0" border="0" class="dTable" id="dTable">
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th><?php echo $texts['col_nombre']; ?></th>
-                        <th><?php echo $texts['col_nivel']; ?></th>
-                        <th><?php echo $texts['col_maestro']; ?></th>
-                    </tr>
-                </thead>
-                <tbody>
-                </tbody>
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th><?php echo $texts['col_nombre']; ?></th>
+                            <th><?php echo $texts['col_nivel']; ?></th>
+                            <th><?php echo $texts['col_maestro']; ?></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
                 </table> 
             </div>
             <div class="clear"></div> 
@@ -72,29 +70,34 @@ include('../dict/admin/materias.php');
 
         <input type="hidden" name="idParciales" id="idParciales" rel="0" />
 
-        <label for="name"><?php echo $texts['materia']; ?></label>
-        <br>
+        <div class="formRow">
+            <label for="name"><?php echo $texts['materia']; ?></label>
             <input type="text" name="nombre" id="nombre" rel="1" />
-        <br>
-        <label for="name"><?php echo $texts['col_nivel']; ?></label>
-        <br>
-        <select id="nivel" name="nivel"> 
-            <?php
-                while($row = mysqli_fetch_array($result)){    
-                      echo "<option value='".$row['idNiveles']."'>".$row['nombre']."</option>";
-                } 
+        </div>
+        <div class="formRow">
+            <div class="selector" style="width: 230px;">
+                <span><?php echo $texts['col_nivel']; ?>    </span>
+                <select id="nivel" name="nivel"> 
+                    <?php
+                        while($row = mysqli_fetch_array($result)){    
+                              echo "<option value='".$row['idNiveles']."'>".$row['nombre']."</option>";
+                        } 
 
-            ?>
-        </select>
-        <br>
-        <label for="teacher"><?php echo $texts['col_maestro']; ?></label>
-        <br>
-        <select id="teacher" name="teacher"> 
-            <?php
-                while($row2 = mysqli_fetch_array($result2)){    
-                      echo "<option value='".$row2['idUsers']."'>".$row2['nombre']." ".$row2['apellidos']."</option>";
-                } 
+                    ?>
+                </select>
+            </div>
+        </div>
+        <div class="formRow" >
+            <div class="selector" style="width: 230px;">
+                <span><?php echo $texts['col_maestro']; ?></span>
+                <select id="teacher" name="teacher" class="select chzn-done"> 
+                    <?php
+                        while($row2 = mysqli_fetch_array($result2)){    
+                              echo "<option value='".$row2['idUsers']."'>".$row2['nombre']." ".$row2['apellidos']."</option>";
+                        } 
 
-            ?>
-        </select>
+                    ?>
+                </select>
+            </div>
+        </div>
 </form>

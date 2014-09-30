@@ -31,19 +31,19 @@ include('../dict/admin/teachers.php');
 
                 <a class="tOptions act" title="Options"><img src="images/icons/options" alt="" /></a>
                 <table cellpadding="0" cellspacing="0" border="0" class="dTable" id="dTable">
-                <thead>
-                <tr>
-                    <th>ID</th>
-                    <th><?php echo $texts['col_apellidos']; ?></th>
-                    <th><?php echo $texts['col_nombre']; ?></th>
-                    <th><?php echo $texts['col_dir']; ?></th>
-                    <th><?php echo $texts['col_telefono']; ?></th>
-                    <th><?php echo $texts['col_correo']; ?></th>
-                    <th><?php echo $texts['col_but']; ?></th>
-                </tr>
-                </thead>
-                <tbody>
-                </tbody>
+                    <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th><?php echo $texts['col_apellidos']; ?></th>
+                        <th><?php echo $texts['col_nombre']; ?></th>
+                        <th><?php echo $texts['col_dir']; ?></th>
+                        <th><?php echo $texts['col_telefono']; ?></th>
+                        <th><?php echo $texts['col_correo']; ?></th>
+                        <th><?php echo $texts['col_but']; ?></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
                 </table> 
             </div>
             <div class="clear"></div> 

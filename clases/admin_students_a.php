@@ -38,9 +38,9 @@ include('../dict/students.php');
                         <th>ID</th>
                         <th><?php echo $texts['col_apellidos']; ?></th>
                         <th><?php echo $texts['col_nombre']; ?></th>
-                        <th><?php echo $texts['col_telefono']; ?></th>
-                        <th><?php echo $texts['col_correo']; ?></th>
-                        <th><?php echo $texts['col_dir']; ?></th>
+                        <th><?php echo $texts['col_env_correo']; ?></th>
+                        <th><?php echo $texts['col_fam']; ?></th>
+                        <th><?php echo $texts['col_datos']; ?></th>
                     </tr>
                     </thead>
                     <tbody>
