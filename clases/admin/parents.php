@@ -15,16 +15,11 @@ require_once('../mysqlcon.php');
     WHERE users.idUsers = map_familiares.idFamiliar 
     AND map_familiares.idEstudiante = '".$_GET['qestudiante']."'";
 
-    //echo $elsql;
+    echo $elsql;
     $sqlt = $con->query($elsql); 
    
     while ($row = $sqlt->fetch_assoc()) {
-        /*$row = array();
 
-        for ( $i=0 ; $i<sizeof($aColumns) ; $i++ ) {            
-            $row[] = $aRow[ $aColumns[$i] ];            
-        };
-        */
         $chido[] = $row['idUsers'];
         $chido[] = $row['apellidos'];
         $chido[] = $row['nombre'];

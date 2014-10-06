@@ -27,7 +27,7 @@ require_once('../mysqlcon.php');
                     <span class="icon-inbox"></span><span>Enviar correo</span></a>';
         $chido[] = '<a href="#" onclick="assignme(\'admin_parents?qestudiante='.$row['idUsers'].'\',\'content\'); return false;" class="buttonM bLightBlue">
                     <span class="icon-user"></span><span>Familiares</span></a>';
-        $chido[] = '<a href="#" onclick="assignme(\'admin_parents?qestudiante='.$row['idUsers'].'\',\'content\'); return false;" class="buttonM bGold">
+        $chido[] = '<a href="#" onclick="assignme(\'admin_students_config?qestudiante='.$row['idUsers'].'\',\'content\'); return false;" class="buttonM bGold">
                     <span class="icon-bars"></span><span>Datos</span></a>';
         
         $output['aaData'][] = $chido;

@@ -66,7 +66,14 @@
         $_SESSION['nombre'] = $row['nombre'];
         $_SESSION['apellidos'] = $row['apellidos'];
         $_SESSION['pass'] = $row['qpass'];
-        $_SESSION['direccion'] = $row['direccion']; 
+
+        //$_SESSION['direccion'] = $row['direccion']; 
+        $_SESSION['calle_num'] = $row['calle_num']; 
+        $_SESSION['colonia'] = $row['colonia']; 
+        $_SESSION['zip_code'] = $row['zip_code']; 
+        $_SESSION['municipio'] = $row['municipio']; 
+        $_SESSION['estado'] = $row['estado']; 
+
         $_SESSION['telefono'] = $row['tel'];
         $_SESSION['e_mail'] = $row['email'];
         $_SESSION['code'] = $row['qcode'];
