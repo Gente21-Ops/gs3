@@ -15,6 +15,7 @@ if($_SESSION['qlen'] == "es"){
 	"col_zip" => "Código Postal",
 	"col_municipio" => "Municipio",
 	"col_edo" => "Estado",
+	"col_telefono" => "Teléfono",
 	"col_correo" => "Email",
 	"col_fecha" => "Fecha de nacimiento",
 	"guardar" => "Guardar cambios",

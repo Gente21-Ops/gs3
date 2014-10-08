@@ -9,7 +9,7 @@ include('../dict/students_config.php');
     mysql_query('SET NAMES "utf8"');
 
     //TOP
-    $breads = $texts['title'].'^profesor_config';
+    $breads = $texts['title'].'^students_config';
     include('top.php');
 
     //locales para calendario
@@ -49,7 +49,7 @@ include('../dict/students_config.php');
                     <br>
                     
                     <div id="container">
-                        <a href="#" class="buttonM bBlue" id="browse"><span class="icon-camera"></span><span><?php echo $texts['img_but_browse']; ?></span></a>
+                        <a href="#" class="buttonM bBlue" id="browser"><span class="icon-camera"></span><span><?php echo $texts['img_but_browse']; ?></span></a>
                     </div>
 
                     <pre id="console"></pre>
@@ -57,7 +57,7 @@ include('../dict/students_config.php');
                 </div>
             </div>
             
-            <!-- Bars chart
+            <!-- Bars chart -->
             <div class="widget grid6 chartWrapper">
                 <div class="whead"><h6>Estadísticas generales</h6><div class="clear"></div></div>
                 <div class="formRow">
@@ -75,12 +75,13 @@ include('../dict/students_config.php');
                     <div class="clear"></div>
                 </div>
             </div>
-             -->
+        
         </div>
 
     
         <!-- 6 + 6 -->
         <form action="" class="main">
+        <input type="hidden" name="code" id="code" value="<?php echo $_SESSION['code']; ?>" />
             <fieldset>
                 <div class="widget fluid">
                     <div class="whead"><h6><?php echo $texts['tabletitle']; ?></h6><div class="clear"></div></div>
@@ -97,11 +98,33 @@ include('../dict/students_config.php');
                         <div class="grid9"><input type="text" id="nick" value="<?php echo $_SESSION['qnick']; ?>" /></div>
                         <div class="clear"></div>
                     </div>
+                    
                     <div class="formRow">
-                        <div class="grid3"><label><?php echo $texts['col_dir']; ?>:</label></div>
-                        <div class="grid9"><input type="text" id="address" value="<?php echo $_SESSION['direccion']; ?>" /></div>
+                        <div class="grid3"><label><?php echo $texts['col_calle']; ?>:</label></div>
+                        <div class="grid9"><input type="text" id="calle_num" value="<?php echo $_SESSION['calle_num']; ?>" /></div>
                         <div class="clear"></div>
                     </div>
+                    <div class="formRow">
+                        <div class="grid3"><label><?php echo $texts['col_colonia']; ?>:</label></div>
+                        <div class="grid9"><input type="text" id="colonia" value="<?php echo $_SESSION['colonia']; ?>" /></div>
+                        <div class="clear"></div>
+                    </div>
+                    <div class="formRow">
+                        <div class="grid3"><label><?php echo $texts['col_zip']; ?>:</label></div>
+                        <div class="grid9"><input type="text" id="zip_code" value="<?php echo $_SESSION['zip_code']; ?>" /></div>
+                        <div class="clear"></div>
+                    </div>
+                    <div class="formRow">
+                        <div class="grid3"><label><?php echo $texts['col_municipio']; ?>:</label></div>
+                        <div class="grid9"><input type="text" id="municipio" value="<?php echo $_SESSION['municipio']; ?>" /></div>
+                        <div class="clear"></div>
+                    </div>
+                    <div class="formRow">
+                        <div class="grid3"><label><?php echo $texts['col_edo']; ?>:</label></div>
+                        <div class="grid9"><input type="text" id="estado" value="<?php echo $_SESSION['estado']; ?>" /></div>
+                        <div class="clear"></div>
+                    </div>
+                    
                     <div class="formRow">
                         <div class="grid3"><label><?php echo $texts['col_telefono']; ?>:</label></div>
                         <div class="grid9"><input type="text" class="maskPhone" id="tel" value="<?php echo $_SESSION['telefono']; ?>" /><span class="note">(999) 999-9999</span></div>

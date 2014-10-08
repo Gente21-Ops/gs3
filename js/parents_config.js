@@ -22,14 +22,20 @@ $( "#sendo" ).click(function(e) {
 	$( "#sendo" ).attr("disabled", "disabled");
 	$( "#sendo" ).hide();
 	
-	$.post( "clases/student/students_config.php", { 
+	$.post( "clases/admin/admin_students_config.php", { 
 		name: $('#name').val(), 
 		last: $('#last').val(),
 		nick: $('#nick').val(),
-		address: $('#address').val(),
+		//address: $('#address').val(),
+		calle_num: $('#calle_num').val(),
+		colonia: $('#colonia').val(),
+		zip_code: $('#zip_code').val(),
+		municipio: $('#municipio').val(),
+		estado: $('#estado').val(),
 		tel: $('#tel').val(),
 		email: $('#email').val(),
-		birth: $('#birth').val() }, 
+		birth: $('#birth').val(),
+		code: $('#code').val() }, 
 		function( data ) {
 			//el callback de php debe regresar un 1 (significa que todo fue ok)
 			if (Number(data) == '1'){
@@ -50,11 +56,11 @@ $( "#sendo" ).click(function(e) {
 //init de plupload
 var uploader = new plupload.Uploader({
 	runtimes : 'html5',
-	browse_button: 'browse', // this can be an id of a DOM element or the DOM element itself
+	browse_button: 'browser', // this can be an id of a DOM element or the DOM element itself
 	//drop_element : 'jalo',
 	max_file_size : '20mb',
 	multi_selection : false,
-	url: '../clases/uploadPics.php',
+	url: '../clases/uploadPics.php?qcode='+$('#code').val(),
 	filters : [
 	        {//title : "Image files", extensions : "jpg,jpeg,png,PNG,JPG,JPEG"}
 	        title : "Image files", extensions : "jpg,jpeg,JPG,JPEG"}
@@ -128,8 +134,8 @@ uploader.bind('FileUploaded', function(up, file, res) {
 //----------------CHANGE PICTURE TERMINA------------------//
 
 
-/*NOT NECESSARY FOR TEACHERS FOR NOW*/
+
 //----------------STATS COMIENZA------------------//
-//$("#progress").progressbar({ value: 80  });
-//$("#progress1").progressbar({ value: 20  });
+$("#progress").progressbar({ value: 80  });
+$("#progress1").progressbar({ value: 20  });
 //----------------STATS TERMINA------------------//

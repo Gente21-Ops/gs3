@@ -19,12 +19,26 @@
     $nombre = stripslashes($nombre);
     $nombre = mysql_real_escape_string($nombre);
     $pass = mysql_real_escape_string($pass);
-    $sql="SELECT users.idUsers AS idUsers, users.tipo AS qtipo, users.nombre AS nombre, 
-    users.apellidos AS apellidos, users.pass AS qpass, users.direccion AS direccion, 
-    users.telefono AS tel, users.e_mail AS email, users.code AS qcode, 
-    users.friends AS qfriends, users.nacimiento AS qnac, users.nick AS qnick, 
-    escuelas.idEscuelas AS qescuelaid, settings.lenguaje AS qlen, 
-    settings.stream AS qstream, settings.timezone AS qtimezone 
+    $sql="SELECT users.idUsers AS idUsers, 
+    users.tipo AS qtipo, 
+    users.nombre AS nombre, 
+    users.apellidos AS apellidos, 
+    users.pass AS qpass, 
+    users.calle_num AS calle_num, 
+    users.colonia AS colonia, 
+    users.zip_code AS zip_code, 
+    users.municipio AS municipio, 
+    users.estado AS estado, 
+    users.telefono AS tel, 
+    users.e_mail AS email, 
+    users.code AS qcode, 
+    users.friends AS qfriends, 
+    users.nacimiento AS qnac, 
+    users.nick AS qnick, 
+    escuelas.idEscuelas AS qescuelaid, 
+    settings.lenguaje AS qlen, 
+    settings.stream AS qstream, 
+    settings.timezone AS qtimezone 
     FROM users, escuelas, settings 
     WHERE users.nombre = '$nombre' 
     AND users.pass = '$pass' 
@@ -100,8 +114,7 @@
         else if ((int)$_SESSION['tipo'] == 4) { $_SESSION['tipofol'] = "parent"; }
         header("location:../main2");
         
-    }
-    else {
+    } else {
         echo "Wrong Username or Password";
         //header("location:../index?error=1");
     }
