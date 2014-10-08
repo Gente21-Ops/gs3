@@ -63,7 +63,7 @@ include('dict/sidebar_admin.php'); ?>
             
             <!--<li><a href="#" onclick="assignme('admin_students_a','content'); return false;" title="" class="linko"><img src="images/icons/mainnav/statistics.png" alt="" /><span><?php echo $texts['estadisticas']; ?></span></a></li>-->
 
-            <li><a href="#" onclick="assignme('admin_parents','content'); return false;" title="" class="linko"><img src="images/icons/mainnav/family.png" alt="" /><span>Familiares</span></a></li>
+            <!--<li><a href="#" onclick="assignme('admin_parents','content'); return false;" title="" class="linko"><img src="images/icons/mainnav/family.png" alt="" /><span>Familiares</span></a></li>-->
 
             <li><a href="#" onclick="assignme('admin_admon','content'); return false;" title="" class="linko"><img src="images/icons/mainnav/admins.png" alt="" /><span>Administrativos</span></a></li>
 

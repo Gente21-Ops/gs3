@@ -9,7 +9,7 @@ include('../dict/students_config.php');
     mysql_query('SET NAMES "utf8"');
 
     //TOP
-    $breads = $texts['title'].'^profesor_config';
+    $breads = $texts['title'].'^students_config';
     include('top.php');
 
     //locales para calendario
@@ -20,12 +20,18 @@ include('../dict/students_config.php');
     } else {
         echo '<script src="http://jquery-ui.googlecode.com/svn/tags/latest/ui/i18n/jquery.ui.datepicker-en-GB.js"></script>';
     }
+
+
+    $query = "SELECT * FROM users WHERE idUsers = '".$_GET['qestudiante']."'";
+    $result = mysqli_query($con, $query);
+    $row = mysqli_fetch_assoc($result);
 ?>  
 
     <div id="qlang" style="display:none;"><?php echo $_SESSION['qlen']; ?></div>
     <div id="qimgchanged" style="display:none;"><?php echo $texts['imgchanged']; ?></div>
     <div id="qerror" style="display:none;"><?php echo $texts['savederror']; ?></div>
     <div style="display:none;" id="quser"><?php echo $_SESSION['code']; ?></div>
+    <div style="display:none;" id="qestudiante"><?php echo $_GET['qestudiante']; ?></div>
     
     <!-- Main content -->
     <div class="wrapper">
@@ -40,7 +46,7 @@ include('../dict/students_config.php');
 
                     <!--arreglar este estilo en línea!!!! -->
                     <ul class="middleFree" style="margin-top:10px;">
-                        <li><img id="elusero320" src="images/users/320/<?php echo $_SESSION['code']; ?>.jpg?ran=<?php echo rand(1, 200); ?>" alt="" class="relative" /></li>
+                        <li><img id="elusero320" src="images/users/320/<?php echo $row['code']; ?>.jpg?ran=<?php echo rand(1, 200); ?>" alt="" class="relative" /></li>
                         <li></li>
                     </ul>
                     
@@ -49,7 +55,7 @@ include('../dict/students_config.php');
                     <br>
                     
                     <div id="container">
-                        <a href="#" class="buttonM bBlue" id="browse"><span class="icon-camera"></span><span><?php echo $texts['img_but_browse']; ?></span></a>
+                        <a href="#" class="buttonM bBlue" id="browser"><span class="icon-camera"></span><span><?php echo $texts['img_but_browse']; ?></span></a>
                     </div>
 
                     <pre id="console"></pre>
@@ -57,7 +63,7 @@ include('../dict/students_config.php');
                 </div>
             </div>
             
-            <!-- Bars chart
+            <!-- Bars chart -->
             <div class="widget grid6 chartWrapper">
                 <div class="whead"><h6>Estadísticas generales</h6><div class="clear"></div></div>
                 <div class="formRow">
@@ -75,36 +81,60 @@ include('../dict/students_config.php');
                     <div class="clear"></div>
                 </div>
             </div>
-             -->
+        
         </div>
 
     
         <!-- 6 + 6 -->
         <form action="" class="main">
+        <input type="hidden" name="code" id="code" value="<?php echo $row['code']; ?>" />
+
             <fieldset>
                 <div class="widget fluid">
                     <div class="whead"><h6><?php echo $texts['tabletitle']; ?></h6><div class="clear"></div></div>
                     <div class="formRow">
                         <div class="grid3"><label><?php echo $texts['col_apellidos']; ?>:</label></div>
                         <div class="grid9">
-                            <span class="grid4"><input type="text" id="name" value="<?php echo $_SESSION['nombre']; ?>" /></span>
-                            <span class="grid8"><input type="text" id="last" value="<?php echo $_SESSION['apellidos']; ?>" /></span>
+                            <span class="grid4"><input type="text" id="name" value="<?php echo $row['nombre']; ?>" /></span>
+                            <span class="grid8"><input type="text" id="last" value="<?php echo $row['apellidos']; ?>" /></span>
                         </div>
                         <div class="clear"></div>
                     </div>
                     <div class="formRow">
                         <div class="grid3"><label><?php echo $texts['col_apodo']; ?>:</label></div>
-                        <div class="grid9"><input type="text" id="nick" value="<?php echo $_SESSION['qnick']; ?>" /></div>
+                        <div class="grid9"><input type="text" id="nick" value="<?php echo $row['nick']; ?>" /></div>
+                        <div class="clear"></div>
+                    </div>
+
+                    <div class="formRow">
+                        <div class="grid3"><label><?php echo $texts['col_calle']; ?>:</label></div>
+                        <div class="grid9"><input type="text" id="calle_num" value="<?php echo $row['calle_num']; ?>" /></div>
                         <div class="clear"></div>
                     </div>
                     <div class="formRow">
-                        <div class="grid3"><label><?php echo $texts['col_dir']; ?>:</label></div>
-                        <div class="grid9"><input type="text" id="address" value="<?php echo $_SESSION['direccion']; ?>" /></div>
+                        <div class="grid3"><label><?php echo $texts['col_colonia']; ?>:</label></div>
+                        <div class="grid9"><input type="text" id="colonia" value="<?php echo $row['colonia']; ?>" /></div>
                         <div class="clear"></div>
                     </div>
+                    <div class="formRow">
+                        <div class="grid3"><label><?php echo $texts['col_zip']; ?>:</label></div>
+                        <div class="grid9"><input type="text" id="zip_code" value="<?php echo $row['zip_code']; ?>" /></div>
+                        <div class="clear"></div>
+                    </div>
+                    <div class="formRow">
+                        <div class="grid3"><label><?php echo $texts['col_municipio']; ?>:</label></div>
+                        <div class="grid9"><input type="text" id="municipio" value="<?php echo $row['municipio']; ?>" /></div>
+                        <div class="clear"></div>
+                    </div>
+                    <div class="formRow">
+                        <div class="grid3"><label><?php echo $texts['col_edo']; ?>:</label></div>
+                        <div class="grid9"><input type="text" id="estado" value="<?php echo $row['estado']; ?>" /></div>
+                        <div class="clear"></div>
+                    </div>
+
                     <div class="formRow">
                         <div class="grid3"><label><?php echo $texts['col_telefono']; ?>:</label></div>
-                        <div class="grid9"><input type="text" class="maskPhone" id="tel" value="<?php echo $_SESSION['telefono']; ?>" /><span class="note">(999) 999-9999</span></div>
+                        <div class="grid9"><input type="text" class="maskPhone" id="tel" value="<?php echo $row['telefono']; ?>" /><span class="note">(999) 999-9999</span></div>
                         <div class="clear"></div>
                     </div>
                     <div class="formRow">
@@ -114,7 +144,7 @@ include('../dict/students_config.php');
                     </div>
                     <div class="formRow">
                         <div class="grid3"><label><?php echo $texts['col_fecha']; ?>:</label></div>
-                        <div class="grid9"><input type="text" class="datepicker" id="birth" value="<?php echo $_SESSION['qnac']; ?>" /></div>
+                        <div class="grid9"><input type="text" class="datepicker" id="birth" value="<?php echo $row['nacimiento']; ?>" /></div>
                         <div class="clear"></div>
                     </div>
                     <div class="formRow">

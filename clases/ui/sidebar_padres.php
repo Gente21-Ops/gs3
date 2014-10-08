@@ -50,6 +50,8 @@
 
             <li><a href="#" onclick="assignme('parents_statistics','content'); return false;" title="" class="linko"><img src="images/icons/mainnav/admins.png" alt="" /><span><?php echo $texts['calificaciones']; ?></span></a></li>
 
+            <li><a href="#" onclick="assignme('parents_config','content'); return false;" title="" class="linko"><img src="images/icons/mainnav/config.png" alt="" /><span><?php echo $texts['configuracion']; ?></span></a></li>            
+
                 
         </ul>
     </div>

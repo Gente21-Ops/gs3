@@ -29,7 +29,13 @@ oTable = $('.dTable').dataTable({
     },
     {
     	sName: "nombre"
-    }] 
+    },
+        {
+        	sName: "idNiveles"
+        },
+        {
+        	sName: "qMaestro"
+        }] 
 
 }).makeEditable({
     sUpdateURL: "clases/admin/materias_update.php",
@@ -37,7 +43,7 @@ oTable = $('.dTable').dataTable({
     sDeleteURL: "clases/admin/materias_delete.php"
 });
 
-
+/*
 //EDITABLE
 oTable = $('.dTableDctos').dataTable({
 	
@@ -78,7 +84,6 @@ oTable = $('.dTableDctos').dataTable({
 });
 
 //NON-EDITABLE
-/*
 oTable = $('.dTable').dataTable({      
 	"bJQueryUI": false,
 	"bAutoWidth": false,
@@ -86,7 +91,7 @@ oTable = $('.dTable').dataTable({
 	"sDom": '<"H"fl>t<"F"ip>',
 	"sAjaxSource": 'clases/students.php'
 });
-*/
+
 
 //select on click
 $("div.dyn2 > table > tbody > tr").click(function(){
@@ -94,3 +99,4 @@ $("div.dyn2 > table > tbody > tr").click(function(){
     $(this).closest('table tbody tr').addClass('thisRow');
 });
 
+*/

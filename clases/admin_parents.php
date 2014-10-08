@@ -3,13 +3,14 @@ error_reporting(E_ALL);
 include("logon.php");
 include('../dict/admin/parents.php');
 
-    ob_start();
-
     //TOP
     $breads = $texts['title'].'^admin_parents';
     include('top.php');
 ?>  
-    
+
+<div id="qestudiante" style="display:none;"><?php echo $_GET['qestudiante']; ?></div> 
+
+
 <!-- Main content -->
 <div class="wrapper">
 

@@ -22,7 +22,7 @@ $( "#sendo" ).click(function(e) {
 	$( "#sendo" ).attr("disabled", "disabled");
 	$( "#sendo" ).hide();
 	
-	$.post( "clases/student/students_config.php", { 
+	$.post( "clases/admin/admin_students_config.php", { 
 		name: $('#name').val(), 
 		last: $('#last').val(),
 		nick: $('#nick').val(),

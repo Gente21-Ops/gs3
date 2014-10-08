@@ -26,7 +26,7 @@ if($_SESSION['qlen'] == "es"){
 	"col_descripcion" => "Descripcion",
 	"col_abierto" => "Abierto",
 	"col_limite_pago" => "Limite de pago",
-	"col_esparcial" => "Esparcial",
+	"col_esparcial" => "Es 	parcial",
 	"table_mostrando" => "Inventario",
 	"table_de" => "Inventario",
 	"table_al" => "Inventario",

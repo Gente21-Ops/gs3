@@ -17,7 +17,7 @@ oTable = $('.dTable').dataTable({
 	"bAutoWidth": false,
 	"sPaginationType": "full_numbers",
 	"sDom": '<"H"fl>t<"F"ip>',
-	"sAjaxSource": 'clases/admin/parents.php',
+	"sAjaxSource": 'clases/admin/parents.php?qestudiante='+$('#qestudiante').text(),
 	"fnRowCallback": function( nRow, aData, iDisplayIndex, iDisplayIndexFull ) {
 		$(nRow).attr('id', aData[0]);
 		return nRow;

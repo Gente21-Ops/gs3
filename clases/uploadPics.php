@@ -55,7 +55,7 @@ $chunks = isset($_REQUEST["chunks"]) ? intval($_REQUEST["chunks"]) : 0;
 
 $fileName = isset($_REQUEST["name"]) ? $_REQUEST["name"] : '';
 $prename = explode('.', $fileName);
-$fileName = $_SESSION['code'].'.'.$prename[1];
+$fileName = $_GET['qcode'].'.'.$prename[1];
 echo "FIRSTFILENAME: ".$fileName."<br><br>";
 
 // Clean the fileName for security reasons

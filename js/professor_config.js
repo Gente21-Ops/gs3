@@ -22,7 +22,7 @@ $( "#sendo" ).click(function(e) {
 	$( "#sendo" ).attr("disabled", "disabled");
 	$( "#sendo" ).hide();
 	
-	$.post( "clases/student/students_config.php", { 
+	$.post( "clases/profesor/professor_config.php", { 
 		name: $('#name').val(), 
 		last: $('#last').val(),
 		nick: $('#nick').val(),
@@ -134,8 +134,8 @@ uploader.bind('FileUploaded', function(up, file, res) {
 //----------------CHANGE PICTURE TERMINA------------------//
 
 
-
+/*NOT NECESSARY FOR TEACHERS FOR NOW*/
 //----------------STATS COMIENZA------------------//
-$("#progress").progressbar({ value: 80  });
-$("#progress1").progressbar({ value: 20  });
+//$("#progress").progressbar({ value: 80  });
+//$("#progress1").progressbar({ value: 20  });
 //----------------STATS TERMINA------------------//
