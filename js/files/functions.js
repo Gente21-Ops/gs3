@@ -2,6 +2,43 @@
 var GL = {};
 
 GL.userdata = {};
+GL.emoticons = {
+        "=D":"Laughing.png", 
+        ":)":"Laughing.png",
+        "(smile)":"Smile.png",
+        "X(":"Angry.png",
+        "X-(":"Angry.png",
+        "(angry)":"Angry.png",
+        "(content)":"Content.png",
+        "(grin)":"Grin.png",
+        ":*":"Kiss.png",
+        ":-*":"Kiss.png",
+        "(kiss)":"Kiss.png",
+        "8-)":"Cool.png",
+        "(cool)":"Cool.png",
+        "(heart)":"Heart.png",
+        "<3":"Heart.png",
+        "(devil)":"Naughty.png",
+        "(sick)":"Sick.png",
+        "(no)":"Thumbs-Down.png",
+        "(yes)":"Thumbs-Up.png",
+        "(ok)":"Thumbs-Up.png",
+        "(tongue)":"Yuck.png",
+        "=P":"Yuck.png",
+        ":P":"Yuck.png",
+        ";-)":"Wink.png",
+        ";)":"Wink.png",
+        ";=)":"Gasp.png",
+        ":-O":"Gasp.png",
+        ":=o":"Gasp.png",
+        ";P":"Crazy.png",
+        "(crazy)":"Crazy.png",
+        "($)":"Money-Mouth.png",
+        "(money)":"Money-Mouth.png",
+        "=B":"Nerd.png",
+        ":B":"Nerd.png",
+        "(nerd)":"Nerd.png"
+      }
 
 //global function for simple loading
 function assignme(url,target){
@@ -111,6 +148,24 @@ $(function() {
 	GL.today = function(num){
 		var d = new Date(), month = d.getMonth()+1, day = d.getDate();
     	return d.getFullYear()+'/'+(month<10 ? '0' : '')+month+'/'+(day<10 ? '0' : '')+day;
+	}
+
+	//-----------------------CHAT TIME
+	GL.mytime = function(){
+	    var currentdate = new Date(); 
+	    var datetime = "@ " + currentdate.getDate() + "/"
+	        + (currentdate.getMonth()+1)  + "/" 
+	        + currentdate.getFullYear() + " - "  
+	        + currentdate.getHours() + ":"  
+	        + currentdate.getMinutes() + ":" 
+	        + currentdate.getSeconds();
+	    return datetime;
+	}
+
+	//-----------------------MICROTIME
+	GL.microtime = function(){
+	    var seconds = new Date() / 1000;
+	    return Math.ceil(seconds);
 	}
 
     //----- USER HOVER --------//

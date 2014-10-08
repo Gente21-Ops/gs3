@@ -7,76 +7,24 @@ var localStream, room;
 var whoiam = GL.userdata.coder;
 //whoiamid is the code from the chat
 var whoiamid = 0;
-var whatsmyname = "";
+var whatsmyname = GL.userdata.qnick;
 var whatsmyrole = 1;
 var myroom = "any school";
 var first = 0;
 var myfriends = {};
+//var types = Array('','Profesor','Alumn@','Padre/Madre');
 
 //timer vars, state: 1 active, 0 idle
 var idleTime = 0;
 var state = 1;
-var idleseconds = 300000;
+
+//timers
+var idleseconds = 30000;
+var deadseconds = 60000;
 
 //CONNECTED STATUSES
-var c_status = ['status_off', 'status_available', 'status_away'];
+var c_status = Array('','status_available', 'status_away', 'status_off');
 var mystatus = 0;
-
-//emojis
-var emoticons = {
-        "=D":"Laughing.png",
-        ":)":"Laughing.png",
-        "(smile)":"Smile.png",
-        "X(":"Angry.png",
-        "X-(":"Angry.png",
-        "(angry)":"Angry.png",
-        "(content)":"Content.png",
-        "(grin)":"Grin.png",
-        ":*":"Kiss.png",
-        ":-*":"Kiss.png",
-        "(kiss)":"Kiss.png",
-        "8-)":"Cool.png",
-        "(cool)":"Cool.png",
-        "(heart)":"Heart.png",
-        "<3":"Heart.png",
-        "(devil)":"Naughty.png",
-        "(sick)":"Sick.png",
-        "(no)":"Thumbs-Down.png",
-        "(yes)":"Thumbs-Up.png",
-        "(ok)":"Thumbs-Up.png",
-        "(tongue)":"Yuck.png",
-        "=P":"Yuck.png",
-        ":P":"Yuck.png",
-        ";-)":"Wink.png",
-        ";)":"Wink.png",
-        ";=)":"Gasp.png",
-        ":-O":"Gasp.png",
-        ":=o":"Gasp.png",
-        ";P":"Crazy.png",
-        "(crazy)":"Crazy.png",
-        "($)":"Money-Mouth.png",
-        "(money)":"Money-Mouth.png",
-        "=B":"Nerd.png",
-        ":B":"Nerd.png",
-        "(nerd)":"Nerd.png"
-      }
-
-//TIMESTAMP
-function mytime(){
-    var currentdate = new Date(); 
-    var datetime = "AT: " + currentdate.getDate() + "/"
-        + (currentdate.getMonth()+1)  + "/" 
-        + currentdate.getFullYear() + " - "  
-        + currentdate.getHours() + ":"  
-        + currentdate.getMinutes() + ":" 
-        + currentdate.getSeconds();
-    return datetime;
-}
-
-function microtime(){
-    var seconds = new Date() / 1000;
-    return Math.ceil(seconds);
-}
 
 //GLOBAL VARS START
 function getParameterByName(name) {
@@ -87,41 +35,43 @@ function getParameterByName(name) {
 }
 
 function print_r(arr,name) {
-    console.log(name);
+    //console.log(name);
     for(var index in arr) {
-      console.log(index + " : " + arr[index]);
+      //console.log(index + " : " + arr[index]);
     }
 }
 
-function localmsg(texto){
-    var tstamp = microtime();
-    $("#texto").append('<span class="singlemsg" title="'+mytime()+'"><strong>'+whatsmyname+': </strong>'+emoji(texto)+'</span><span class="singlemsgdate"> </span><br><span class="singlemsgspace bottom5" id="sp'+tstamp+'"><br>&nbsp;<br></span>')
-    //by forcing the recalculation the scrollbar appears
-    
-    $(".nano").nanoScroller();
-    $(".nano").nanoScroller({ scrollTo: $('#sp'+tstamp)});
-}
-
-function emoji(qstr){
-    var url = "images/emojis/standar/", patterns = [],
-         metachars = /[[\]{}()*+?.\\|^$\-,&#\s]/g;
-
-      // build a regex pattern for each defined property
-      for (var i in emoticons) {
-        if (emoticons.hasOwnProperty(i)){ // escape metacharacters
-          patterns.push('('+i.replace(metachars, "\\$&")+')');
-        }
-      }
-
-      // build the regular expression and replace
-      return qstr.replace(new RegExp(patterns.join('|'),'g'), function (match) {
-        return typeof emoticons[match] != 'undefined' ?
-               '<img src="'+url+emoticons[match]+'"/>' :
-               match;
-    });
-}
-
 window.onload = function () {
+
+    GL.consol('>>>>USER DATA:');
+    GL.consol(GL.userdata);
+
+    function emoji(qstr){
+        var url = "images/emojis/standar/", patterns = [],
+             metachars = /[[\]{}()*+?.\\|^$\-,&#\s]/g;
+
+          // build a regex pattern for each defined property
+          for (var i in GL.emoticons) {
+            if (GL.emoticons.hasOwnProperty(i)){ // escape metacharacters
+              patterns.push('('+i.replace(metachars, "\\$&")+')');
+            }
+          }
+
+          // build the regular expression and replace
+          return qstr.replace(new RegExp(patterns.join('|'),'g'), function (match) {
+            return typeof GL.emoticons[match] != 'undefined' ?
+                   '<img src="'+url+GL.emoticons[match]+'"/>' :
+                   match;
+        });
+    }
+
+    function localmsg(texto){
+        var tstamp = GL.microtime();
+        $("#texto").append('<span class="singlemsg" title="'+GL.mytime()+'"><strong>'+GL.userdata.qnick+': </strong>'+emoji(texto)+'</span><span class="singlemsgdate"> </span><br><span class="singlemsgspace bottom5" id="sp'+tstamp+'"><br>&nbsp;<br></span>')
+        //by forcing the recalculation the scrollbar appears
+        $(".nano").nanoScroller();
+        $(".nano").nanoScroller({ scrollTo: $('#sp'+tstamp)});
+    }
 
     //list of connected friends starts
     function conectedfriends(connectedness){
@@ -140,30 +90,55 @@ window.onload = function () {
                 +"</a>"
                 +"</li >";
         });        
-        console.log('recreating friend\'s list with data:');
+        //console.log('recreating friend\'s list with data:');
         GL.consol(myfriends);
         $('#myfirends').html(salida);
     } 
     //list of connected friends ends
 
     //change friend status
-    function changefstat(qid,status){
-        var qtime = GL.now();
-        GL.consol('User '+qid+' Wants to switch his status to:'+status+' at:'+qtime);
-        //cambio su status en la lista de amigos
-        var result = $.grep(myfriends, function(e){ return e.id == qid; });
-        GL.consol(result);
+    function changefstat(qid,status,timo){    
+        GL.consol('changefstat');    
+        //cambio su status en la lista local de amigos
+        var res = $.grep(myfriends, function(e){ return e.id == qid; });
+        if(res && res.length == 1){
+            //we only change the updated time if available
+            //otherwise the other states will never occur
+            if (status == 1){
+                res[0].updated = timo;
+            }            
+            res[0].status = status;
+        }        
         //cambio el color
-        $('#lis_'+qid).attr("class",c_status[status]);       
+        GL.consol('User lis_'+qid+' Wants to switch his status to:'+c_status[status]+' at:'+timo);
+        $('#lis_'+qid).attr("class",c_status[status]);
+    }
+
+    function checkallstatus(){        
+        var checktime = GL.now();
+        GL.consol('Checking everybody\'s status at '+checktime);
+        $.each( myfriends, function( key, value ) {
+            if (value.updated != undefined){
+                //if the difference in time is larger than deadtime and status is not 2 we kill him
+                if ( (checktime - value.updated) > deadseconds && value.status != 2){
+                    GL.consol('User '+value.id+' | '+value.name+' is dead, we set him red');
+                    changefstat(value.id,2,value.updated);
+                }
+                //if the difference in time is larger than idletime and status is not 1 we set him as idle
+                else if ( (checktime - value.updated) > idleseconds && value.status != 1){
+                    changefstat(value.id,1,value.updated);
+                }
+            }
+        });
     }
 
     //we get friend's list from server
     function getfriends(){        
-        console.log('>> getting list of friends at '+GL.now());
+        //console.log('>> getting list of friends at '+GL.now());
         $.post( "clases/ui/getfriends.php", function( data ) {
             //new json format
             myfriends = JSON.parse(data);
-            console.log(myfriends);
+            //console.log(myfriends);
             conectedfriends();
         });
         if (first == 0){
@@ -178,7 +153,7 @@ window.onload = function () {
     //RUNME STARTS
     function runme(){ 
     
-        console.log('Initializing COM client at 632');
+        //console.log('Initializing COM client at 632');
 
         recording = false;
         var screen = getParameterByName("screen");
@@ -212,10 +187,10 @@ window.onload = function () {
             var token = response;
             room = Erizo.Room({token: token});
 
-            console.log('>>TOKEN: '+token);
-            console.log('>>ROOM ID: '+String(room.roomID));
-            console.log(room);
-            console.log('>>-------------------------------------------------');
+            //console.log('>>TOKEN: '+token);
+            //console.log('>>ROOM ID: '+String(room.roomID));
+            //console.log(room);
+            //console.log('>>-------------------------------------------------');
 
             localStream.addEventListener("access-accepted", function () {
                 var subscribeToStreams = function (streams) {
@@ -234,7 +209,7 @@ window.onload = function () {
 
                 room.addEventListener("stream-subscribed", function(streamEvent) {
                     var stream = streamEvent.stream;
-                    console.log('>> Stream suscribed!');
+                    //console.log('>> Stream suscribed!');
                     
                     var div = document.createElement('div');
                     div.setAttribute("style", "width: 320px; height: 240px;");
@@ -246,19 +221,20 @@ window.onload = function () {
 
                     //I recognize myself:
                     whoiamid = localStream.getID();
-                    console.log('REMOTE STREAM ID: '+stream.getID()+'\nLOCAL STREAM:'+localStream.getID()
-                        +'\nI AM '+GL.userdata.coder+' (ON GS3)  AND ID:'+whoiamid); 
+                    /*//console.log('REMOTE STREAM ID: '+stream.getID()+'\nLOCAL STREAM:'+localStream.getID()
+                        +'\nI AM '+GL.userdata.coder+' (ON GS3)  AND ID:'+whoiamid); */
 
                     //streams list (all users in the room)
                     var lostreams = room.remoteStreams;
-                    console.log(room.remoteStreams);
+                    //console.log(room.remoteStreams);
 
                     /*---------------START UP SYNC MSG---------------*/
                     //I identify myself
-                    broadcast(0,whoiamid,GL.userdata.coder,0,whatsmyname,'',state);
+                    broadcast(0,whoiamid,GL.userdata.coder,0,GL.userdata.qnick,'',state);
 
                     /*--------------------OTHER FUNCTIONS STARTS-------------------*/
                     function broadcast(type,mychatid,mygsid,towho,clearname,data,mystate){ 
+                        GL.consol(mygsid+' is broadcasting, coder:'+GL.userdata.coder);
                         localStream.sendData({
                             qtype:type,
                             qdata:data,
@@ -277,11 +253,11 @@ window.onload = function () {
                         //envio el mensaje a mi propia ventana desde fuera de los listeners de otr forma la acción se realiza en el otro usuario
                         localmsg($('#qinput').val());
                         //send message
-                        broadcast(1,whoiamid,whoiam,0,whatsmyname,qmsg,state);
+                        broadcast(1,whoiamid,GL.userdata.coder,0,GL.userdata.qnick,qmsg,state);
 
                         //clear the area
                         $('textarea#qinput').val('');
-                        //console.log('Pasa mensaje: '+qmsg);
+                        ////console.log('Pasa mensaje: '+qmsg);
                     }
 
                     $("#elbutto").click(function() {
@@ -305,71 +281,61 @@ window.onload = function () {
                     });
 
                     function timerIncrement() {
+
                         idleTime ++;
                         if (idleTime > 1) {
                             state = 0;
-                            //conectedfriends();
-                            //window.location.reload();
-                            broadcast(0,whoiamid,whoiam,0,whatsmyname,'Status update to idle',state);
+                            broadcast(0,whoiamid,GL.userdata.coder,0,GL.userdata.qnick,'Status update to idle',state);
                         } else {
                             state = 1;
                         }
-                        //console.log('oooooooooooooo TIMER: '+idleTime+ ' - MY STATE: '+state);
+                        GL.consol('Timer tick! @'+GL.now()+' | idletime:'+idleTime+' | MY STATE:'+state);
                     }
                     //===== TIMER ENDS =====//
                     /*--------------------OTHER FUCNTIONS ENDS---------------------*/
 
                     //MSG PROCESSING FUNCTION STARTS
                     stream.addEventListener("stream-data", function(evt){
-                        console.log('Se ha recibido un mensaje del tipo:'+evt.msg.qtype);
+                        //console.log('Se ha recibido un mensaje del tipo:'+evt.msg.qtype+' está siendo enviado por:'+evt.msg.qgsid);
+                        GL.consol(evt.msg);
                         //FORMAT: data|type|id|gsid|towhom
                         //0 => syncronization message
                         //1 => simple message to all listeners
                         //2 => simple message broacast to a single listener
+
+                        //***SUPER FUCKING IMPORTANT*********************////////////////////////////////
+                        //ALL events inside this listener will have an effect on all peers
+                        //so if you want to do something locally must be run outside of thi scope
                         
-                        //console.log('MESSAGE HAS BEEN TRANSMITTED, qtype:'+evt.msg.qtype+' qid:'+evt.msg.qid+' qgsid:'+evt.msg.qgsid+' data:'+evt.msg.qdata+' qstate:'+evt.msg.qstate);
                         //el mensaje de sincronización solo sirve para ver si existo
                         if (evt.msg.qtype == 0){
-                            console.log('- THIS IS A SYNCRONIZATION MSG FROM: '+evt.msg.qgsid+' CURRENT USER:'+GL.userdata.coder);
-
-                            //change user's status to connected
-                            //if it's not me who's sending the message then I take action
+                            //console.log('- THIS IS A SYNCRONIZATION MSG FROM: '+evt.msg.qgsid+' CURRENT USER:'+GL.userdata.coder);
+                            //if it's not me who send the msg
                             if (evt.msg.qgsid != GL.userdata.coder){
-                                changefstat(evt.msg.qgsid,1);
-                            }                            
-
-                            //we look for the friend into the friends array:
-                            /*
-                            for (var hh = 0; hh < myfriends.length; hh++){
-                                if (myfriends[hh][0] == evt.msg.qgsid){
-                                    myfriends[hh][2] = whoiamid;
-                                    myfriends[hh][3] = evt.msg.qstate;
-                                }
-                            }
-                            */
-                            /*
-                            state = evt.msg.qstate;
-                            conectedfriends();
-                            */
+                                changefstat(evt.msg.qgsid,1,GL.now());
+                            } 
                         } else if (evt.msg.qtype == 1){
-                            //console.log('- THIS IS A MSG TO ALL LISTENERS');                         
+                            ////console.log('- THIS IS A MSG TO ALL LISTENERS');                         
                             
                             //click sound
                             var clickSound = new Audio('noerro.mp3');
                             clickSound.play();
 
                             //say I'm alive
-                            if (evt.msg.qgsid != GL.userdata.coder){ changefstat(evt.msg.qgsid,1); }
+                            if (evt.msg.qgsid != GL.userdata.coder){
+                                GL.consol('Message to all users from: '+evt.msg.qgsid);
+                                GL.consol(evt.msg);
+                                changefstat(evt.msg.qgsid,1,GL.now());
+                            }
 
                             //idleTime we force to zero so the counter starts again
                             idleTime = 0;
                             state = 1;
-                            conectedfriends();
-
+                            //conectedfriends();
                             
                             //remote message
-                            var tstamp = microtime();
-                            $("#texto").append('<span class="singlemsg" title="'+mytime()+'"><strong>'+evt.msg.qname+': </strong>'+emoji(evt.msg.qdata)+'</span><span class="singlemsgdate"> </span><br><span class="singlemsgspace bottom5" id="sp'+tstamp+'"><br>&nbsp;<br></span>');
+                            var tstamp = GL.microtime();
+                            $("#texto").append('<span class="singlemsg" title="'+GL.mytime()+'"><strong>'+evt.msg.qname+': </strong>'+emoji(evt.msg.qdata)+'</span><span class="singlemsgdate"> </span><br><span class="singlemsgspace bottom5" id="sp'+tstamp+'"><br>&nbsp;<br></span>');
                             //by forcing the recalculation the scrollbar appears
                             
                             //$(".nano").nanoScroller({ scroll: 'bottom' });
@@ -389,14 +355,14 @@ window.onload = function () {
                 });
 
                 room.addEventListener("stream-added", function (streamEvent) {
-                    console.log('>> Stream Added!');
+                    //console.log('>> Stream Added!');
                     var streams = [];
                     streams.push(streamEvent.stream);
                     subscribeToStreams(streams);
                 });
 
                 room.addEventListener("stream-removed", function (streamEvent) {
-                    console.log('>> Stream Removed!');                
+                    //console.log('>> Stream Removed!');                
                     // Remove stream from DOM
                     var stream = streamEvent.stream;
                     if (stream.elementID !== undefined) {
@@ -406,13 +372,6 @@ window.onload = function () {
                 });
 
                 room.connect();
-
-                
-
-                
-
-               
-
                 //localStream.show("myVideo");
 
             });
