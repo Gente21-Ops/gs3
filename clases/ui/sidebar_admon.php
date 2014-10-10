@@ -71,7 +71,7 @@ include('dict/sidebar_admin.php'); ?>
             
             <li><a href="#" onclick="assignme('admin_data','content'); return false;" title="" class="linko"><img src="images/icons/mainnav/statistics.png" alt="" /><span><?php echo $texts['statistics']; ?></span></a></li>
 
-            <li><a href="#" onclick="assignme('students_config','content'); return false;" title="" class="linko"><img src="images/icons/mainnav/config.png" alt="" /><span><?php echo $texts['configuracion']; ?></span></a></li>            
+            <li><a href="#" onclick="assignme('admin_config','content'); return false;" title="" class="linko"><img src="images/icons/mainnav/config.png" alt="" /><span><?php echo $texts['configuracion']; ?></span></a></li>            
 
         </ul>
     </div>

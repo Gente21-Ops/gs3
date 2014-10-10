@@ -5,7 +5,7 @@ require_once('../mysqlcon.php');
 //este es un hack relativo a windows:
 //require_once('general/number_format.php');
 
-    $elsql = "SELECT idUsers, nombre, apellidos, direccion, telefono, e_mail, nacimiento, code FROM users WHERE tipo = '2'";
+    $elsql = "SELECT idUsers, nombre, apellidos FROM users WHERE tipo = '2'";
 
     //echo $elsql;
     $sqlt = $con->query($elsql); 
@@ -28,7 +28,7 @@ require_once('../mysqlcon.php');
         $chido[] = '<a href="#" onclick="assignme(\'admin_parents?qestudiante='.$row['idUsers'].'\',\'content\'); return false;" class="buttonM bLightBlue">
                     <span class="icon-user"></span><span>Familiares</span></a>';
         $chido[] = '<a href="#" onclick="assignme(\'admin_students_config?qestudiante='.$row['idUsers'].'\',\'content\'); return false;" class="buttonM bGold">
-                    <span class="icon-bars"></span><span>Datos</span></a>';
+                    <span class="icon-cog"></span><span>Datos personales</span></a>';
         
         $output['aaData'][] = $chido;
     }

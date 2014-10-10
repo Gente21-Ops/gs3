@@ -910,7 +910,6 @@ $(function() {
 
 	
 	//===== jQuery UI stuff =====//
-	
 	// default mode
 	$('#progress1').anim_progressbar();
 	
@@ -921,15 +920,14 @@ $(function() {
 	
 	// Progressbar
     $("#progress").progressbar({
-        value: 80
+        value: 20
     });
 	
     // Modal Link
     $('#modal_link').click(function () {
         $('#dialog-message').dialog('open');
         return false;
-    });
-
+    })
 
 
 	//===== Add class on #content resize. Needed for responsive grid =====//
