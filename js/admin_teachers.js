@@ -32,18 +32,15 @@ oTable = $('.dTable').dataTable({
     },
     {
         sName: "nombre"
-    },  
-    {
-        sName: "direccion"
     },
     {
-        sName: "telefono"
+        sName: "correo"
     },
     {
-        sName: "e_mail"
+        sName: "datos"
     },
     {
-        sName: "buts"
+        sName: "materias"
     }] 
 
 

@@ -36,10 +36,9 @@ include('../dict/admin/teachers.php');
                         <th>ID</th>
                         <th><?php echo $texts['col_apellidos']; ?></th>
                         <th><?php echo $texts['col_nombre']; ?></th>
-                        <th><?php echo $texts['col_dir']; ?></th>
-                        <th><?php echo $texts['col_telefono']; ?></th>
-                        <th><?php echo $texts['col_correo']; ?></th>
-                        <th><?php echo $texts['col_but']; ?></th>
+                        <th><?php echo $texts['col_env_correo']; ?></th>
+                        <th><?php echo $texts['col_datos']; ?></th>
+                        <th><?php echo $texts['materias']; ?></th>
                     </tr>
                     </thead>
                     <tbody>

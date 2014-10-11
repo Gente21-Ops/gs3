@@ -1,7 +1,7 @@
 <?php
 error_reporting(E_ALL);
 include("logon.php");
-include('../dict/students_config.php');
+include('../dict/professor_config.php');
 
     ob_start();
     require_once('connection.php');
@@ -22,7 +22,7 @@ include('../dict/students_config.php');
     }
 
 
-    $query = "SELECT * FROM users WHERE idUsers = '".$_GET['qestudiante']."'";
+    $query = "SELECT * FROM users WHERE idUsers = '".$_GET['qmaestro']."'";
     $result = mysqli_query($con, $query);
     $row = mysqli_fetch_assoc($result);
 
@@ -33,7 +33,7 @@ include('../dict/students_config.php');
     <div id="qimgchanged" style="display:none;"><?php echo $texts['imgchanged']; ?></div>
     <div id="qerror" style="display:none;"><?php echo $texts['savederror']; ?></div>
     <div style="display:none;" id="quser"><?php echo $_SESSION['code']; ?></div>
-    <div style="display:none;" id="qestudiante"><?php echo $_GET['qestudiante']; ?></div>
+    <div style="display:none;" id="qmaestro"><?php echo $_GET['qmaestro']; ?></div>
     
     <!-- Main content -->
     <div class="wrapper">
@@ -62,25 +62,6 @@ include('../dict/students_config.php');
 
                     <pre id="console"></pre>
 
-                </div>
-            </div>
-            
-            <!-- Bars chart -->
-            <div class="widget grid6 chartWrapper">
-                <div class="whead"><h6>Estadísticas generales</h6><div class="clear"></div></div>
-                <div class="formRow">
-                    <div class="grid3"><label>Rendimiento:</label></div>
-                    <div class="grid9">
-                        <div id="progress"></div>
-                    </div>
-                    <div class="clear"></div>
-                </div>
-                <div class="formRow">
-                    <div class="grid3"><label>Faltas:</label></div>
-                    <div class="grid9">
-                        <div id="progress1"></div>
-                    </div>
-                    <div class="clear"></div>
                 </div>
             </div>
         

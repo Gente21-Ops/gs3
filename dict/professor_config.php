@@ -6,7 +6,7 @@
 if($_SESSION['qlen'] == "es"){
     $texts = array(
     "title" => "Configuraci&oacute;n de cuenta", 
-	"tabletitle" => "Datos de cuenta del estudiante: ",
+	"tabletitle" => "Datos de cuenta del profesor: ",
 	"col_apellidos" => "Nombre(s) y apellidos",
 	"col_apodo" => "Apodo",
 	"col_dir" => "Direcci&oacute;n",
@@ -22,7 +22,7 @@ if($_SESSION['qlen'] == "es"){
 	"saved" => "Tu información ha sido guardada correctamente",
 	"imgchanged" => "Tu imagen se actualiz&oacute; con &eacute;xito",
 	"savederror" => "Error al guardar",
-	"img_but_browse" => "Cambiar foto del estudiante: ",
+	"img_but_browse" => "Cambiar foto del profesor",
 	"img_advice" => "Haz click en 'Buscar foto'");
 } else if($_SESSION['qlen'] == "en"){
 	$texts = array(
