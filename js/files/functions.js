@@ -103,6 +103,16 @@ $(function() {
 		}
 	}
 
+	//------------------------GLOBAL ERROR OUTPUT
+	GL.clearo = function(msg){
+		if ( window.clear ) {
+			console.clear();
+			GL.consol('console cleared');
+		} else {
+			//alert(msg);
+		}
+	}
+
 	//------------------------GETTER/SETTER
 	GL.getter = function(url,params,datatype,callback){
 		GL.consol('Trying to get data from '+url+' with request parameters:');
@@ -134,10 +144,12 @@ $(function() {
 
 	//------------------------GLOBAL USER DATA
 	//I would like to know who am I, thank you very much
+	/* THE MSG SYSTEM IS DOING THIS
     GL.getter('clases/ui/getmyadata.php',{},'json',returnData);
     function returnData(param) {
     	GL.userdata = param;
     }
+    */
 
     //------------------------TIMESTAMP
 	GL.now = function(num){

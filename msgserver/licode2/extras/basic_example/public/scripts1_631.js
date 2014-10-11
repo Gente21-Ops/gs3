@@ -4,7 +4,7 @@ var localStream, room;
 
 //WHO AM I 
 //whoiam is the code for the user
-var whoiam = GL.userdata.coder;
+var whoiam = '0';
 //whoiamid is the code from the chat
 var whoiamid = 0;
 var whatsmyname = GL.userdata.qnick;
@@ -14,17 +14,17 @@ var first = 0;
 var myfriends = {};
 //var types = Array('','Profesor','Alumn@','Padre/Madre');
 
-//timer vars, state: 1 active, 0 idle
-var idleTime = 0;
-var state = 1;
-
 //timers
-var idleseconds = 30000;
-var deadseconds = 60000;
+//WARNING THIS CREATES LAG IN THE NETWORK 
+//SO VALUES MUST BE KEPT OVER 100000
+var idleseconds = 10000;
+var deadseconds = 20000;
 
 //CONNECTED STATUSES
 var c_status = Array('','status_available', 'status_away', 'status_off');
-var mystatus = 0;
+//timer vars, state: 1 active, 0 idle
+var idleTime = 0;
+var state = 0;
 
 //GLOBAL VARS START
 function getParameterByName(name) {
@@ -43,8 +43,6 @@ function print_r(arr,name) {
 
 window.onload = function () {
 
-    GL.consol('>>>>USER DATA:');
-    GL.consol(GL.userdata);
 
     function emoji(qstr){
         var url = "images/emojis/standar/", patterns = [],
@@ -77,9 +75,12 @@ window.onload = function () {
     function conectedfriends(connectedness){
         //ok so we're gonna create a li per connected friend
         var salida = "";
+        var getpic = '';
+        if (first == 0){ getpic = '?p='+GL.now(); };
         $.each( myfriends, function( key, value ) {
-            salida += "<li id='li_"+value.id+"'><a href='#' title=''><img src='images/users/37/"+value.id+".jpg' alt='' />"
-                +"<span class='contactName'>"
+            
+            salida += "<li id='li_"+value.id+"'><a href='#' title=''><img src='images/users/37/"+value.id+".jpg"+getpic+"' alt='' />"
+                +"<span class='contactName'>" 
                 +"<strong>"+value.name+" <span></span></strong>"
                 //+"<strong>"+value.name+" <span>(5)</span></strong>"
                 //+"<i>web &amp; ui designer</i>"
@@ -98,7 +99,7 @@ window.onload = function () {
 
     //change friend status
     function changefstat(qid,status,timo){    
-        GL.consol('changefstat');    
+        GL.consol('changefstat para: '+qid+' | status:'+status+' | '+timo);    
         //cambio su status en la lista local de amigos
         var res = $.grep(myfriends, function(e){ return e.id == qid; });
         if(res && res.length == 1){
@@ -110,25 +111,26 @@ window.onload = function () {
             res[0].status = status;
         }        
         //cambio el color
-        GL.consol('User lis_'+qid+' Wants to switch his status to:'+c_status[status]+' at:'+timo);
+        //GL.consol('User lis_'+qid+' Wants to switch his status to:'+c_status[status]+' at:'+timo);
         $('#lis_'+qid).attr("class",c_status[status]);
+        //GL.clearo(); 
     }
 
     function checkallstatus(){        
         var checktime = GL.now();
-        GL.consol('Checking everybody\'s status at '+checktime);
+        GL.consol('Checking everybody\'s status at '+GL.mytime());
         $.each( myfriends, function( key, value ) {
             if (value.updated != undefined){
                 //if the difference in time is larger than deadtime and status is not 2 we kill him
                 if ( (checktime - value.updated) > deadseconds && value.status != 2){
-                    GL.consol('User '+value.id+' | '+value.name+' is dead, we set him red');
+                    GL.consol('User '+value.id+' | '+value.name+' is dead, new status: ');
                     changefstat(value.id,2,value.updated);
                 }
                 //if the difference in time is larger than idletime and status is not 1 we set him as idle
                 else if ( (checktime - value.updated) > idleseconds && value.status != 1){
                     changefstat(value.id,1,value.updated);
                 }
-            }
+            } 
         });
     }
 
@@ -138,22 +140,30 @@ window.onload = function () {
         $.post( "clases/ui/getfriends.php", function( data ) {
             //new json format
             myfriends = JSON.parse(data);
-            //console.log(myfriends);
             conectedfriends();
+            //I must get the current user's data before the sync!!!
+            //this is redundant since functions.js does it as well BUT not in sync
+            GL.getter('clases/ui/getmyadata.php',{},'json',returnData);
+            function returnData(param) {
+                GL.userdata = param;
+                whoiam = GL.userdata.coder;
+                //ALL SET!!! we can get this show started
+                if (first == 0){ runme(); }
+            }
         });
-        if (first == 0){
-            runme();
-            first = 1;
-        }
+        
     }
 
     //INIT
     if (first == 0){ getfriends(); };
 
+
+
+
     //RUNME STARTS
     function runme(){ 
     
-        //console.log('Initializing COM client at 632');
+        console.log('@ Initializing COM client at 1122');
 
         recording = false;
         var screen = getParameterByName("screen");
@@ -209,7 +219,7 @@ window.onload = function () {
 
                 room.addEventListener("stream-subscribed", function(streamEvent) {
                     var stream = streamEvent.stream;
-                    //console.log('>> Stream suscribed!');
+                    GL.consol('>> Stream suscribed!');
                     
                     var div = document.createElement('div');
                     div.setAttribute("style", "width: 320px; height: 240px;");
@@ -221,6 +231,8 @@ window.onload = function () {
 
                     //I recognize myself:
                     whoiamid = localStream.getID();
+                    //I change my local state to connected
+                    state = 2;
                     /*//console.log('REMOTE STREAM ID: '+stream.getID()+'\nLOCAL STREAM:'+localStream.getID()
                         +'\nI AM '+GL.userdata.coder+' (ON GS3)  AND ID:'+whoiamid); */
 
@@ -229,91 +241,82 @@ window.onload = function () {
                     //console.log(room.remoteStreams);
 
                     /*---------------START UP SYNC MSG---------------*/
-                    //I identify myself
-                    broadcast(0,whoiamid,GL.userdata.coder,0,GL.userdata.qnick,'',state);
+                    //I identify myself (only once and we burn first)
+                    if (first == 0){
+                    	broadcast(0,whoiamid,GL.userdata.coder,0,GL.userdata.qnick,'StartUp Sync MSG',state);
+                    	interun();
+                    	first = 1;
+                    }
+                    
 
                     /*--------------------OTHER FUNCTIONS STARTS-------------------*/
-                    function broadcast(type,mychatid,mygsid,towho,clearname,data,mystate){ 
-                        GL.consol(mygsid+' is broadcasting, coder:'+GL.userdata.coder);
+                    function broadcast(type,mychatid,mygsid,towho,clearname,data,mystate){
+                        //GL.consol('BROADCAST: type:'+type+' | mychatid:'+mychatid+' | mygsid:'+mygsid+' | towho:'+towho+' | clearname:'+clearname+' | data:'+data+' | mystate:'+mystate);
                         localStream.sendData({
                             qtype:type,
-                            qdata:data,
                             qid:mychatid,
                             qgsid:mygsid,
                             qwho:towho,
                             qname:clearname,
+                            qdata:data,
                             qstate:mystate
                         });
                     }
 
                     function msg(qmsg){
-                        //when sending a message do I really need to get the friends again?
-                        //getfriends();                  
-
-                        //envio el mensaje a mi propia ventana desde fuera de los listeners de otr forma la acción se realiza en el otro usuario
                         localmsg($('#qinput').val());
-                        //send message
                         broadcast(1,whoiamid,GL.userdata.coder,0,GL.userdata.qnick,qmsg,state);
-
                         //clear the area
                         $('textarea#qinput').val('');
-                        ////console.log('Pasa mensaje: '+qmsg);
                     }
 
                     $("#elbutto").click(function() {
                         if ($('#qinput').val().length > 1){
                             msg($('#qinput').val()); 
-                        }                    
+                        } 
+                        return false;                   
                     });
+
                     //===== TIMER STARTS =====//    
-                    //Increment the idle time counter every minute.
-                    var idleInterval = setInterval(timerIncrement, idleseconds); // 1 minute
+				    //Increment the idle time counter every minute.
+				    function interun(){
+				    	
+				        var idleInterval = setInterval(keepAlive, idleseconds); // 1 minute
+						
+				        function keepAlive() {			        	
+				            broadcast(0,whoiamid,GL.userdata.coder,0,GL.userdata.qnick,'Status update to idle | idleseconds:'+idleseconds,state);
+				            checkallstatus();
+				            //this doesn't work
+				            //window.clearInterval(idleInterval);
+				            //GL.consol('Interval killed');
+				            //GL.consol('Timer tick! @'+GL.now()+' | idletime:'+idleTime+' | MY STATE:'+state);
+				        }        
+				    }
 
-                    //Zero the idle timer on mouse movement.
-                    $('body').mousemove(function (e) {
-                        idleTime = 0;
-                    });
-                    $('body').mouseover(function (e) {
-                        idleTime = 0;
-                    });
-                    $('body').keypress(function (e) {
-                        idleTime = 0;
-                    });
-
-                    function timerIncrement() {
-
-                        idleTime ++;
-                        if (idleTime > 1) {
-                            state = 0;
-                            broadcast(0,whoiamid,GL.userdata.coder,0,GL.userdata.qnick,'Status update to idle',state);
-                        } else {
-                            state = 1;
-                        }
-                        GL.consol('Timer tick! @'+GL.now()+' | idletime:'+idleTime+' | MY STATE:'+state);
-                    }
-                    //===== TIMER ENDS =====//
+                    
                     /*--------------------OTHER FUCNTIONS ENDS---------------------*/
 
                     //MSG PROCESSING FUNCTION STARTS
                     stream.addEventListener("stream-data", function(evt){
                         //console.log('Se ha recibido un mensaje del tipo:'+evt.msg.qtype+' está siendo enviado por:'+evt.msg.qgsid);
-                        GL.consol(evt.msg);
+                        //GL.consol(evt.msg);
                         //FORMAT: data|type|id|gsid|towhom
                         //0 => syncronization message
                         //1 => simple message to all listeners
-                        //2 => simple message broacast to a single listener
+                        //2 => simple message broacast to a single listener 
 
                         //***SUPER FUCKING IMPORTANT*********************////////////////////////////////
                         //ALL events inside this listener will have an effect on all peers
                         //so if you want to do something locally must be run outside of thi scope
                         
                         //el mensaje de sincronización solo sirve para ver si existo
-                        if (evt.msg.qtype == 0){
-                            //console.log('- THIS IS A SYNCRONIZATION MSG FROM: '+evt.msg.qgsid+' CURRENT USER:'+GL.userdata.coder);
+                        if (evt.msg.qtype == 0){                            
                             //if it's not me who send the msg
                             if (evt.msg.qgsid != GL.userdata.coder){
+                            	//GL.consol('- THIS IS A SYNCRONIZATION MSG FROM: '+evt.msg.qgsid+' CURRENT USER:'+GL.userdata.coder);
+                            	//GL.consol(evt.msg);
                                 changefstat(evt.msg.qgsid,1,GL.now());
-                            } 
+                            }
                         } else if (evt.msg.qtype == 1){
                             ////console.log('- THIS IS A MSG TO ALL LISTENERS');                         
                             
@@ -348,9 +351,26 @@ window.onload = function () {
                             //////////THE TWILIGHT ZONE//////////////////////
                         }
                         
-                        
                     });
                     //MSG PROCESSING FUNCTION ENDS
+
+
+
+                    
+                    
+                    //===== TIMER ENDS =====//
+                    /*
+                    //Zero the idle timer on mouse movement.
+                    $('body').mousemove(function (e) {
+                        idleTime = 0;
+                    });
+                    $('body').mouseover(function (e) {
+                        idleTime = 0;
+                    });
+                    $('body').keypress(function (e) {
+                        idleTime = 0;
+                    });
+					*/
                     
                 });
 

@@ -11,7 +11,13 @@
         'nombre' => $_SESSION['nombre'],
         'apellidos' => $_SESSION['apellidos'],
         'pass' => $_SESSION['pass'],
-        'direccion' => $_SESSION['direccion'],
+
+        'calle_num' => $_SESSION['calle_num'],
+        'colonia' => $_SESSION['colonia'],
+        'zip_code' => $_SESSION['zip_code'],
+        'municipio' => $_SESSION['municipio'],
+        'estado' => $_SESSION['estado'],
+
         'telefono' => $_SESSION['telefono'],
         'e_mail' => $_SESSION['e_mail'],
         'coder' => $_SESSION['code'],
@@ -22,5 +28,5 @@
         'qnick' => $_SESSION['qnick']
     );
     echo json_encode($alldata);
-    //echo $alldata;
+    //print_r($alldata);
 ?>
