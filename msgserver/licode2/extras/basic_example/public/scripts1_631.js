@@ -17,8 +17,8 @@ var myfriends = {};
 //timers
 //WARNING THIS CREATES LAG IN THE NETWORK 
 //SO VALUES MUST BE KEPT OVER 100000
-var idleseconds = 10000;
-var deadseconds = 20000;
+var idleseconds = 15000;
+var deadseconds = 30000;
 
 //CONNECTED STATUSES
 var c_status = Array('','status_available', 'status_away', 'status_off');
@@ -107,6 +107,9 @@ window.onload = function () {
             //otherwise the other states will never occur
             if (status == 1){
                 res[0].updated = timo;
+                GL.consol('I do update the time for user:'+qid);
+            } else{
+            	GL.consol('I do NOT update the time for user'+qid);
             }            
             res[0].status = status;
         }        
@@ -118,28 +121,31 @@ window.onload = function () {
 
     function checkallstatus(){        
         var checktime = GL.now();
-        GL.consol('Checking everybody\'s status at '+GL.mytime());
         $.each( myfriends, function( key, value ) {
-            if (value.updated != undefined){
+            if (value.updated != undefined){ 
+            	GL.consol('This user has a status:'+value.status+' | his latest update was @'+(checktime - value.updated)+' | idleseconds:'+idleseconds);
                 //if the difference in time is larger than deadtime and status is not 2 we kill him
                 if ( (checktime - value.updated) > deadseconds && value.status != 2){
                     GL.consol('User '+value.id+' | '+value.name+' is dead, new status: ');
-                    changefstat(value.id,2,value.updated);
+                    changefstat(value.id,3,value.updated);
                 }
                 //if the difference in time is larger than idletime and status is not 1 we set him as idle
-                else if ( (checktime - value.updated) > idleseconds && value.status != 1){
-                    changefstat(value.id,1,value.updated);
+                else if ( (checktime - value.updated) >= idleseconds && value.status != 2){
+                    changefstat(value.id,2,value.updated);
                 }
             } 
         });
+        GL.consol('Checking everybody\'s status at '+GL.mytime());
+        GL.consol(myfriends);
     }
 
     //we get friend's list from server
-    function getfriends(){        
-        //console.log('>> getting list of friends at '+GL.now());
-        $.post( "clases/ui/getfriends.php", function( data ) {
+    function getfriends(){  
+
+    	GL.getter('clases/ui/getfriends.php',{},'json',retmydat);
+        function retmydat(mydata) {
             //new json format
-            myfriends = JSON.parse(data);
+            myfriends = mydata;
             conectedfriends();
             //I must get the current user's data before the sync!!!
             //this is redundant since functions.js does it as well BUT not in sync
@@ -150,7 +156,7 @@ window.onload = function () {
                 //ALL SET!!! we can get this show started
                 if (first == 0){ runme(); }
             }
-        });
+        };
         
     }
 
@@ -163,7 +169,7 @@ window.onload = function () {
     //RUNME STARTS
     function runme(){ 
     
-        console.log('@ Initializing COM client at 1122');
+        console.log('@ Initializing COM client at 1133');
 
         recording = false;
         var screen = getParameterByName("screen");

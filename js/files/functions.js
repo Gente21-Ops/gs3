@@ -118,7 +118,7 @@ $(function() {
 		GL.consol('Trying to get data from '+url+' with request parameters:');
 		GL.consol(params);
 		$.ajax({
-			url: url,
+			url: url+'?'+GL.now(),
 			type: 'POST',
 			data: params,
 			async: true,
@@ -131,11 +131,11 @@ $(function() {
 			error: function(xhr, status, error) {
 			  var err = xhr.responseText;
 			  GL.consol(err.Message+' | '+url+' | ');
-			  //GL.consol('ERROR: '+err);
+			  //GL.consol('ERROR: '+err); 
 			  callback(err);
 			}
 		});
-	}
+	} 
 
 	//------------------------RANDOM NUMBER GENERATOR
 	GL.rando = function(num){
@@ -922,6 +922,7 @@ $(function() {
 
 	
 	//===== jQuery UI stuff =====//
+	
 	// default mode
 	$('#progress1').anim_progressbar();
 	
@@ -932,14 +933,15 @@ $(function() {
 	
 	// Progressbar
     $("#progress").progressbar({
-        value: 20
+        value: 80
     });
 	
     // Modal Link
     $('#modal_link').click(function () {
         $('#dialog-message').dialog('open');
         return false;
-    })
+    });
+
 
 
 	//===== Add class on #content resize. Needed for responsive grid =====//
