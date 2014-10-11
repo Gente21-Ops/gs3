@@ -1,20 +1,29 @@
 <div class="contentTop">
         <span class="pageTitle"><span class="icon-screen"></span><?php echo $texts['title']; ?></span>
-        <?php //include(''); ?>
-        <ul class="quickStats">
-            <li>
-                <a href="" class="blueImg"><img src="images/icons/quickstats/plus.png" alt="" /></a>
-                <div class="floatR"><strong class="blue"><?php require_once('student/calif_alumno.php'); ?></strong><span>promedio</span></div>
-            </li>
-            <li>
-                <a href="" class="redImg"><img src="images/icons/quickstats/user.png" alt="" /></a>
-                <div class="floatR"><strong class="blue"><?php require_once('student/faltas_alumno.php'); ?></strong><span>faltas</span></div>
-            </li>
-            <!--<li>
-                <a href="" class="greenImg"><img src="images/icons/quickstats/money.png" alt="" /></a>
-                <div class="floatR"><strong class="blue"><?php require_once('student/saldo_alumno.php'); ?></strong><span>saldo</span></div>
-            </li>-->
-        </ul>
+        <?php 
+            
+            if($_SESSION['tipo'] == 2){
+                require_once('student/faltas_alumno.php');
+                require_once('student/calif_alumno.php');
+                require_once('student/saldo_alumno.php');
+                echo '
+                <ul class="quickStats">
+                    <li>
+                        <a href="" class="blueImg"><img src="images/icons/quickstats/plus.png" alt="" /></a>
+                        <div class="floatR"><strong class="blue">'.$qcalif.'</strong><span>promedio</span></div>
+                    </li>
+                    <li>
+                        <a href="" class="redImg"><img src="images/icons/quickstats/user.png" alt="" /></a>
+                        <div class="floatR"><strong class="blue">'.$qfaltas.'</strong><span>faltas</span></div>
+                    </li>
+                    <!--<li>
+                        <a href="" class="greenImg"><img src="images/icons/quickstats/money.png" alt="" /></a>
+                        <div class="floatR"><strong class="blue">'.$qsaldo.'</strong><span>saldo</span></div>
+                    </li>-->
+                </ul>
+                ';
+            }
+        ?>
         <div class="clear"></div>
     </div>
     
@@ -24,14 +33,14 @@
             <ul id="breadcrumbs" class="breadcrumbs">
                 <li><a href="#">Principal</a></li>
                 <?php
-                    $items = explode('|', $breads); 
+                    /*$items = explode('|', $breads); 
                     for ($r = 0; $r < sizeof($items); $r++){
                         $inner = explode('^', $items[$r]);
                         
                         //linking is disabled until finding a solution for dynamic loading
                         //echo '<li><a href="'.$inner[1].'" data-js="'.$inner[2].'">'.$inner[0].'</a></li>';
                         echo '<li><a href="#" data-js="'.$inner[2].'">'.$inner[0].'</a></li>';
-                    }
+                    }*/
                  ?>
 
                 

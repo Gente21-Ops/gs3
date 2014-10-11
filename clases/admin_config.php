@@ -3,8 +3,6 @@ error_reporting(E_ALL);
 include("logon.php");
 include('../dict/students_config.php');
 
-
-
     ob_start();
     require_once('connection.php');
     mysql_query('SET CHARACTER SET utf8');
@@ -22,18 +20,12 @@ include('../dict/students_config.php');
     } else {
         echo '<script src="http://jquery-ui.googlecode.com/svn/tags/latest/ui/i18n/jquery.ui.datepicker-en-GB.js"></script>';
     }
-
-    echo $qfaltas;
 ?>  
 
     <div id="qlang" style="display:none;"><?php echo $_SESSION['qlen']; ?></div>
     <div id="qimgchanged" style="display:none;"><?php echo $texts['imgchanged']; ?></div>
     <div id="qerror" style="display:none;"><?php echo $texts['savederror']; ?></div>
     <div style="display:none;" id="quser"><?php echo $_SESSION['code']; ?></div>
-    <div style="display:none;" id="qcalif"><?php echo $qcalif; ?></div>
-    <div style="display:none;" id="qfaltas"><?php echo $qfaltas; ?></div>
-
-    
     
     <!-- Main content -->
     <div class="wrapper">
@@ -42,7 +34,7 @@ include('../dict/students_config.php');
         <div class="fluid">
         
             <!-- Bars chart -->
-            <div class="widget grid6 chartWrapper">
+            <div class="widget grid12 chartWrapper">
                 <div class="whead"><h6><?php echo $texts['img_but_browse']; ?></h6><div class="clear"></div></div>
                 <div class="body">
 
@@ -65,26 +57,26 @@ include('../dict/students_config.php');
                 </div>
             </div>
             
-            <!-- Bars chart -->
+            <!-- Bars chart 
             <div class="widget grid6 chartWrapper">
                 <div class="whead"><h6>Estadísticas generales</h6><div class="clear"></div></div>
                 <div class="formRow">
-                    <div class="grid3"><label>Promedio:</label></div>
+                    <div class="grid3"><label>Rendimiento:</label></div>
                     <div class="grid9">
-                        <div id="progressProm"></div>
+                        <div id="progress"></div>
                     </div>
                     <div class="clear"></div>
                 </div>
                 <div class="formRow">
                     <div class="grid3"><label>Faltas:</label></div>
                     <div class="grid9">
-                        <div id="progressFaltas"></div>
+                        <div id="progress1"></div>
                     </div>
                     <div class="clear"></div>
                 </div>
             </div>
         
-        </div>
+        </div>-->
 
     
         <!-- 6 + 6 -->
