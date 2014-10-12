@@ -17,14 +17,17 @@ var myfriends = {};
 //timers
 //WARNING THIS CREATES LAG IN THE NETWORK 
 //SO VALUES MUST BE KEPT OVER 100000
-var idleseconds = 15000;
-var deadseconds = 30000;
+var idleseconds = 600000; //<- 600 seconds (10 minutes)
+var deadseconds = 1200000; //<- 1200 seconds (20 minutes)
 
 //CONNECTED STATUSES
 var c_status = Array('','status_available', 'status_away', 'status_off');
 //timer vars, state: 1 active, 0 idle
 var idleTime = 0;
 var state = 0;
+
+//who am I talking with?
+var talkingto = '0';
 
 //GLOBAL VARS START
 function getParameterByName(name) {
@@ -40,6 +43,20 @@ function print_r(arr,name) {
       //console.log(index + " : " + arr[index]);
     }
 }
+
+function tof(who){
+    talkingto = who;        
+    //let's retrieve this person's name
+    var res = $.grep(myfriends, function(e){ return e.id == who; });
+    if(res && res.length == 1){
+        //GL.consol('Going to chat to:'+talkingto+' | '+res[0].name);
+        //console.log('Going to chat to:'+talkingto+' | '+res[0].name);
+        $('#talkto').html('<img src="images/users/37/'+who+'.jpg" style="width:37px; height:37px; vertical-align:middle;"><span> &nbsp; '+res[0].name+'</span>');
+    }
+    return false;
+}
+
+
 
 window.onload = function () {
 
@@ -74,32 +91,35 @@ window.onload = function () {
     //list of connected friends starts
     function conectedfriends(connectedness){
         //ok so we're gonna create a li per connected friend
-        var salida = "";
+        var salida = '';
         var getpic = '';
         if (first == 0){ getpic = '?p='+GL.now(); };
         $.each( myfriends, function( key, value ) {
             
-            salida += "<li id='li_"+value.id+"'><a href='#' title=''><img src='images/users/37/"+value.id+".jpg"+getpic+"' alt='' />"
-                +"<span class='contactName'>" 
-                +"<strong>"+value.name+" <span></span></strong>"
+            salida += '<li id="li_'+value.id+'">'
+                +'<a href="#" onclick="tof(\''+value.id+'\'); return false;" title="">'
+                +'<img src="images/users/37/'+value.id+'.jpg'+getpic+'" style="width:22px; height:22px;" alt="" />'
+                +'<span class="contactName">'
+                +'<strong>'+value.name+' <span></span></strong>'
                 //+"<strong>"+value.name+" <span>(5)</span></strong>"
                 //+"<i>web &amp; ui designer</i>"
-                +"<i>GS user (more data)</i>"
-                +"</span>"
-                +"<span class='status_off' id='lis_"+value.id+"'></span>"
-                +"<span class='clear'></span>"
-                +"</a>"
-                +"</li >";
+                //+'<i>GS user (more data)</i>'
+                +'</span>'
+                +'<span class="status_off" id="lis_'+value.id+'"></span>'
+                +'<span class="clear"></span>'
+                +'</a>'
+                +'</li >';
         });        
+        // onclick='talkingto(\'"+value.id+"\'); return false;'
         //console.log('recreating friend\'s list with data:');
-        GL.consol(myfriends);
+        //GL.consol(myfriends);
         $('#myfirends').html(salida);
     } 
     //list of connected friends ends
 
     //change friend status
     function changefstat(qid,status,timo){    
-        GL.consol('changefstat para: '+qid+' | status:'+status+' | '+timo);    
+        //GL.consol('changefstat para: '+qid+' | status:'+status+' | '+timo);     
         //cambio su status en la lista local de amigos
         var res = $.grep(myfriends, function(e){ return e.id == qid; });
         if(res && res.length == 1){
@@ -107,10 +127,8 @@ window.onload = function () {
             //otherwise the other states will never occur
             if (status == 1){
                 res[0].updated = timo;
-                GL.consol('I do update the time for user:'+qid);
-            } else{
-            	GL.consol('I do NOT update the time for user'+qid);
-            }            
+                //GL.consol('I DO update the time for user:'+qid+' nwe time:'+timo);
+            }           
             res[0].status = status;
         }        
         //cambio el color
@@ -123,19 +141,24 @@ window.onload = function () {
         var checktime = GL.now();
         $.each( myfriends, function( key, value ) {
             if (value.updated != undefined){ 
-            	GL.consol('This user has a status:'+value.status+' | his latest update was @'+(checktime - value.updated)+' | idleseconds:'+idleseconds);
+            	GL.consol('Cehcktime:'+checktime+' | his latest update was @'+(checktime - value.updated)+' | updated @'+value.updated);
                 //if the difference in time is larger than deadtime and status is not 2 we kill him
-                if ( (checktime - value.updated) > deadseconds && value.status != 2){
-                    GL.consol('User '+value.id+' | '+value.name+' is dead, new status: ');
+                if ( (checktime - value.updated) >= deadseconds && value.status != 3){
+                    GL.consol('>>> User '+value.id+' | '+value.name+' is dead, new status: 3');
                     changefstat(value.id,3,value.updated);
                 }
                 //if the difference in time is larger than idletime and status is not 1 we set him as idle
                 else if ( (checktime - value.updated) >= idleseconds && value.status != 2){
+                    GL.consol('>>> User '+value.id+' | '+value.name+' is asleep, new status: 2');
                     changefstat(value.id,2,value.updated);
                 }
-            } 
+            } else {
+                //este usuario NO existe (no está conectado)
+                //GL.consol('Este usuario NO tiene definido su timer');
+                //changefstat(value.id,1,value.updated);
+            }
         });
-        GL.consol('Checking everybody\'s status at '+GL.mytime());
+        //GL.consol('Checking everybody\'s status at '+GL.mytime());
         GL.consol(myfriends);
     }
 
@@ -289,8 +312,7 @@ window.onload = function () {
 				    	
 				        var idleInterval = setInterval(keepAlive, idleseconds); // 1 minute
 						
-				        function keepAlive() {			        	
-				            broadcast(0,whoiamid,GL.userdata.coder,0,GL.userdata.qnick,'Status update to idle | idleseconds:'+idleseconds,state);
+				        function keepAlive() {			     
 				            checkallstatus();
 				            //this doesn't work
 				            //window.clearInterval(idleInterval);
@@ -323,24 +345,19 @@ window.onload = function () {
                             	//GL.consol(evt.msg);
                                 changefstat(evt.msg.qgsid,1,GL.now());
                             }
+                        ////console.log('- THIS IS A MSG TO ALL LISTENERS');    
                         } else if (evt.msg.qtype == 1){
-                            ////console.log('- THIS IS A MSG TO ALL LISTENERS');                         
-                            
-                            //click sound
-                            var clickSound = new Audio('noerro.mp3');
-                            clickSound.play();
 
                             //say I'm alive
                             if (evt.msg.qgsid != GL.userdata.coder){
+                                //click sound
+                                var clickSound = new Audio('noerro.mp3');
+                                clickSound.play();
+
                                 GL.consol('Message to all users from: '+evt.msg.qgsid);
                                 GL.consol(evt.msg);
                                 changefstat(evt.msg.qgsid,1,GL.now());
                             }
-
-                            //idleTime we force to zero so the counter starts again
-                            idleTime = 0;
-                            state = 1;
-                            //conectedfriends();
                             
                             //remote message
                             var tstamp = GL.microtime();
@@ -355,6 +372,9 @@ window.onload = function () {
                             //THIS HAPPENS ON THE OTHER CLIENT'S BROWSER/////
                             //$('#content').html('<br><strong><span style="font-size:50px">MESSAGE FROM BEYOND</span></strong>');
                             //////////THE TWILIGHT ZONE//////////////////////
+                        ////console.log('- THIS IS A MSG TO A CERTAIN LISTENER');
+                        } else if (evt.msg.qtype == 2){
+
                         }
                         
                     });

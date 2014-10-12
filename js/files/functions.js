@@ -39,6 +39,7 @@ GL.emoticons = {
         ":B":"Nerd.png",
         "(nerd)":"Nerd.png"
       }
+GL.chat = {};
 
 //global function for simple loading
 function assignme(url,target){
@@ -179,6 +180,26 @@ $(function() {
 	    var seconds = new Date() / 1000;
 	    return Math.ceil(seconds);
 	}
+
+	/*----LOCAL CHAT FUNCTIONS STARTS----*/
+	GL.ch_savedata = function(timestamp,senderid,text){
+		//let's retrieve the info from this conversation
+		var retrievedObject = localStorage.getItem('c_'+senderid);
+		var temp = JSON.parse(retrievedObject);
+		
+		//add new msg
+		temp.push({ 'tim': timestamp, 'sid': senderid, 'txt': text });
+		//save to local
+		localStorage.setItem(window['c_'+senderid], JSON.stringify(temp));
+		
+	}
+	function ch_getdata(){
+
+	}
+	function ch_deleteold(){
+	    
+	}
+	/*-----LOCAL CHAT FUNCTIONS ENDS-----*/
 
     //----- USER HOVER --------//
   // $("#elusero").tipsy({html: true, gravity: $.fn.tipsy.autoNS });

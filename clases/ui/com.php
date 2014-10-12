@@ -4,13 +4,6 @@
 <!-- Secondary nav -->
     <div class="secNav">
         <div class="secWrapper">
-            <div class="secTop">
-                <div class="balance">
-                    <div class="balInfo">Chat window<span>15 new messages</span></div>
-                    <div class="balAmount"><span class="balBars"><!--5,10,15,20,18,16,14,20,15,16,12,10--></span><span>$58,990</span></div>
-                </div>
-                <a href="#" class="triangle-red"></a>
-            </div>
 
 
             
@@ -27,9 +20,9 @@
                     <li><a href="#alt2" title=""><span class="icos-archive"></span></a></li>
                 </ul>
 
-                -->
                 
-                <div class="divider"><span></span></div>
+                
+                <div class="divider"><span></span></div>-->
                 
                 <!--
                 <div id="general">
@@ -67,6 +60,14 @@
                 -->
                 
                 <div id="alt1">
+
+                        <div class="sideWidget">
+                            <div class="formRow">
+                                <div class="pageTitle" id="talkto">
+                                    Chat window
+                                </div><!--<span>15 new messages</span>-->
+                            </div>
+                        </div>
                                             
                         <div class="sideWidget">
                             <div class="nano" id="about">
@@ -84,6 +85,11 @@
                             <div class="formRow">
                                 <input type="submit" class="buttonS bLightBlue" value="SEND MESSAGE" id="elbutto" />
                             </div>
+                            <!--
+                            <div class="formRow">
+                                &nbsp;
+                            </div>
+                            -->
                         </div>
 
                     <div class="divider"><span></span></div>
@@ -138,7 +144,7 @@
                 -->
             </div>
             
-            <div class="divider"><span></span></div> 
+            <!--<div class="divider"><span></span></div>-->
             
        </div> 
        <div class="clear"></div>
