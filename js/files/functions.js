@@ -39,6 +39,7 @@ GL.emoticons = {
         ":B":"Nerd.png",
         "(nerd)":"Nerd.png"
       }
+GL.chat = {};
 
 //global function for simple loading
 function assignme(url,target){
@@ -103,12 +104,22 @@ $(function() {
 		}
 	}
 
+	//------------------------GLOBAL ERROR OUTPUT
+	GL.clearo = function(msg){
+		if ( window.clear ) {
+			console.clear();
+			GL.consol('console cleared');
+		} else {
+			//alert(msg);
+		}
+	}
+
 	//------------------------GETTER/SETTER
 	GL.getter = function(url,params,datatype,callback){
 		GL.consol('Trying to get data from '+url+' with request parameters:');
 		GL.consol(params);
 		$.ajax({
-			url: url,
+			url: url+'?'+GL.now(),
 			type: 'POST',
 			data: params,
 			async: true,
@@ -121,11 +132,11 @@ $(function() {
 			error: function(xhr, status, error) {
 			  var err = xhr.responseText;
 			  GL.consol(err.Message+' | '+url+' | ');
-			  //GL.consol('ERROR: '+err);
+			  //GL.consol('ERROR: '+err); 
 			  callback(err);
 			}
 		});
-	}
+	} 
 
 	//------------------------RANDOM NUMBER GENERATOR
 	GL.rando = function(num){
@@ -134,10 +145,12 @@ $(function() {
 
 	//------------------------GLOBAL USER DATA
 	//I would like to know who am I, thank you very much
+	/* THE MSG SYSTEM IS DOING THIS
     GL.getter('clases/ui/getmyadata.php',{},'json',returnData);
     function returnData(param) {
     	GL.userdata = param;
     }
+    */
 
     //------------------------TIMESTAMP
 	GL.now = function(num){
@@ -167,6 +180,26 @@ $(function() {
 	    var seconds = new Date() / 1000;
 	    return Math.ceil(seconds);
 	}
+
+	/*----LOCAL CHAT FUNCTIONS STARTS----*/
+	GL.ch_savedata = function(timestamp,senderid,text){
+		//let's retrieve the info from this conversation
+		var retrievedObject = localStorage.getItem('c_'+senderid);
+		var temp = JSON.parse(retrievedObject);
+		
+		//add new msg
+		temp.push({ 'tim': timestamp, 'sid': senderid, 'txt': text });
+		//save to local
+		localStorage.setItem(window['c_'+senderid], JSON.stringify(temp));
+		
+	}
+	function ch_getdata(){
+
+	}
+	function ch_deleteold(){
+	    
+	}
+	/*-----LOCAL CHAT FUNCTIONS ENDS-----*/
 
     //----- USER HOVER --------//
   // $("#elusero").tipsy({html: true, gravity: $.fn.tipsy.autoNS });
@@ -910,6 +943,7 @@ $(function() {
 
 	
 	//===== jQuery UI stuff =====//
+	
 	// default mode
 	$('#progress1').anim_progressbar();
 	
@@ -920,14 +954,15 @@ $(function() {
 	
 	// Progressbar
     $("#progress").progressbar({
-        value: 20
+        value: 80
     });
 	
     // Modal Link
     $('#modal_link').click(function () {
         $('#dialog-message').dialog('open');
         return false;
-    })
+    });
+
 
 
 	//===== Add class on #content resize. Needed for responsive grid =====//

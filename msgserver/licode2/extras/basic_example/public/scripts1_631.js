@@ -4,7 +4,7 @@ var localStream, room;
 
 //WHO AM I 
 //whoiam is the code for the user
-var whoiam = GL.userdata.coder;
+var whoiam = '0';
 //whoiamid is the code from the chat
 var whoiamid = 0;
 var whatsmyname = GL.userdata.qnick;
@@ -14,17 +14,20 @@ var first = 0;
 var myfriends = {};
 //var types = Array('','Profesor','Alumn@','Padre/Madre');
 
-//timer vars, state: 1 active, 0 idle
-var idleTime = 0;
-var state = 1;
-
 //timers
-var idleseconds = 30000;
-var deadseconds = 60000;
+//WARNING THIS CREATES LAG IN THE NETWORK 
+//SO VALUES MUST BE KEPT OVER 100000
+var idleseconds = 600000; //<- 600 seconds (10 minutes)
+var deadseconds = 1200000; //<- 1200 seconds (20 minutes)
 
 //CONNECTED STATUSES
 var c_status = Array('','status_available', 'status_away', 'status_off');
-var mystatus = 0;
+//timer vars, state: 1 active, 0 idle
+var idleTime = 0;
+var state = 0;
+
+//who am I talking with?
+var talkingto = '0';
 
 //GLOBAL VARS START
 function getParameterByName(name) {
@@ -41,10 +44,22 @@ function print_r(arr,name) {
     }
 }
 
+function tof(who){
+    talkingto = who;        
+    //let's retrieve this person's name
+    var res = $.grep(myfriends, function(e){ return e.id == who; });
+    if(res && res.length == 1){
+        //GL.consol('Going to chat to:'+talkingto+' | '+res[0].name);
+        //console.log('Going to chat to:'+talkingto+' | '+res[0].name);
+        $('#talkto').html('<img src="images/users/37/'+who+'.jpg" style="width:37px; height:37px; vertical-align:middle;"><span> &nbsp; '+res[0].name+'</span>');
+    }
+    return false;
+}
+
+
+
 window.onload = function () {
 
-    GL.consol('>>>>USER DATA:');
-    GL.consol(GL.userdata);
 
     function emoji(qstr){
         var url = "images/emojis/standar/", patterns = [],
@@ -76,29 +91,35 @@ window.onload = function () {
     //list of connected friends starts
     function conectedfriends(connectedness){
         //ok so we're gonna create a li per connected friend
-        var salida = "";
+        var salida = '';
+        var getpic = '';
+        if (first == 0){ getpic = '?p='+GL.now(); };
         $.each( myfriends, function( key, value ) {
-            salida += "<li id='li_"+value.id+"'><a href='#' title=''><img src='images/users/37/"+value.id+".jpg' alt='' />"
-                +"<span class='contactName'>"
-                +"<strong>"+value.name+" <span></span></strong>"
+            
+            salida += '<li id="li_'+value.id+'">'
+                +'<a href="#" onclick="tof(\''+value.id+'\'); return false;" title="">'
+                +'<img src="images/users/37/'+value.id+'.jpg'+getpic+'" style="width:22px; height:22px;" alt="" />'
+                +'<span class="contactName">'
+                +'<strong>'+value.name+' <span></span></strong>'
                 //+"<strong>"+value.name+" <span>(5)</span></strong>"
                 //+"<i>web &amp; ui designer</i>"
-                +"<i>GS user (more data)</i>"
-                +"</span>"
-                +"<span class='status_off' id='lis_"+value.id+"'></span>"
-                +"<span class='clear'></span>"
-                +"</a>"
-                +"</li >";
+                //+'<i>GS user (more data)</i>'
+                +'</span>'
+                +'<span class="status_off" id="lis_'+value.id+'"></span>'
+                +'<span class="clear"></span>'
+                +'</a>'
+                +'</li >';
         });        
+        // onclick='talkingto(\'"+value.id+"\'); return false;'
         //console.log('recreating friend\'s list with data:');
-        GL.consol(myfriends);
+        //GL.consol(myfriends);
         $('#myfirends').html(salida);
     } 
     //list of connected friends ends
 
     //change friend status
     function changefstat(qid,status,timo){    
-        GL.consol('changefstat');    
+        //GL.consol('changefstat para: '+qid+' | status:'+status+' | '+timo);     
         //cambio su status en la lista local de amigos
         var res = $.grep(myfriends, function(e){ return e.id == qid; });
         if(res && res.length == 1){
@@ -106,54 +127,72 @@ window.onload = function () {
             //otherwise the other states will never occur
             if (status == 1){
                 res[0].updated = timo;
-            }            
+                //GL.consol('I DO update the time for user:'+qid+' nwe time:'+timo);
+            }           
             res[0].status = status;
         }        
         //cambio el color
-        GL.consol('User lis_'+qid+' Wants to switch his status to:'+c_status[status]+' at:'+timo);
+        //GL.consol('User lis_'+qid+' Wants to switch his status to:'+c_status[status]+' at:'+timo);
         $('#lis_'+qid).attr("class",c_status[status]);
+        //GL.clearo(); 
     }
 
     function checkallstatus(){        
         var checktime = GL.now();
-        GL.consol('Checking everybody\'s status at '+checktime);
         $.each( myfriends, function( key, value ) {
-            if (value.updated != undefined){
+            if (value.updated != undefined){ 
+            	GL.consol('Cehcktime:'+checktime+' | his latest update was @'+(checktime - value.updated)+' | updated @'+value.updated);
                 //if the difference in time is larger than deadtime and status is not 2 we kill him
-                if ( (checktime - value.updated) > deadseconds && value.status != 2){
-                    GL.consol('User '+value.id+' | '+value.name+' is dead, we set him red');
-                    changefstat(value.id,2,value.updated);
+                if ( (checktime - value.updated) >= deadseconds && value.status != 3){
+                    GL.consol('>>> User '+value.id+' | '+value.name+' is dead, new status: 3');
+                    changefstat(value.id,3,value.updated);
                 }
                 //if the difference in time is larger than idletime and status is not 1 we set him as idle
-                else if ( (checktime - value.updated) > idleseconds && value.status != 1){
-                    changefstat(value.id,1,value.updated);
+                else if ( (checktime - value.updated) >= idleseconds && value.status != 2){
+                    GL.consol('>>> User '+value.id+' | '+value.name+' is asleep, new status: 2');
+                    changefstat(value.id,2,value.updated);
                 }
+            } else {
+                //este usuario NO existe (no está conectado)
+                //GL.consol('Este usuario NO tiene definido su timer');
+                //changefstat(value.id,1,value.updated);
             }
         });
+        //GL.consol('Checking everybody\'s status at '+GL.mytime());
+        GL.consol(myfriends);
     }
 
     //we get friend's list from server
-    function getfriends(){        
-        //console.log('>> getting list of friends at '+GL.now());
-        $.post( "clases/ui/getfriends.php", function( data ) {
+    function getfriends(){  
+
+    	GL.getter('clases/ui/getfriends.php',{},'json',retmydat);
+        function retmydat(mydata) {
             //new json format
-            myfriends = JSON.parse(data);
-            //console.log(myfriends);
+            myfriends = mydata;
             conectedfriends();
-        });
-        if (first == 0){
-            runme();
-            first = 1;
-        }
+            //I must get the current user's data before the sync!!!
+            //this is redundant since functions.js does it as well BUT not in sync
+            GL.getter('clases/ui/getmyadata.php',{},'json',returnData);
+            function returnData(param) {
+                GL.userdata = param;
+                whoiam = GL.userdata.coder;
+                //ALL SET!!! we can get this show started
+                if (first == 0){ runme(); }
+            }
+        };
+        
     }
 
     //INIT
     if (first == 0){ getfriends(); };
 
+
+
+
     //RUNME STARTS
     function runme(){ 
     
-        //console.log('Initializing COM client at 632');
+        console.log('@ Initializing COM client at 1133');
 
         recording = false;
         var screen = getParameterByName("screen");
@@ -209,7 +248,7 @@ window.onload = function () {
 
                 room.addEventListener("stream-subscribed", function(streamEvent) {
                     var stream = streamEvent.stream;
-                    //console.log('>> Stream suscribed!');
+                    GL.consol('>> Stream suscribed!');
                     
                     var div = document.createElement('div');
                     div.setAttribute("style", "width: 320px; height: 240px;");
@@ -221,6 +260,8 @@ window.onload = function () {
 
                     //I recognize myself:
                     whoiamid = localStream.getID();
+                    //I change my local state to connected
+                    state = 2;
                     /*//console.log('REMOTE STREAM ID: '+stream.getID()+'\nLOCAL STREAM:'+localStream.getID()
                         +'\nI AM '+GL.userdata.coder+' (ON GS3)  AND ID:'+whoiamid); */
 
@@ -229,109 +270,94 @@ window.onload = function () {
                     //console.log(room.remoteStreams);
 
                     /*---------------START UP SYNC MSG---------------*/
-                    //I identify myself
-                    broadcast(0,whoiamid,GL.userdata.coder,0,GL.userdata.qnick,'',state);
+                    //I identify myself (only once and we burn first)
+                    if (first == 0){
+                    	broadcast(0,whoiamid,GL.userdata.coder,0,GL.userdata.qnick,'StartUp Sync MSG',state);
+                    	interun();
+                    	first = 1;
+                    }
+                    
 
                     /*--------------------OTHER FUNCTIONS STARTS-------------------*/
-                    function broadcast(type,mychatid,mygsid,towho,clearname,data,mystate){ 
-                        GL.consol(mygsid+' is broadcasting, coder:'+GL.userdata.coder);
+                    function broadcast(type,mychatid,mygsid,towho,clearname,data,mystate){
+                        //GL.consol('BROADCAST: type:'+type+' | mychatid:'+mychatid+' | mygsid:'+mygsid+' | towho:'+towho+' | clearname:'+clearname+' | data:'+data+' | mystate:'+mystate);
                         localStream.sendData({
                             qtype:type,
-                            qdata:data,
                             qid:mychatid,
                             qgsid:mygsid,
                             qwho:towho,
                             qname:clearname,
+                            qdata:data,
                             qstate:mystate
                         });
                     }
 
                     function msg(qmsg){
-                        //when sending a message do I really need to get the friends again?
-                        //getfriends();                  
-
-                        //envio el mensaje a mi propia ventana desde fuera de los listeners de otr forma la acción se realiza en el otro usuario
                         localmsg($('#qinput').val());
-                        //send message
                         broadcast(1,whoiamid,GL.userdata.coder,0,GL.userdata.qnick,qmsg,state);
-
                         //clear the area
                         $('textarea#qinput').val('');
-                        ////console.log('Pasa mensaje: '+qmsg);
                     }
 
                     $("#elbutto").click(function() {
                         if ($('#qinput').val().length > 1){
                             msg($('#qinput').val()); 
-                        }                    
+                        } 
+                        return false;                   
                     });
+
                     //===== TIMER STARTS =====//    
-                    //Increment the idle time counter every minute.
-                    var idleInterval = setInterval(timerIncrement, idleseconds); // 1 minute
+				    //Increment the idle time counter every minute.
+				    function interun(){
+				    	
+				        var idleInterval = setInterval(keepAlive, idleseconds); // 1 minute
+						
+				        function keepAlive() {			     
+				            checkallstatus();
+				            //this doesn't work
+				            //window.clearInterval(idleInterval);
+				            //GL.consol('Interval killed');
+				            //GL.consol('Timer tick! @'+GL.now()+' | idletime:'+idleTime+' | MY STATE:'+state);
+				        }        
+				    }
 
-                    //Zero the idle timer on mouse movement.
-                    $('body').mousemove(function (e) {
-                        idleTime = 0;
-                    });
-                    $('body').mouseover(function (e) {
-                        idleTime = 0;
-                    });
-                    $('body').keypress(function (e) {
-                        idleTime = 0;
-                    });
-
-                    function timerIncrement() {
-
-                        idleTime ++;
-                        if (idleTime > 1) {
-                            state = 0;
-                            broadcast(0,whoiamid,GL.userdata.coder,0,GL.userdata.qnick,'Status update to idle',state);
-                        } else {
-                            state = 1;
-                        }
-                        GL.consol('Timer tick! @'+GL.now()+' | idletime:'+idleTime+' | MY STATE:'+state);
-                    }
-                    //===== TIMER ENDS =====//
+                    
                     /*--------------------OTHER FUCNTIONS ENDS---------------------*/
 
                     //MSG PROCESSING FUNCTION STARTS
                     stream.addEventListener("stream-data", function(evt){
                         //console.log('Se ha recibido un mensaje del tipo:'+evt.msg.qtype+' está siendo enviado por:'+evt.msg.qgsid);
-                        GL.consol(evt.msg);
+                        //GL.consol(evt.msg);
                         //FORMAT: data|type|id|gsid|towhom
                         //0 => syncronization message
                         //1 => simple message to all listeners
-                        //2 => simple message broacast to a single listener
+                        //2 => simple message broacast to a single listener 
 
                         //***SUPER FUCKING IMPORTANT*********************////////////////////////////////
                         //ALL events inside this listener will have an effect on all peers
                         //so if you want to do something locally must be run outside of thi scope
                         
                         //el mensaje de sincronización solo sirve para ver si existo
-                        if (evt.msg.qtype == 0){
-                            //console.log('- THIS IS A SYNCRONIZATION MSG FROM: '+evt.msg.qgsid+' CURRENT USER:'+GL.userdata.coder);
+                        if (evt.msg.qtype == 0){                            
                             //if it's not me who send the msg
                             if (evt.msg.qgsid != GL.userdata.coder){
+                            	//GL.consol('- THIS IS A SYNCRONIZATION MSG FROM: '+evt.msg.qgsid+' CURRENT USER:'+GL.userdata.coder);
+                            	//GL.consol(evt.msg);
                                 changefstat(evt.msg.qgsid,1,GL.now());
-                            } 
+                            }
+                        ////console.log('- THIS IS A MSG TO ALL LISTENERS');    
                         } else if (evt.msg.qtype == 1){
-                            ////console.log('- THIS IS A MSG TO ALL LISTENERS');                         
-                            
-                            //click sound
-                            var clickSound = new Audio('noerro.mp3');
-                            clickSound.play();
 
                             //say I'm alive
                             if (evt.msg.qgsid != GL.userdata.coder){
+                                //click sound
+                                var clickSound = new Audio('noerro.mp3');
+                                clickSound.play();
+
                                 GL.consol('Message to all users from: '+evt.msg.qgsid);
                                 GL.consol(evt.msg);
                                 changefstat(evt.msg.qgsid,1,GL.now());
                             }
-
-                            //idleTime we force to zero so the counter starts again
-                            idleTime = 0;
-                            state = 1;
-                            //conectedfriends();
                             
                             //remote message
                             var tstamp = GL.microtime();
@@ -346,11 +372,31 @@ window.onload = function () {
                             //THIS HAPPENS ON THE OTHER CLIENT'S BROWSER/////
                             //$('#content').html('<br><strong><span style="font-size:50px">MESSAGE FROM BEYOND</span></strong>');
                             //////////THE TWILIGHT ZONE//////////////////////
+                        ////console.log('- THIS IS A MSG TO A CERTAIN LISTENER');
+                        } else if (evt.msg.qtype == 2){
+
                         }
-                        
                         
                     });
                     //MSG PROCESSING FUNCTION ENDS
+
+
+
+                    
+                    
+                    //===== TIMER ENDS =====//
+                    /*
+                    //Zero the idle timer on mouse movement.
+                    $('body').mousemove(function (e) {
+                        idleTime = 0;
+                    });
+                    $('body').mouseover(function (e) {
+                        idleTime = 0;
+                    });
+                    $('body').keypress(function (e) {
+                        idleTime = 0;
+                    });
+					*/
                     
                 });
 
