@@ -55,7 +55,7 @@ require_once('mysqlcon.php');
             <div class="widget">
                 <div class="whead">
                     <h6>
-                        <?php echo $texts['tabletitle']." ".$day."/".$month."/".$year; ?>
+                        <?php echo $texts['tabletitle']/*." ".$day."/".$month."/".$year*/; ?>
                     </h6>
                     <h6 style="float:right; margin-right:33px;"></h6>
 

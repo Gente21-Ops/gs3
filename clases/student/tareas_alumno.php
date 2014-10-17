@@ -1,8 +1,12 @@
 <?php
-
-include("../logon.php");
+/*include("../logon.php");
 require_once('../mysqlcon.php');
-	//error_reporting(0);
+error_reporting(0);*/
+
+$cuantasTareas = 0;
+$qgrupo = 0;
+$qalumno = 0;
+
 	$qgrupo = $_SESSION['qidgrupo'];
     $qalumno = $_SESSION['idUsers'];
 
@@ -23,5 +27,5 @@ ORDER BY qmatname ASC, tareas.fechaEntrega ASC";
 	  $tareas = $aRow['cuantas'];
 	}
 
-    echo $tareas;
+    $cuantasTareas = $tareas;
 ?>

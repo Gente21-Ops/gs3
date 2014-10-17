@@ -3,26 +3,25 @@ error_reporting(E_ALL);
 include("logon.php");
 include('../dict/parents_homework.php');
 
-    ob_start();
-    require_once('connection.php');
-    mysql_query('SET CHARACTER SET utf8');
-    mysql_query('SET NAMES "utf8"');
+mysql_query('SET CHARACTER SET utf8');
+mysql_query('SET NAMES "utf8"');
 
-    //TOP
-    $breads = $texts['title'].'^parents_homework';
-    include('top.php');
+//TOP
+$breads = $texts['title'].'^parents_homework';
+include('top.php');
 
-    if(!isset($_GET['qestudiante'])){
-        $result = mysqli_query($con,"SELECT idEstudiante FROM map_familiares WHERE idFamiliar = '".$_SESSION['idUsers']."'");
-        $row = mysqli_fetch_assoc($result);
-        $qestudiante = $row['idEstudiante'];
-    } else {
-        $qestudiante = $_GET['qestudiante'];
-    }
 
-    /////menu options "students"
-    $student = "";
-    $studentSel = "";
+if(!isset($_GET['qestudiante'])){
+    $result = mysql_query("SELECT idEstudiante FROM map_familiares WHERE idFamiliar = '".$_SESSION['idUsers']."'");
+    $row = mysql_fetch_assoc($result);
+    $qestudiante = $row['idEstudiante'];
+} else {
+    $qestudiante = $_GET['qestudiante'];
+}
+
+/////menu options "students"
+$student = "";
+$studentSel = "";
 ?>  
 
 <div id="deldialog" style="display:none;"><strong><?php echo $texts['deldialog']; ?></strong></div>
@@ -41,7 +40,7 @@ include('../dict/parents_homework.php');
                 <div class="whead"><h6><?php echo $texts['tabletitle']; ?>
                     <select class="studentpicker">
                     <?php
-                        $result2 = mysqli_query($con,"SELECT 
+                        $result2 = mysql_query("SELECT 
                                 users.idUsers, 
                                 users.nombre, 
                                 users.apellidos, 
@@ -52,7 +51,7 @@ include('../dict/parents_homework.php');
                                 AND map_familiares.idFamiliar = ".$_SESSION['idUsers']);
 
                         if(isset($_GET['qestudiante'])){
-                            while ($row3 = mysqli_fetch_array($result2)) {
+                            while ($row3 = mysql_fetch_array($result2)) {
                                 if($_GET['qestudiante'] == $row3['idUsers']){
                                     $studentSel .= '<option selected value="'.$row3['idUsers'].'">'.$row3['nombre'].' '.$row3['apellidos'].'</option>';
                                 } else {
@@ -61,7 +60,7 @@ include('../dict/parents_homework.php');
                             }
                             echo $studentSel;
                         } else {
-                            while ($row3 = mysqli_fetch_array($result2)) {
+                            while ($row3 = mysql_fetch_array($result2)) {
                                 $student .= '<option value="'.$row3['idUsers'].'">'.$row3['nombre'].' '.$row3['apellidos'].'</option>';
                             }
                             echo $student;
