@@ -1,6 +1,7 @@
 //var serverUrl = "/";
 var serverUrl = "http://107.22.250.130:3001/";
 var localStream, room; 
+var clickSound = new Audio('noerro.mp3');
 
 //WHO AM I 
 //whoiam is the code for the user
@@ -39,27 +40,54 @@ function getParameterByName(name) {
 
 function print_r(arr,name) {
     //console.log(name);
-    for(var index in arr) {
+    for(var index in arr) { 
       //console.log(index + " : " + arr[index]);
     }
 }
 
-function tof(who){
-    talkingto = who;        
-    //let's retrieve this person's name
-    var res = $.grep(myfriends, function(e){ return e.id == who; });
-    if(res && res.length == 1){
-        //GL.consol('Going to chat to:'+talkingto+' | '+res[0].name);
-        //console.log('Going to chat to:'+talkingto+' | '+res[0].name);
-        $('#talkto').html('<img src="images/users/37/'+who+'.jpg" style="width:37px; height:37px; vertical-align:middle;"><span> &nbsp; '+res[0].name+'</span>');
-    }
-    return false;
-}
-
-
-
 window.onload = function () {
 
+    function getfriendname(qid){
+        GL.consol('Trying to get friend\'s name:'+qid);
+        var res = $.grep(myfriends, function(e){ return e.id == qid; });
+        if(res && res.length == 1){
+            return res[0].name;
+        } else {
+            GL.consol('>>COULDN\'T GET IT XD');
+            GL.consol(res);
+        }
+    }
+
+    function rebuildmsgs(allmsgs){
+        //GL.consol('rebuild...');
+        var laststamp;
+        for (var key in allmsgs) {            
+            //GL.consol(allmsgs[key].txt);//
+            //find out friend's name if not me
+            if (allmsgs[key].sid != GL.userdata.coder){
+                localmsg_dest(allmsgs[key].txt,getfriendname(allmsgs[key].rid),allmsgs[key].tim);
+            } else {
+                localmsg_dest(allmsgs[key].txt,GL.userdata.qnick,allmsgs[key].tim);
+                //GL.consol('I sent this msg: '+allmsgs[key].txt);
+            }
+            laststamp = allmsgs[key].tim;
+        }
+        $(".nano").nanoScroller({ scroll: 'bottom' });
+        $(".nano").nanoScroller();
+        $(".nano").nanoScroller({ scrollTo: $('#sp'+laststamp)});
+    }
+
+    function tof(who){
+        talkingto = who;           
+        //let's retrieve this person's name
+        var res = $.grep(myfriends, function(e){ return e.id == who; });
+        if(res && res.length == 1){
+            $('#talkto').html('<img src="images/users/37/'+who+'.jpg" style="width:37px; height:37px; vertical-align:middle;"><span> &nbsp; '+res[0].name+'</span>');
+            //now let's retrieve the messages from this person
+            rebuildmsgs(GL.ch_getdata(GL.userdata.coder,who));
+        }
+        return false;
+    }
 
     function emoji(qstr){
         var url = "images/emojis/standar/", patterns = [],
@@ -81,8 +109,15 @@ window.onload = function () {
     }
 
     function localmsg(texto){
-        var tstamp = GL.microtime();
+        var tstamp = GL.now();
         $("#texto").append('<span class="singlemsg" title="'+GL.mytime()+'"><strong>'+GL.userdata.qnick+': </strong>'+emoji(texto)+'</span><span class="singlemsgdate"> </span><br><span class="singlemsgspace bottom5" id="sp'+tstamp+'"><br>&nbsp;<br></span>')
+        //by forcing the recalculation the scrollbar appears
+        $(".nano").nanoScroller();
+        $(".nano").nanoScroller({ scrollTo: $('#sp'+tstamp)});
+    }
+
+    function localmsg_dest(texto,dest,tstamp){
+        $("#texto").append('<span class="singlemsg" title="'+GL.mytimefromepoch(tstamp)+'"><strong>'+dest+': </strong>'+emoji(texto)+'</span><span class="singlemsgdate"> </span><br><span class="singlemsgspace bottom5" id="sp'+tstamp+'"><br>&nbsp;<br></span>')
         //by forcing the recalculation the scrollbar appears
         $(".nano").nanoScroller();
         $(".nano").nanoScroller({ scrollTo: $('#sp'+tstamp)});
@@ -97,7 +132,8 @@ window.onload = function () {
         $.each( myfriends, function( key, value ) {
             
             salida += '<li id="li_'+value.id+'">'
-                +'<a href="#" onclick="tof(\''+value.id+'\'); return false;" title="">'
+                /*+'<a href="#" onclick="tof(\''+value.id+'\'); return false;" title="">'*/
+                +'<a href="#" title="">'
                 +'<img src="images/users/37/'+value.id+'.jpg'+getpic+'" style="width:22px; height:22px;" alt="" />'
                 +'<span class="contactName">'
                 +'<strong>'+value.name+' <span></span></strong>'
@@ -293,8 +329,12 @@ window.onload = function () {
                     }
 
                     function msg(qmsg){
-                        localmsg($('#qinput').val());
-                        broadcast(1,whoiamid,GL.userdata.coder,0,GL.userdata.qnick,qmsg,state);
+                        //possible security risk on user input
+                        var eltexto = $('#qinput').val()
+                        localmsg(eltexto);
+                        broadcast(2,whoiamid,GL.userdata.coder,talkingto,GL.userdata.qnick,qmsg,state);
+                        //save this msg to localStorage
+                        GL.ch_savedata(GL.now(),GL.userdata.coder,talkingto,eltexto,eltexto);
                         //clear the area
                         $('textarea#qinput').val('');
                     }
@@ -302,25 +342,29 @@ window.onload = function () {
                     $("#elbutto").click(function() {
                         if ($('#qinput').val().length > 1){
                             msg($('#qinput').val()); 
-                        } 
+                        }
                         return false;                   
+                    });
+                    
+                    //hooks de select friend
+                    $('[id^="li_"]').click(function(){
+                        var whoisit = $(this).attr('id').split('_');
+                        //GL.consol('ID OF CLICKED: '+$(this).attr('id'));
+                        tof(whoisit[1]);
+                    });
+                    $('html').on('click', 'msgpop', function() {
+                        var whoisit = $(this).attr('id').split('_');
+                        tof(whoisit[1]);
                     });
 
                     //===== TIMER STARTS =====//    
 				    //Increment the idle time counter every minute.
-				    function interun(){
-				    	
-				        var idleInterval = setInterval(keepAlive, idleseconds); // 1 minute
-						
+				    function interun(){				    	
+				        var idleInterval = setInterval(keepAlive, idleseconds);						
 				        function keepAlive() {			     
 				            checkallstatus();
-				            //this doesn't work
-				            //window.clearInterval(idleInterval);
-				            //GL.consol('Interval killed');
-				            //GL.consol('Timer tick! @'+GL.now()+' | idletime:'+idleTime+' | MY STATE:'+state);
 				        }        
 				    }
-
                     
                     /*--------------------OTHER FUCNTIONS ENDS---------------------*/
 
@@ -351,7 +395,6 @@ window.onload = function () {
                             //say I'm alive
                             if (evt.msg.qgsid != GL.userdata.coder){
                                 //click sound
-                                var clickSound = new Audio('noerro.mp3');
                                 clickSound.play();
 
                                 GL.consol('Message to all users from: '+evt.msg.qgsid);
@@ -374,7 +417,49 @@ window.onload = function () {
                             //////////THE TWILIGHT ZONE//////////////////////
                         ////console.log('- THIS IS A MSG TO A CERTAIN LISTENER');
                         } else if (evt.msg.qtype == 2){
+                            //I check that it's not me
+                            if (evt.msg.qgsid != GL.userdata.coder){
 
+                                //I check that it's directed to me
+                                if (evt.msg.qwho == GL.userdata.coder){
+                                    GL.consol('This is a rpivate MSG for me from '+evt.msg.qgsid);
+                                    clickSound.play();
+                                    changefstat(evt.msg.qgsid,1,GL.now());
+
+                                    //remote message
+                                    //THIS MSG should NOT be written to the output window unless it's for the current "taling to" user
+                                    //otherwise it will go directly into the ch_ object in order to be read later on
+                                    if (GL.userdata.coder == talkingto){
+                                        //GL.consol('This is a message directed at me and I am the talkingto user');
+                                        var tstamp = GL.microtime();
+                                        $("#texto").append('<span class="singlemsg" title="'+GL.mytime()+'"><strong>'+evt.msg.qname+': </strong>'+emoji(evt.msg.qdata)+'</span><span class="singlemsgdate"> </span><br><span class="singlemsgspace bottom5" id="sp'+tstamp+'"><br>&nbsp;<br></span>');
+                                    } else {
+                                        GL.consol('This is a message directed at me but I am NOT the talkingto user');
+                                        $.jGrowl('<div class="msgpop" id="msgpop_'+evt.msg.qgsid+'">'+
+                                            '<div style="float:left"><img src="images/users/37/'+evt.msg.qgsid+'.jpg" style="width:40px; height:40px; vertical-align:middle;"></div>'+
+                                            '<div style="float:left; margin-left:7px;"><strong>'+getfriendname(evt.msg.qgsid)+'</strong><br>'+GL.trunkme(evt.msg.qdata,30)+'</div>'+
+                                            '</div>', {
+                                                //AQUI ME QUEDO EL jGROWl MENSAJE NO ESTÁ MOSTRANDO EL TEXTO
+                                            /*header: 'Important',*/
+                                            life: 15000,
+                                            position: 'bottom-right',
+                                            easing: 'swing'
+                                        });
+                                    }
+
+                                    //write to LS
+                                    GL.ch_savedata(GL.now(),evt.msg.qgsid,GL.userdata.coder,evt.msg.qdata);
+
+                                }
+                            }
+                        }
+                        ////new room request for single file sharing
+                        else if (evt.msg.qtype == 3){
+
+                        }
+                        ////new room request for multi file sharing
+                        else if (evt.msg.qtype == 4){
+                        
                         }
                         
                     });

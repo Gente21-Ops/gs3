@@ -105,6 +105,8 @@ include('dict/main.php');
 <script type="text/javascript" src="js/plugins/charts/jquery.flot.symbol.js"></script>
 <script type="text/javascript" src="js/plugins/charts/jquery.flot.tooltip_0.5.js"></script>
 
+<script type="text/javascript" src="js/plugins/moment.js"></script> 
+
 <!--
 <script type="text/javascript" src="js/charts/chart.js"></script>
 

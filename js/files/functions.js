@@ -174,6 +174,11 @@ $(function() {
 	        + currentdate.getSeconds();
 	    return datetime;
 	}
+	GL.mytimefromepoch = function(epoch){
+		var nomiliseconds = String(epoch).substring(0, String(epoch).length - 3);
+		//GL.consol('Remaking time from epoch: '+nomiliseconds);
+	    return '@ '+moment.unix(parseInt(nomiliseconds)).format('DD-MM-YYYY HH:mm:ss');
+	}
 
 	//-----------------------MICROTIME
 	GL.microtime = function(){
@@ -181,20 +186,45 @@ $(function() {
 	    return Math.ceil(seconds);
 	}
 
-	/*----LOCAL CHAT FUNCTIONS STARTS----*/
-	GL.ch_savedata = function(timestamp,senderid,text){
-		//let's retrieve the info from this conversation
-		var retrievedObject = localStorage.getItem('c_'+senderid);
-		var temp = JSON.parse(retrievedObject);
-		
-		//add new msg
-		temp.push({ 'tim': timestamp, 'sid': senderid, 'txt': text });
-		//save to local
-		localStorage.setItem(window['c_'+senderid], JSON.stringify(temp));
-		
+	//-----------------------TRUNCATES A STRING
+	GL.trunkme = function(texto,lenght){
+	    return jQuery.trim(texto).substring(0,lenght).split(" ").slice(0, -1).join(" ") + "...";
 	}
-	function ch_getdata(){
 
+	/*----LOCAL CHAT FUNCTIONS STARTS----*/
+	GL.ch_savedata = function(timestamp,senderid,recipientid,text){
+		//is recipient defined?
+		if (String(recipientid) != '0'){
+			//check if this object exists
+			//GL.consol('Writting data...');
+			if (localStorage.getItem('c_'+senderid+'_'+recipientid) === null) {
+				//this is absolutely necesary, we must enclose the result on an array the first time we use it
+				var a = [];
+				a.push({ 'tim': timestamp, 'sid': senderid, 'rid': recipientid, 'txt': text });
+				localStorage.setItem('c_'+senderid+'_'+recipientid, JSON.stringify(a));
+			} else {
+				//GL.consol('Object found! appending data...');
+				var retrievedObject = localStorage.getItem('c_'+senderid+'_'+recipientid);
+				var chido = JSON.parse(retrievedObject);
+				chido.push({ 'tim': timestamp, 'sid': senderid, 'rid': recipientid, 'txt': text });
+				//save to local
+				localStorage.setItem('c_'+senderid+'_'+recipientid, JSON.stringify(chido));
+				
+			}
+		} else {
+			//GL.consol('No recipient selected');
+			$.jGrowl('You have not selected a recipient XD', {
+                /*header: 'Important',*/
+                life: 5000,
+                position: 'bottom-right',
+                easing: 'swing'
+            });
+		}			
+	}
+	GL.ch_getdata = function(senderid,recipientid){
+		GL.consol('Retrieving data...');
+		var retrievedObject = localStorage.getItem('c_'+senderid+'_'+recipientid);
+		return JSON.parse(retrievedObject);
 	}
 	function ch_deleteold(){
 	    
