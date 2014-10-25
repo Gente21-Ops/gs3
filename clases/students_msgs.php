@@ -212,7 +212,7 @@ include('msgs_getnames.php');
 
 <!-- picdel DIALOG -->
 
-<div id="diapicdel" title="FLAG MESSAGE">
+<div id="diapicdel" title="FLAG MESSAGE" style="display:none;">
     <div>
         
     </div>

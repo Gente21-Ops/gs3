@@ -22,6 +22,7 @@ GL.emoticons = {
         "(sick)":"Sick.png",
         "(no)":"Thumbs-Down.png",
         "(yes)":"Thumbs-Up.png",
+        "(y)":"Thumbs-Up.png",
         "(ok)":"Thumbs-Up.png",
         "(tongue)":"Yuck.png",
         "=P":"Yuck.png",
@@ -40,6 +41,8 @@ GL.emoticons = {
         "(nerd)":"Nerd.png"
       }
 GL.chat = {};
+
+//localStorage
 
 //global function for simple loading
 function assignme(url,target){
@@ -205,18 +208,19 @@ $(function() {
 		if (String(recipientid) != '0'){
 			//check if this object exists
 			//GL.consol('Writting data...');
-			if (localStorage.getItem('c_'+talkingto) === null) {
+			var whoisit = 'c_'+talkingto;
+			if (localStorage.getItem(whoisit) === null) {
 				//this is absolutely necesary, we must enclose the result on an array the first time we use it
 				var a = [];
 				a.push({ 'tim': timestamp, 'sid': senderid, 'rid': recipientid, 'txt': text });
-				localStorage.setItem('c_'+talkingto, JSON.stringify(a));
+				localStorage.setItem(whoisit, JSON.stringify(a));
 			} else {
 				//GL.consol('Object found! appending data...');
-				var retrievedObject = localStorage.getItem('c_'+talkingto);
+				var retrievedObject = localStorage.getItem(whoisit);
 				var chido = JSON.parse(retrievedObject);
 				chido.push({ 'tim': timestamp, 'sid': senderid, 'rid': recipientid, 'txt': text });
 				//save to local
-				localStorage.setItem('c_'+talkingto, JSON.stringify(chido));
+				localStorage.setItem(whoisit, JSON.stringify(chido));
 				
 			}
 		} else {
@@ -230,15 +234,9 @@ $(function() {
 		}			
 	}
 	GL.ch_getdata = function(senderid,recipientid){
-		GL.consol('Retrieving data...');
-
-		//who am i talking to? <-Prevents that I'm labeling a message as being sent to myself
-		var talkingto = senderid;
-		if (recipientid != GL.userdata.coder){
-			talkingto = recipientid;
-		}
-		
-		var retrievedObject = localStorage.getItem('c_'+talkingto);
+		var talkingto = 'c_'+recipientid;
+		var retrievedObject = localStorage.getItem(talkingto);
+		//GL.consol(retrievedObject);
 		return JSON.parse(retrievedObject);
 	}
 	function ch_deleteold(){

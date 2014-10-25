@@ -13,6 +13,7 @@ var whatsmyrole = 1;
 var myroom = "any school";
 var first = 0;
 var myfriends = {};
+var prevmsgw = 30;
 //var types = Array('','Profesor','Alumn@','Padre/Madre');
 
 //timers
@@ -47,30 +48,38 @@ function print_r(arr,name) {
 
 window.onload = function () {
 
+    GL.consol('TEST @'+GL.now());
+
     function getfriendname(qid){
-        GL.consol('Trying to get friend\'s name:'+qid);
+        //GL.consol('Trying to get friend\'s name:'+qid);
         var res = $.grep(myfriends, function(e){ return e.id == qid; });
         if(res && res.length == 1){
             return res[0].name;
         } else {
             GL.consol('>>COULDN\'T GET IT XD');
-            GL.consol(res);
+            //GL.consol(res);
         }
     }
 
     function rebuildmsgs(allmsgs){
         //GL.consol('rebuild...');
+        //falta encontrar la forma de prevenir esta salida si el objeto con los MSGS viene vacio
         var laststamp;
         for (var key in allmsgs) {            
-            //GL.consol(allmsgs[key].txt);//
-            //find out friend's name if not me
-            if (allmsgs[key].sid != GL.userdata.coder){
-                localmsg_dest(allmsgs[key].txt,getfriendname(allmsgs[key].rid),allmsgs[key].tim);
-            } else {
-                localmsg_dest(allmsgs[key].txt,GL.userdata.qnick,allmsgs[key].tim);
-                //GL.consol('I sent this msg: '+allmsgs[key].txt);
+            //GL.consol('Trying to rebuild MSG from user: '+allmsgs[key].rid);//
+
+            //we will only rebuild the msgs of they concern me (this process ideally should ocur before reading the LSO)
+            if (GL.userdata.coder == allmsgs[key].sid || GL.userdata.coder == allmsgs[key].rid){
+                //find out friend's name if not me
+                if (allmsgs[key].sid != GL.userdata.coder){
+                    localmsg_dest(allmsgs[key].txt,getfriendname(allmsgs[key].sid),allmsgs[key].tim);
+                } else {
+                    localmsg_dest(allmsgs[key].txt,GL.userdata.qnick,allmsgs[key].tim);
+                    //GL.consol('I sent this msg: '+allmsgs[key].txt);
+                }
+                laststamp = allmsgs[key].tim;
             }
-            laststamp = allmsgs[key].tim;
+            
         }
         $(".nano").nanoScroller({ scroll: 'bottom' });
         $(".nano").nanoScroller();
@@ -78,6 +87,7 @@ window.onload = function () {
     }
 
     function tof(who){
+    	GL.consol('TOF - Trying to talk to:'+who);
         //clearup text
         $("#texto").html('');
         talkingto = who;           
@@ -90,6 +100,7 @@ window.onload = function () {
         }
         return false;
     }
+
 
     function emoji(qstr){
         var url = "images/emojis/standar/", patterns = [],
@@ -152,6 +163,15 @@ window.onload = function () {
         //console.log('recreating friend\'s list with data:');
         //GL.consol(myfriends);
         $('#myfirends').html(salida);
+
+        //hooks de select friend
+        $('[id^="li_"]').click(function(e){
+            e.preventDefault();
+            var whoisit = $(this).attr('id').split('_');
+            GL.consol('ID OF CLICKED: '+$(this).attr('id'));
+            tof(whoisit[1]);
+        });
+
     } 
     //list of connected friends ends
 
@@ -230,8 +250,7 @@ window.onload = function () {
     //RUNME STARTS
     function runme(){ 
     
-        console.log('@ Initializing COM client at 1133');
-
+        console.log('@ Initializing COM client at '+GL.now());
         recording = false;
         var screen = getParameterByName("screen");
         var config = {audio: false, video: false, data: true, screen: screen, videoSize: [640, 480, 640, 480]};
@@ -348,12 +367,7 @@ window.onload = function () {
                         return false;                   
                     });
                     
-                    //hooks de select friend
-                    $('[id^="li_"]').click(function(){
-                        var whoisit = $(this).attr('id').split('_');
-                        //GL.consol('ID OF CLICKED: '+$(this).attr('id'));
-                        tof(whoisit[1]);
-                    });
+                    
 
                     //===== TIMER STARTS =====//    
 				    //Increment the idle time counter every minute.
@@ -420,7 +434,7 @@ window.onload = function () {
 
                                 //I check that it's directed to me
                                 if (evt.msg.qwho == GL.userdata.coder){
-                                    GL.consol('This is a private MSG for me from '+evt.msg.qgsid);
+                                    //GL.consol('This is a private MSG for me from '+evt.msg.qgsid);
                                     clickSound.play();
                                     changefstat(evt.msg.qgsid,1,GL.now()); 
 									var tstamp = GL.microtime();
@@ -434,7 +448,7 @@ window.onload = function () {
                                         GL.consol('This is a message directed at me but I am NOT the talkingto user');
                                         $.jGrowl('<div class="msgpop" id="msgpop_'+evt.msg.qgsid+'"'+
                                             '<div style="float:left"><img src="images/users/37/'+evt.msg.qgsid+'.jpg" style="width:40px; height:40px; vertical-align:middle;"></div>'+
-                                            '<div style="float:left; margin-left:5px;"><strong>'+getfriendname(evt.msg.qgsid)+'</strong><br>'+emoji(GL.trunkme(evt.msg.qdata,50))+'</div>'+
+                                            '<div style="float:left; margin-left:5px;"><strong>'+getfriendname(evt.msg.qgsid)+'</strong><br>'+emoji(GL.trunkme(evt.msg.qdata,prevmsgw))+'</div>'+
                                             '</div>', {    
                                             /*header: 'Important',*/
                                             //AQUI ME QUEDO EL jGROWl debería de funcionar al click no al open
@@ -443,8 +457,8 @@ window.onload = function () {
                                                 tof(evt.msg.qgsid);
                                                 //$("#texto").append('<span class="singlemsg" title="'+GL.mytime()+'"><strong>'+evt.msg.qname+': </strong>'+emoji(evt.msg.qdata)+'</span><span class="singlemsgdate"> </span><br><span class="singlemsgspace bottom5" id="sp'+tstamp+'"><br>&nbsp;<br></span>');
                                             },
-                                            sticky: true,
-                                            /*life: 15000,*/
+                                            /*sticky: true,*/
+                                            life: 15000,
                                             position: 'bottom-right',
                                             easing: 'swing'
                                         });

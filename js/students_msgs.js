@@ -1,5 +1,5 @@
 
-console.log('STUDENTS_MSGS LOADED 1654');
+//console.log('STUDENTS_MSGS LOADED 1654');
 function ran(min,max){
     return Math.floor(Math.random()*(max-min+1)+min);
 }
@@ -24,7 +24,7 @@ var filbuffer = new Array();
 function addcomment(obj){
     var qresp = $('#msgbox_'+obj).val();
     if (qresp.length > 1){
-        console.log('ADDING COMMENT: '+qresp +' ON OBJECT:'+obj);
+        //console.log('ADDING COMMENT: '+qresp +' ON OBJECT:'+obj);
 
         //if there are images let's set them up too
         var exitpics = '';
@@ -66,7 +66,7 @@ function ext(qs,type){
 
 //send message to all
 function allmsg () {
-    console.log('Sendin MSG to everybody');
+    //console.log('Sendin MSG to everybody');
 
     //if there are images let's set them up too
     var exitpics = '';
@@ -171,7 +171,7 @@ $('#diaflag').dialog({
     }
 });
 function openflag(obj,type,qrespid){
-    console.log('Gonna flag msg:'+obj+' type:'+type+' respid:'+qrespid);
+    //console.log('Gonna flag msg:'+obj+' type:'+type+' respid:'+qrespid);
     q_fobject = obj;
     q_ftype = type;
     q_respid = qrespid;
@@ -241,7 +241,7 @@ function setpl(obj){
         var speed2 = parseInt(uploader.total.bytesPerSec/1024);
        // $('#fprog_'+file.id).html('<span>'+Math.round(uploader.total.loaded/1024)+'Kb out of '+Math.round(uploader.total.size/1024)+'Kb</span> - <span>'+speed2+'Kb/sec</span>');
         $('#'+file.id+'_prog').attr('title',file.percent+'%');
-        //console.log('POR: '+file.percent);
+        ////console.log('POR: '+file.percent);
         var perc = Math.round( (file.percent * $('#pcon_'+file.id).width())/100 );
         $('#'+file.id+'_prog').width(perc+'px');
     });
@@ -264,18 +264,18 @@ function setpl(obj){
         //parsing json:
         var obj2 = eval(res);
 
-        console.log(res);
+        //console.log(res);
         
 
         var reto = JSON.parse(obj2.response);
-        //console.log('DATO 3.6.1: isimg '+reto['isimg']);
+        ////console.log('DATO 3.6.1: isimg '+reto['isimg']);
 
         //we change png into jpg
         var newfn = reto['new'].replace('.png','.jpg');
 
         var justcodo = reto['new'].split('.');
 
-        console.log('TRYING TO REPLACE CONTENT IN: imgal_'+file.id);
+        //console.log('TRYING TO REPLACE CONTENT IN: imgal_'+file.id);
 
         //en este caso sobreescribo el contenido del li
         var fileok = '<a href="files/'+$('#qescuelacode').text()+'/'+newfn+'" data-namo="COCO_'+justcodo[0]+'" id="prev_'+justcodo[0]+'" target="_blank"><img class="imgalin" src="files/'+$('#qescuelacode').text()+'/120/'+newfn+'"></a>'
@@ -285,7 +285,7 @@ function setpl(obj){
         //we add top the list of new images to save
         coll.push(reto['new']);
         
-        console.log('THIS IS AN IMAGE!!!, setting up fancybox to prev_'+justcodo[0]+' COL:'+coll.length);
+        //console.log('THIS IS AN IMAGE!!!, setting up fancybox to prev_'+justcodo[0]+' COL:'+coll.length);
         $("#prev_"+justcodo[0]).fancybox({ 'hideOnContentClick': true });
 
             
@@ -297,7 +297,7 @@ function setpl(obj){
 
 //trigger function
 function fireup(obj){
-    //console.log('Trying to change PL to 1 '+obj);
+    ////console.log('Trying to change PL to 1 '+obj);
     setpl(obj);
 }
 
@@ -307,7 +307,7 @@ $('[id^="msg_"]').each(function(index){
     var qid = $(this).attr('id').split('_');
     //$("a.c_"+data).fancybox({
 
-    //console.log('Trying to setup fancybox on: '+qid[1]);
+    ////console.log('Trying to setup fancybox on: '+qid[1]);
     
     $("a.c_"+qid[1]).fancybox({
         'cyclic': true,
@@ -324,7 +324,7 @@ $('[id^="msg_"]').each(function(index){
 //delete image (id del objeto, filename)
 //this is for the images that are already on DB
 function picdel(qid,qfile,qtyper){
-    console.log('Tratando de borrar '+qfile+'  de la faz de la tierra');
+    //console.log('Tratando de borrar '+qfile+'  de la faz de la tierra');
     $.post('clases/streamDelPic.php', { qid:qid, qfile:qfile, quser:$('#quser').text(), qtype:qtyper, qcodeschool:$('#qescuelacode').text() }, function(data) {
         if (data == 'ok'){
             $('#gi_'+ext(qfile,0)).fadeOut(400, function(){
