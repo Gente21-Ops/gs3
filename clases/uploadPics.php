@@ -226,7 +226,7 @@ function createthumb($name)
 		imagecopyresampled($dest_img, $src_img, 0 , 0 , 0, 0, $crop_w, $crop_h, $orig_w, $orig_h);
 
 		//$thumbPath = $targetDir."/".$largo;
-		echo "<br>--------------".$qname."-----------------------<br>";
+		echo "<br>--------------".$largo."/".$qname."-----------------------<br>";
 		$thumbPath = "../images/users/".$largo."/";
 		$filename = $thumbPath.$qname;
 

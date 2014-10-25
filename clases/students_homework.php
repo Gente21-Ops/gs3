@@ -1,12 +1,17 @@
 <?php
-error_reporting(E_ALL);
+error_reporting(E_ALL); 
+ini_set( 'display_errors','1');
+
 include("logon.php");
 include('../dict/students_homework.php');
+
+
 
     ob_start();
     require_once('connection.php');
     mysql_query('SET CHARACTER SET utf8');
     mysql_query('SET NAMES "utf8"');
+
 
     //TOP
     $breads = $texts['title'].'^students_homework';

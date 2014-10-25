@@ -62,14 +62,14 @@
         <div class="breadLinks">
             <ul>
                 <?php
-                    
+                    /*
                     if($_SESSION['tipo'] == 2){
                         require_once("student/tareas_done_alumno.php");
                         require_once("student/tareas_alumno.php");
                         echo '<li><a href="students_homework" title=""><i class="icos-list"></i><span>Tareas completadas</span> <strong>(+'.$cuantasTareasHechas.')</strong></a></li>';
 
                         echo '<li><a href="students_homework" title=""><i class="icos-check"></i><span>Tareas pendientes</span> <strong>(+'.$cuantasTareas.')</strong></a></li>';
-                    }/* else if($_SESSION['tipo'] == 4){
+                    } else if($_SESSION['tipo'] == 4){
                         echo '<li><a href="parents_homework" title=""><i class="icos-list"></i><span>Tareas completadas</span> <strong>(+'.$cuantasTareasHechas.')</strong></a></li>';
 
                         echo '<li><a href="parents_homework" title=""><i class="icos-check"></i><span>Tareas pendientes</span> <strong>(+'.$cuantasTareas.')</strong></a></li>';

@@ -1,5 +1,4 @@
 <?php
-
 error_reporting(E_ALL);
 ini_set('display_errors', '1');
 
@@ -7,6 +6,9 @@ include("logon.php");
 include('../dict/students_data.php');
 ob_start();
 require_once('mysqlcon.php');
+
+/*echo "si";
+exit();*/
 
     //$sql = "SELECT idParciales, nombre FROM parciales WHERE codeEscuelas = '".$_SESSION['qescuelacode']."'";
     //$result = mysqli_query($con,$sql);

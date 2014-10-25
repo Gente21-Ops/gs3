@@ -1,6 +1,6 @@
 <?php
-
-include("../logon.php");
+session_start();
+//include("../logon.php");
 require_once('../mysqlcon.php');
 
     //these array of columns is the order in which they wil appear on the table
@@ -12,8 +12,8 @@ require_once('../mysqlcon.php');
     //el id del alumno
 
     //VARS
-    $qgrupo = $_SESSION['qidgrupo'];
-    $qalumno = $_SESSION['idUsers'];
+    //$qgrupo = $_SESSION['qidgrupo'];
+    //$qalumno = $_SESSION['idUsers'];
 
     //DICCIONARIO el diccionario de los botones va aquí (since I can't access the dict from here)
     if($_SESSION['qlen'] == "es"){
@@ -45,11 +45,19 @@ ORDER BY qmatname ASC, tareas.fechaEntrega ASC";
     //var para agarra el id
     $elid = 0;
     $elcode = '0';
+    
+/*if($sqlt->num_rows === 0){
+    
+    $chido = array();
+    echo json_encode( $chido );
 
-    $output['aaData'] = [];
+} else {*/
+
+    //$output['aaData'] = [];
     while ($aRow = $sqlt->fetch_assoc()) {
-        $row = array();
-
+        //$row = array();
+        
+        
         for ( $i=0 ; $i<sizeof($aColumns) ; $i++ ) {
 
             //html para botones
@@ -73,11 +81,12 @@ ORDER BY qmatname ASC, tareas.fechaEntrega ASC";
             }
                         
         };
-
+        
         $output['aaData'][] = $row;
     }
+//}
 
-    print json_encode($output);
+    //print json_encode($output);
     
 
 ?>

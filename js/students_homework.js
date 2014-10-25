@@ -14,7 +14,10 @@ if ($('#qlango').text() == 'es'){
 
 //EDITABLE
 oTable = $('#dTable').dataTable({
-	
+	"oLanguage": {
+        sEmptyTable:     "No hay información por el momento.",
+        sZeroRecords: "No hay información por el momento."
+    },
 	"bJQueryUI": false,
     /*"bRetrieve": true,*/
 	"bAutoWidth": false,
@@ -54,7 +57,10 @@ oTable = $('#dTable').dataTable({
 
 
 oTable = $('#dTable_done').dataTable({
-	
+	"oLanguage": {
+        sEmptyTable:     "No hay información por el momento.",
+        sZeroRecords: "No hay información por el momento."
+    },
 	"bJQueryUI": false,
     /*"bRetrieve": true,*/
 	"bAutoWidth": false,

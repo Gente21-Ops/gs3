@@ -1,7 +1,12 @@
 <?php
-error_reporting(E_ALL);
+error_reporting(E_ALL); 
+ini_set( 'display_errors','1');
+
+
 include("logon.php");
 include('../dict/students_statistics.php');
+
+
 
     ob_start();
 

@@ -38,7 +38,7 @@ ORDER BY qmatname ASC, tareas.fechaEntrega ASC";
     //echo $elsql."<br><br>";
     $sqlt = $con->query($elsql); 
    
-   $output['aaData'] = [];
+   //$output['aaData'] = [];
     while ($aRow = $sqlt->fetch_assoc()) {
         $row = array();
 

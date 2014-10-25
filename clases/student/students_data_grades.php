@@ -12,6 +12,9 @@ $elsql7 = "SELECT DISTINCT idMaterias AS qmaterias FROM calificaciones WHERE idC
 $result7 = $con->query($elsql7);
 
 if($result7->num_rows === 0){
+    
+    $chido = array();
+    echo json_encode( $chido );
 
 } else {    
     
@@ -27,7 +30,7 @@ if($result7->num_rows === 0){
 
         while ($aRow8 = $result8->fetch_assoc()) { 
 
-            $chido = [];
+            //$chido = [];
 
             $chido[] = $row9['idMaterias'];
             $chido[] = $row9['nombre'];
