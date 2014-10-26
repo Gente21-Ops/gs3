@@ -67,22 +67,19 @@ window.onload = function () {
         var laststamp;
         for (var key in allmsgs) {            
             //GL.consol('Trying to rebuild MSG from user: '+allmsgs[key].rid);//
-
-            //we will only rebuild the msgs of they concern me (this process ideally should ocur before reading the LSO)
-            if (GL.userdata.coder == allmsgs[key].sid || GL.userdata.coder == allmsgs[key].rid){
-                //find out friend's name if not me
-                if (allmsgs[key].sid != GL.userdata.coder){
-                    localmsg_dest(allmsgs[key].txt,getfriendname(allmsgs[key].sid),allmsgs[key].tim);
-                } else {
-                    localmsg_dest(allmsgs[key].txt,GL.userdata.qnick,allmsgs[key].tim);
-                    //GL.consol('I sent this msg: '+allmsgs[key].txt);
-                }
-                laststamp = allmsgs[key].tim;
+            //find out friend's name if not me
+            if (allmsgs[key].sid != GL.userdata.coder){
+                localmsg_dest(allmsgs[key].txt,getfriendname(allmsgs[key].sid),allmsgs[key].tim);
+            } else {
+                localmsg_dest(allmsgs[key].txt,GL.userdata.qnick,allmsgs[key].tim);
+                //GL.consol('I sent this msg: '+allmsgs[key].txt);
             }
-            
+            laststamp = allmsgs[key].tim;
         }
-        $(".nano").nanoScroller({ scroll: 'bottom' });
+        
         $(".nano").nanoScroller();
+        $(".nano").nanoScroller({ scroll: 'bottom' });
+        //$(".nano").nanoScroller({scrollBottom: -10});
         $(".nano").nanoScroller({ scrollTo: $('#sp'+laststamp)});
     }
 
@@ -121,19 +118,21 @@ window.onload = function () {
         });
     }
 
-    function localmsg(texto){
-        var tstamp = GL.now();
-        $("#texto").append('<span class="singlemsg" title="'+GL.mytime()+'"><strong>'+GL.userdata.qnick+': </strong>'+emoji(texto)+'</span><span class="singlemsgdate"> </span><br><span class="singlemsgspace bottom5" id="sp'+tstamp+'"><br>&nbsp;<br></span>')
-        //by forcing the recalculation the scrollbar appears
+    function lower(){
         $(".nano").nanoScroller();
-        $(".nano").nanoScroller({ scrollTo: $('#sp'+tstamp)});
+        $(".nano").nanoScroller({ scroll: 'bottom' });
+        //$(".nano").nanoScroller({ scrollTo: $('#sp'+tstamp)});
     }
-
+    function localmsg(texto){
+        var tstamp = GL.now();       
+        $("#texto").append('<span class="singlemsg" title="'+GL.mytime()+'"><strong>'+GL.userdata.qnick+': </strong>'+emoji(texto)+'</span><span class="singlemsgdate"></span><br><span class="singlemsgspace bottom5" id="sp'+tstamp+'"><br>&nbsp;<br></span>');
+        //nano bottom
+        setTimeout(lower, 500);        
+    }
     function localmsg_dest(texto,dest,tstamp){
-        $("#texto").append('<span class="singlemsg" title="'+GL.mytimefromepoch(tstamp)+'"><strong>'+dest+': </strong>'+emoji(texto)+'</span><span class="singlemsgdate"> </span><br><span class="singlemsgspace bottom5" id="sp'+tstamp+'"><br>&nbsp;<br></span>')
-        //by forcing the recalculation the scrollbar appears
-        $(".nano").nanoScroller();
-        $(".nano").nanoScroller({ scrollTo: $('#sp'+tstamp)});
+        $("#texto").append('<span class="singlemsg" title="'+GL.mytimefromepoch(tstamp)+'"><strong>'+dest+': </strong>'+emoji(texto)+'</span><span class="singlemsgdate"></span><br><span class="singlemsgspace bottom5" id="sp'+tstamp+'"><br>&nbsp;<br></span>');
+        //nano bottom
+        setTimeout(lower, 500); 
     }
 
     //list of connected friends starts
@@ -360,14 +359,20 @@ window.onload = function () {
                         $('textarea#qinput').val('');
                     }
 
+                    //HOOK SEND BUTTON
                     $("#elbutto").click(function() {
                         if ($('#qinput').val().length > 1){
                             msg($('#qinput').val()); 
                         }
                         return false;                   
                     });
-                    
-                    
+                    //HOOK ENTER                  
+                    $(document).keypress(function (e) {
+                        //si se presiona enter y hay texto y el input tiene focus
+                        if(e.which == 13 && $('#qinput').val().length > 1 && $('#qinput').is(":focus")){
+                            msg($('#qinput').val());
+                        }
+                    }); 
 
                     //===== TIMER STARTS =====//    
 				    //Increment the idle time counter every minute.
@@ -446,19 +451,26 @@ window.onload = function () {
                                         $("#texto").append('<span class="singlemsg" title="'+GL.mytime()+'"><strong>'+evt.msg.qname+': </strong>'+emoji(evt.msg.qdata)+'</span><span class="singlemsgdate"> </span><br><span class="singlemsgspace bottom5" id="sp'+tstamp+'"><br>&nbsp;<br></span>');
                                     } else {
                                         GL.consol('This is a message directed at me but I am NOT the talkingto user');
-                                        $.jGrowl('<div class="msgpop" id="msgpop_'+evt.msg.qgsid+'"'+
+                                        $.jGrowl('<div class="msgpop" id="msgpop_'+evt.msg.qgsid+'" style="cursor: pointer; cursor: hand;">'+
                                             '<div style="float:left"><img src="images/users/37/'+evt.msg.qgsid+'.jpg" style="width:40px; height:40px; vertical-align:middle;"></div>'+
-                                            '<div style="float:left; margin-left:5px;"><strong>'+getfriendname(evt.msg.qgsid)+'</strong><br>'+emoji(GL.trunkme(evt.msg.qdata,prevmsgw))+'</div>'+
-                                            '</div>', {    
-                                            /*header: 'Important',*/
-                                            //AQUI ME QUEDO EL jGROWl debería de funcionar al click no al open
-                                            open: function() {
-                                                GL.consol('Trying to talk to: '+evt.msg.qgsid);
-                                                tof(evt.msg.qgsid);
-                                                //$("#texto").append('<span class="singlemsg" title="'+GL.mytime()+'"><strong>'+evt.msg.qname+': </strong>'+emoji(evt.msg.qdata)+'</span><span class="singlemsgdate"> </span><br><span class="singlemsgspace bottom5" id="sp'+tstamp+'"><br>&nbsp;<br></span>');
+                                            '<div style="float:left; margin-left:5px; width:180px;"><strong>'+getfriendname(evt.msg.qgsid)+'</strong><br>'+emoji(GL.trunkme(evt.msg.qdata,prevmsgw))+'</div>'+
+                                            '</div>', { 
+                                            /**/open: function() {
+                                                //si soy el usuario seleccionado imprimo, si no espero el click
+                                                if (talkingto == evt.msg.qgsid){
+                                                    GL.consol('>>YOU HAVE CLICKED THE TALKING TO USER, we append the MSG');
+                                                    tof(evt.msg.qgsid);
+                                                    $("#msgpop_"+evt.msg.qgsid).closest('.jGrowl-notification').remove();
+                                                } else {
+                                                    GL.consol('>>YOU HAVE CLICKED ON ANOTHER USER, we DON\'T append the MSG un til the click');
+                                                    $('body').on('click', '#msgpop_'+evt.msg.qgsid, function () {
+                                                        tof(evt.msg.qgsid);
+                                                        $("#msgpop_"+evt.msg.qgsid).closest('.jGrowl-notification').remove();
+                                                    });
+                                                }
                                             },
-                                            /*sticky: true,*/
-                                            life: 15000,
+                                            sticky: true,
+                                            /*life: 15000,*/
                                             position: 'bottom-right',
                                             easing: 'swing'
                                         });

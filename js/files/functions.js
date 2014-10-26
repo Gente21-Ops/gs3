@@ -38,11 +38,12 @@ GL.emoticons = {
         "(money)":"Money-Mouth.png",
         "=B":"Nerd.png",
         ":B":"Nerd.png",
-        "(nerd)":"Nerd.png"
-      }
-GL.chat = {};
+        "(nerd)":"Nerd.png",
+        "(meh)":"Not-Amused.png"
+      };
 
 //localStorage
+GL.oldmsg = 604800;
 
 //global function for simple loading
 function assignme(url,target){
@@ -208,7 +209,7 @@ $(function() {
 		if (String(recipientid) != '0'){
 			//check if this object exists
 			//GL.consol('Writting data...');
-			var whoisit = 'c_'+talkingto;
+			var whoisit = 'c_'+talkingto+'_'+GL.userdata.coder;
 			if (localStorage.getItem(whoisit) === null) {
 				//this is absolutely necesary, we must enclose the result on an array the first time we use it
 				var a = [];
@@ -221,7 +222,6 @@ $(function() {
 				chido.push({ 'tim': timestamp, 'sid': senderid, 'rid': recipientid, 'txt': text });
 				//save to local
 				localStorage.setItem(whoisit, JSON.stringify(chido));
-				
 			}
 		} else {
 			//GL.consol('No recipient selected');
@@ -234,13 +234,14 @@ $(function() {
 		}			
 	}
 	GL.ch_getdata = function(senderid,recipientid){
-		var talkingto = 'c_'+recipientid;
+		var talkingto = 'c_'+recipientid+'_'+GL.userdata.coder;
+		//if the LSO doesn't have my id as a rpefix I will return nothing
 		var retrievedObject = localStorage.getItem(talkingto);
 		//GL.consol(retrievedObject);
 		return JSON.parse(retrievedObject);
 	}
 	function ch_deleteold(){
-	    
+	    //GL.oldmsg
 	}
 	/*-----LOCAL CHAT FUNCTIONS ENDS-----*/
 
