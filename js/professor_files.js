@@ -23,16 +23,19 @@ oTable = $('#dTable').on("init", function() {
 		console.log('DTABLE INITED');
 	 
 	}).dataTable({
-	
+	"oLanguage": {
+        sEmptyTable: "No hay información por el momento.",
+        sZeroRecords: "No hay información por el momento."
+    },
 	"bJQueryUI": false,
 	"bRetrieve": true,
 	"bAutoWidth": false,
 	"sPaginationType": "full_numbers",
 	"sDom": '<"H"fl>t<"F"ip>',
-	"sAjaxSource": 'clases/student/student_files.php',
-	"oLanguage": {
+	"sAjaxSource": 'clases/profesor/professor_files.php',
+	/*"oLanguage": {
         "sUrl": qlen
-    },
+    },*/
 	"fnRowCallback": function( nRow, aData, iDisplayIndex, iDisplayIndexFull ) {
 		$(nRow).attr('id', aData[0]);
         return nRow;

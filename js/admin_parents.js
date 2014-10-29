@@ -34,13 +34,10 @@ oTable = $('.dTable').dataTable({
     	sName: "apellidos"
     },
     {
-    	sName: "telefono"
+    	sName: "correo"
     },
     {
-    	sName: "email"
-    },
-    {
-    	sName: "idUsers"
+    	sName: "datos"
     }] 
 
 }).makeEditable({

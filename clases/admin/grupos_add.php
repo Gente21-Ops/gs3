@@ -14,10 +14,10 @@ session_start();
   */
  
   //calculate user's code
-  $elcode = md5($_REQUEST['nombre'].$_REQUEST['apellidos']);
+  //$elcode = md5($_REQUEST['nombre'].$_REQUEST['apellidos']);
    
   //$stmt = $mysqli->stmt_init();
-  $sql="INSERT INTO grupos (nombre, idEscuelas) VALUES ('".mysql_real_escape_string($_REQUEST['nombre'])."', '".$_SESSION['qidescuela']."')";
+  $sql="INSERT INTO grupos (nombre, codeEscuelas) VALUES ('".mysql_real_escape_string($_REQUEST['nombre'])."', '".$_SESSION['qidescuela']."')";
 
   if (!mysqli_query($con,$sql)){
     die('Error: ' . mysqli_error($con));

@@ -35,6 +35,8 @@ oTable = $('#dTable').dataTable({
 
 });
 
+//alert($('#qestudiante').text());
+
 //EDITABLE
 oTable2 = $('#dTable2').dataTable({
 	"oLanguage": {

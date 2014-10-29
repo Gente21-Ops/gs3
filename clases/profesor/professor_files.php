@@ -29,43 +29,54 @@ require_once('../mysqlcon.php');
 
     //echo $elsql;
     $sqlt = $con->query($elsql); 
+
+
+    if($sqlt->num_rows === 0){
+    
+        $chido = array();
+        echo json_encode( $chido );
+
+    } else {  
    
-    while ($aRow = $sqlt->fetch_assoc()) {
-        $row = array();
-        $elid = '0';
-        $elpatho = '';
-        for ( $i=0 ; $i<sizeof($aColumns) ; $i++ ) {   
-            
-            //get the id
-            if ($i == 0){ $elid = $aRow[ $aColumns[$i] ]; }
-            //get the patho
-            if ($i == 4){ $elpatho = $aRow[ $aColumns[$i] ]; }
+        while ($aRow = $sqlt->fetch_assoc()) {
+            $row = array();
+            $elid = '0';
+            $elpatho = '';
+            for ( $i=0 ; $i<sizeof($aColumns) ; $i++ ) {   
+                
+                //get the id
+                if ($i == 0){ $elid = $aRow[ $aColumns[$i] ]; }
+                //get the patho
+                if ($i == 4){ $elpatho = $aRow[ $aColumns[$i] ]; }
 
-            if ($i == 1){
-                $row[] = str_replace('_', ' ', $aRow[ $aColumns[$i] ]);
-            } else if ($i == 3){
-                $row[] = '<a href="#" onclick="assignme(\'students_homework_do.php?qcode='.$aRow[$aColumns[$i]].'\',\'content\'); return false;" class="buttonM bGreen"><span class="icol-add"></span><span>'.$texts['goto'].'</span></a>';
-            } else if ($i == 4){
-                $row[] = '<a href="files/'.$_SESSION['qescuelacode'].'/'.$aRow[$aColumns[$i]].'" target="_blank" class="buttonM bGreyish"><span class="icon-download"></span><span>'.$texts['view'].'</span></a>';
-            } else if ($i == 5){
-                $ischecked = '';
-                if ($aRow[$aColumns[$i]] == '1'){
-                    $ischecked = ' checked="checked"';
+                if ($i == 1){
+                    $row[] = str_replace('_', ' ', $aRow[ $aColumns[$i] ]);
+                } else if ($i == 3){
+                    $row[] = '<a href="#" onclick="assignme(\'students_homework_do.php?qcode='.$aRow[$aColumns[$i]].'\',\'content\'); return false;" class="buttonM bGreen"><span class="icol-add"></span><span>'.$texts['goto'].'</span></a>';
+                } else if ($i == 4){
+                    $row[] = '<a href="files/'.$_SESSION['qescuelacode'].'/'.$aRow[$aColumns[$i]].'" target="_blank" class="buttonM bGreyish"><span class="icon-download"></span><span>'.$texts['view'].'</span></a>';
+                } else if ($i == 5){
+                    $ischecked = '';
+                    if ($aRow[$aColumns[$i]] == '1'){
+                        $ischecked = ' checked="checked"';
+                    }
+                    $row[] = '<div class="on_off" onclick="setshared(\''.$elid.'\',\''.$elpatho.'\'); return false;">
+                                <input type="checkbox" id="check'.$elid.'" '.$ischecked.' name="chbox" />
+                            </div>';
+                } else {
+                    $row[] = $aRow[ $aColumns[$i] ];
                 }
-                $row[] = '<div class="on_off" onclick="setshared(\''.$elid.'\',\''.$elpatho.'\'); return false;">
-                            <input type="checkbox" id="check'.$elid.'" '.$ischecked.' name="chbox" />
-                        </div>';
-            } else {
-                $row[] = $aRow[ $aColumns[$i] ];
-            }
 
-                        
-        };
+                            
+            };
 
-        $output['aaData'][] = $row;
+            $output['aaData'][] = $row;
+        }
+        print json_encode($output);
+
     }
 
-    print json_encode($output);
+    
     
 
 ?>

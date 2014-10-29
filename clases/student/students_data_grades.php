@@ -11,6 +11,8 @@ $elsql7 = "SELECT DISTINCT idMaterias AS qmaterias FROM calificaciones WHERE idC
     AND idUsers = '".$_SESSION['idUsers']."' AND idParciales = '".$_GET['qparcial']."'";
 $result7 = $con->query($elsql7);
 
+//$output['aaData'][] = array();
+
 if($result7->num_rows === 0){
     
     $chido = array();
@@ -30,7 +32,7 @@ if($result7->num_rows === 0){
 
         while ($aRow8 = $result8->fetch_assoc()) { 
 
-            //$chido = [];
+            $chido = array();
 
             $chido[] = $row9['idMaterias'];
             $chido[] = $row9['nombre'];

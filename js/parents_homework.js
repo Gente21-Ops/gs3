@@ -14,16 +14,19 @@ if ($('#qlango').text() == 'es'){
 
 //EDITABLE
 oTable = $('#dTable').dataTable({
-	
+	"oLanguage": {
+        sEmptyTable: "No hay información por el momento.",
+        sZeroRecords: "No hay información por el momento."
+    },
 	"bJQueryUI": false,
     /*"bRetrieve": true,*/
 	"bAutoWidth": false,
 	"sPaginationType": "full_numbers",
 	"sDom": '<"H"fl>t<"F"ip>',
 	"sAjaxSource": 'clases/parent/parents_homework.php?qestudiante='+$('#qestudiante').text(),
-	"oLanguage": {
+	/*"oLanguage": {
         "sUrl": qlen
-    },
+    },*/
     "fnInitComplete": function(oSettings, json) {
       $.unblockUI();
     },
@@ -57,15 +60,21 @@ oTable = $('#dTable').dataTable({
 
 
 oTable = $('#dTable_done').dataTable({
-	
+	"oLanguage": {
+        sEmptyTable: "No hay información por el momento.",
+        sZeroRecords: "No hay información por el momento."
+    },
 	"bJQueryUI": false,
     /*"bRetrieve": true,*/
 	"bAutoWidth": false,
 	"sPaginationType": "full_numbers",
 	"sDom": '<"H"fl>t<"F"ip>',
 	"sAjaxSource": 'clases/parent/parents_homework_done.php?qestudiante='+$('#qestudiante').text(),
-	"oLanguage": {
+	/*"oLanguage": {
         "sUrl": qlen
+    },*/
+    "fnInitComplete": function(oSettings, json) {
+      $.unblockUI();
     },
 	"fnRowCallback": function( nRow, aData, iDisplayIndex, iDisplayIndexFull ) {
 		$(nRow).attr('id', aData[0]);
@@ -106,7 +115,7 @@ oTable = $('#dTable_done').dataTable({
 
 
 $( ".studentpicker" ).on('change', function (e) {
-    $.blockUI();
+    //$.blockUI();
     var optionSelected = $("option:selected", this);
     var valueSelected = this.value;
     assignme('parents_homework.php?qestudiante='+valueSelected,'content'); return false;

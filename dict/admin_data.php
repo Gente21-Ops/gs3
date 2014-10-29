@@ -16,7 +16,7 @@ if($_SESSION['qlen'] == "es"){
 	"col_materia" => "Materia",
 	"col_calif" => "Calificación",
 	"col_nombre" => "Nombre",
-	"col_apelLido" => "Apellido",
+	"col_apellido" => "Apellido",
 	"col_faltas" => "Faltas",
 	"col_asisok" => "tiene calificación de ",
 	"col_asisno" => "no est&aacute; presente el d&iacute;a");

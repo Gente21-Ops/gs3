@@ -43,28 +43,37 @@ ORDER BY qmatname ASC, tareas.fechaEntrega ASC";
     //echo $elsql."<br><br>";
     $sqlt = $con->query($elsql); 
    
-   $output['aaData'] = [];
-    while ($aRow = $sqlt->fetch_assoc()) {
-        $row = array();
+    //$output['aaData'] = [];
 
-        for ( $i=0 ; $i<sizeof($aColumns) ; $i++ ) {
+    if($sqlt->num_rows === 0){
+    
+        $chido = array();
+        echo json_encode( $chido );
 
-            //html para botones
-            if ($i == 5){
-                if($aRow[$aColumns[$i]] == '0'){
-                    $row[] = $texts["notgraded"];
-                } else {
-                    $row[] = '<strong>'.$aRow[ $aColumns[$i] ].'</strong>';
+    } else {  
+        while ($aRow = $sqlt->fetch_assoc()) {
+            $row = array();
+
+            for ( $i=0 ; $i<sizeof($aColumns) ; $i++ ) {
+
+                //html para botones
+                if ($i == 5){
+                    if($aRow[$aColumns[$i]] == '0'){
+                        $row[] = $texts["notgraded"];
+                    } else {
+                        $row[] = '<strong>'.$aRow[ $aColumns[$i] ].'</strong>';
+                    }
                 }
-            }
 
-            $row[] = $aRow[ $aColumns[$i] ];            
-        };
+                $row[] = $aRow[ $aColumns[$i] ];            
+            };
 
-        $output['aaData'][] = $row;
+            $output['aaData'][] = $row;
+        }
+
+        print json_encode($output);
+
     }
-
-    print json_encode($output);
     
 
 ?>

@@ -17,11 +17,11 @@ ORDER BY calificaciones.calificacion DESC";
 
 $result = $con->query($sql);
 
-$output['aaData'] = [];
+$output['aaData'] = array();
     
 while ($row = $result->fetch_assoc()) { 
 
-    $chido = [];
+    $chido = array();
 
     $chido[] = $row['idMaterias'];
     $chido[] = $row['nombre'];

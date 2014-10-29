@@ -21,7 +21,7 @@ ini_set('display_errors', '1');
     
     $sqlt = $con->query($elsql); 
     //print_r(expression);
-    $output['aaData'] = [];
+    $output['aaData'] = array();
     while ($aRow = $sqlt->fetch_assoc()) { 
 
         //I look for faltas, this is an unefficient process!!
@@ -36,7 +36,7 @@ ini_set('display_errors', '1');
             $faltas = '';
         }
 
-        $chido = [];
+        $chido = array();
 
         $chido[] = $aRow['qiduser'];
         $chido[] = $aRow['qapellidos'];

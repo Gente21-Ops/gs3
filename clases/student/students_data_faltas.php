@@ -37,14 +37,11 @@ if($result7->num_rows === 0){
 
         while ($aRow8 = $result8->fetch_assoc()) { 
             
-            //$chido = [];
-            /*echo "si";
-            exit();*/
+            $chido = array();
+
             $chido[] = $row9['idMaterias'];
             $chido[] = $row9['nombre'];
             $chido[] = $aRow8['total'];  
-
-        
             
             $output['aaData'][] = $chido;
             

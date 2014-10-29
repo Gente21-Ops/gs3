@@ -76,11 +76,7 @@ window.onload = function () {
             }
             laststamp = allmsgs[key].tim;
         }
-        
-        $(".nano").nanoScroller();
-        $(".nano").nanoScroller({ scroll: 'bottom' });
-        //$(".nano").nanoScroller({scrollBottom: -10});
-        $(".nano").nanoScroller({ scrollTo: $('#sp'+laststamp)});
+        lower();
     }
 
     function tof(who){
@@ -371,6 +367,7 @@ window.onload = function () {
                         //si se presiona enter y hay texto y el input tiene focus
                         if(e.which == 13 && $('#qinput').val().length > 1 && $('#qinput').is(":focus")){
                             msg($('#qinput').val());
+                            return false;
                         }
                     }); 
 
@@ -446,17 +443,17 @@ window.onload = function () {
                                     //remote message
                                     //THIS MSG should NOT be written to the output window unless it's for the current "taling to" user
                                     //otherwise it will go directly into the ch_ object in order to be read later on
-                                    if (GL.userdata.coder == talkingto){
-                                        //GL.consol('This is a message directed at me and I am the talkingto user');                                        
-                                        $("#texto").append('<span class="singlemsg" title="'+GL.mytime()+'"><strong>'+evt.msg.qname+': </strong>'+emoji(evt.msg.qdata)+'</span><span class="singlemsgdate"> </span><br><span class="singlemsgspace bottom5" id="sp'+tstamp+'"><br>&nbsp;<br></span>');
+                                    if (evt.msg.qgsid == talkingto){
+                                        GL.consol('I am the talkingto user, evt.msg.qwho:'+evt.msg.qwho+' | talkingto:'+talkingto+' | evt.msg.qgsid:'+evt.msg.qgsid);
+                                        localmsg_dest(evt.msg.qdata,evt.msg.qname,GL.now()); 
                                     } else {
-                                        GL.consol('This is a message directed at me but I am NOT the talkingto user');
+                                        GL.consol('I am NOT the talkingto user, evt.msg.qwho:'+evt.msg.qwho+' | talkingto:'+talkingto+' | evt.msg.qgsid:'+evt.msg.qgsid);
                                         $.jGrowl('<div class="msgpop" id="msgpop_'+evt.msg.qgsid+'" style="cursor: pointer; cursor: hand;">'+
                                             '<div style="float:left"><img src="images/users/37/'+evt.msg.qgsid+'.jpg" style="width:40px; height:40px; vertical-align:middle;"></div>'+
                                             '<div style="float:left; margin-left:5px; width:180px;"><strong>'+getfriendname(evt.msg.qgsid)+'</strong><br>'+emoji(GL.trunkme(evt.msg.qdata,prevmsgw))+'</div>'+
                                             '</div>', { 
                                             /**/open: function() {
-                                                //si soy el usuario seleccionado imprimo, si no espero el click
+                                                //si soy el usuario seleccionado imprimo, si no espero el click 
                                                 if (talkingto == evt.msg.qgsid){
                                                     GL.consol('>>YOU HAVE CLICKED THE TALKING TO USER, we append the MSG');
                                                     tof(evt.msg.qgsid);
@@ -474,6 +471,9 @@ window.onload = function () {
                                             position: 'bottom-right',
                                             easing: 'swing'
                                         });
+                                        //msg nottify
+                                        GL.consol('Trying to set class to:'+evt.msg.qgsid);
+                                        $( "#li_"+evt.msg.qgsid ).addClass( "gotmsg" );
                                     }
 
                                     //write to LS

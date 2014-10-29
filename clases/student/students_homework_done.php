@@ -38,6 +38,14 @@ ORDER BY qmatname ASC, tareas.fechaEntrega ASC";
     //echo $elsql."<br><br>";
     $sqlt = $con->query($elsql); 
    
+    $output['aaData'] = array();
+    
+if($sqlt->num_rows === 0){
+    
+    //$chido = array();
+    echo json_encode( $output );
+
+} else {   
    //$output['aaData'] = [];
     while ($aRow = $sqlt->fetch_assoc()) {
         $row = array();
@@ -60,6 +68,7 @@ ORDER BY qmatname ASC, tareas.fechaEntrega ASC";
     }
 
     print json_encode($output);
+}
     
 
 ?>

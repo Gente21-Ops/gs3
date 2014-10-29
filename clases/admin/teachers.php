@@ -15,7 +15,7 @@ require_once('../mysqlcon.php');
     //echo $elsql;
     $sqlt = $con->query($elsql); 
 
-    $output['aaData'] = [];
+    $output['aaData'] = array();
    
     while ($row = $sqlt->fetch_assoc()) {
         /*$row = array();
@@ -24,11 +24,11 @@ require_once('../mysqlcon.php');
             $row[] = $aRow[ $aColumns[$i] ];            
         };*/
 
-        $chido = [];
+        $chido = array();
 
         $chido[] = $row['idUsers'];
-        $chido[] = $row['nombre'];
         $chido[] = $row['apellidos'];
+        $chido[] = $row['nombre'];
         /*$chido[] = $row['direccion'];
         $chido[] = $row['telefono'];
         $chido[] = $row['e_mail'];*/

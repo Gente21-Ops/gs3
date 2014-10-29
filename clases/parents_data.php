@@ -42,7 +42,7 @@ require_once('mysqlcon.php');
     } else {
         $qestudiante = $_GET['qestudiante'];
     }
-
+    echo $qestudiante;
     /////menu options "months"
     $months = "";
     $monthsSel = "";

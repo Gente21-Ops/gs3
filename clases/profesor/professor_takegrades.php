@@ -32,7 +32,7 @@ ini_set('display_errors', '1');
     
 
     //print_r(expression);
-    $output['aaData'] = [];
+    $output['aaData'] = array();
     while ($aRow = $sqlt->fetch_assoc()) { 
 
         //I look for faltas, this is an unefficient process!!
@@ -51,7 +51,7 @@ ini_set('display_errors', '1');
             $calo = $row2['calificacion'];
         }
 
-        $chido = [];
+        $chido = array();
 
         $chido[] = $aRow['qiduser'];
         $chido[] = $aRow['qapellidos'];

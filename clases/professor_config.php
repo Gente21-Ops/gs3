@@ -34,7 +34,7 @@ include('../dict/students_config.php');
         <div class="fluid">
         
             <!-- Bars chart -->
-            <div class="widget grid6 chartWrapper">
+            <div class="widget grid12 chartWrapper">
                 <div class="whead"><h6><?php echo $texts['img_but_browse']; ?></h6><div class="clear"></div></div>
                 <div class="body">
 
@@ -57,7 +57,7 @@ include('../dict/students_config.php');
                 </div>
             </div>
             
-            <!-- Bars chart -->
+            <!-- Bars chart 
             <div class="widget grid6 chartWrapper">
                 <div class="whead"><h6>Estadísticas generales</h6><div class="clear"></div></div>
                 <div class="formRow">
@@ -74,7 +74,7 @@ include('../dict/students_config.php');
                     </div>
                     <div class="clear"></div>
                 </div>
-            </div>
+            </div>-->
         
         </div>
 

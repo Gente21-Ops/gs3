@@ -10,14 +10,12 @@ require_once('../mysqlcon.php');
     //echo $elsql;
     $sqlt = $con->query($elsql); 
 
-    //var para agarra el id
-    $elid = 0;
-    $elcode = '0';
-    
-    while ($row = $sqlt->fetch_assoc()) {
 
+    $output['aaData'] = array();
 
-        $chido = [];
+    while ($row = mysqli_fetch_assoc($sqlt)) {
+
+        $chido = array();
 
         $chido[] = $row['idUsers'];
         $chido[] = $row['apellidos'];
@@ -31,9 +29,14 @@ require_once('../mysqlcon.php');
                     <span class="icon-cog"></span><span>Datos personales</span></a>';
         
         $output['aaData'][] = $chido;
+        
     }
 
+    $sqlt->free();
+
     print json_encode($output);
+
+    $con->close();
     
 
 ?>

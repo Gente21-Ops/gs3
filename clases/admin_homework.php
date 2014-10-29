@@ -16,8 +16,8 @@ include('../dict/admin_homework.php');
         $qestudiante = "";
     } else {
         $sql2 = "SELECT nombre, apellidos FROM users WHERE codeEscuelas = '".$_SESSION['qescuelacode']."' AND idUsers = '".$_GET['qestudiante']."'";
-        $result2 = mysqli_query($con,$sql2);
-        $row2 = mysqli_fetch_array($result2);
+        $result2 = mysql_query($sql2, $con);
+        $row2 = mysql_fetch_array($result2);
 
         $qestudiante = $_GET['qestudiante'];
         $qestudiante_nom = $row2['nombre']." ".$row2['apellidos'];

@@ -2,6 +2,7 @@
 error_reporting(E_ALL);
 include("logon.php");
 include('../dict/admin/materias.php');
+//require_once('../mysqlcon.php');
 
     ob_start();
 
@@ -10,10 +11,10 @@ include('../dict/admin/materias.php');
     include('top.php');
 
     $sql = "SELECT idNiveles, nombre FROM niveles";
-    $result = mysqli_query($con,$sql);
+    $result = mysql_query($sql,$con);
 
     $sql2 = "SELECT idUsers, nombre, apellidos FROM users WHERE tipo = 1 AND codeEscuelas = '".$_SESSION['qescuelacode']."'";
-    $result2 = mysqli_query($con,$sql2);
+    $result2 = mysql_query($sql2,$con);
 ?>  
     
 <!-- Main content -->
@@ -76,10 +77,10 @@ include('../dict/admin/materias.php');
         </div>
         <div class="formRow">
             <div class="selector" style="width: 230px;">
-                <span><?php echo $texts['col_nivel']; ?>    </span>
+                <label for="name"><?php echo $texts['col_nivel']; ?></label>
                 <select id="nivel" name="nivel"> 
                     <?php
-                        while($row = mysqli_fetch_array($result)){    
+                        while($row = mysql_fetch_array($result)){    
                               echo "<option value='".$row['idNiveles']."'>".$row['nombre']."</option>";
                         } 
 
@@ -89,10 +90,10 @@ include('../dict/admin/materias.php');
         </div>
         <div class="formRow" >
             <div class="selector" style="width: 230px;">
-                <span><?php echo $texts['col_maestro']; ?></span>
+                <label for="name"><?php echo $texts['col_maestro']; ?></label>
                 <select id="teacher" name="teacher" class="select chzn-done"> 
                     <?php
-                        while($row2 = mysqli_fetch_array($result2)){    
+                        while($row2 = mysql_fetch_array($result2)){    
                               echo "<option value='".$row2['idUsers']."'>".$row2['nombre']." ".$row2['apellidos']."</option>";
                         } 
 

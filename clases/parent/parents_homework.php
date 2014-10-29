@@ -38,7 +38,7 @@ require_once('../mysqlcon.php');
         "review" => "Faites une revisi&oacute;n S.V.P.");
     }
 
-    $elsql = "SELECT tareas.idTareas, tareas.code AS qcode, tareas.nombre, tareas.fecha, tareas.fechaEntrega, 
+    $elsql2 = "SELECT tareas.idTareas, tareas.code AS qcode, tareas.nombre, tareas.fecha, tareas.fechaEntrega, 
     tareas_status.status AS qstatus, materias.nombre AS qmatname 
 FROM tareas 
 INNER JOIN materias ON (materias.idMaterias = tareas.idMaterias) 
@@ -48,44 +48,53 @@ ORDER BY qmatname ASC, tareas.fechaEntrega ASC";
     
     //echo $_SESSION['qidgrupo']."<br><br>";
     //echo $elsql;
-    $sqlt = $con->query($elsql);
+    $sqlt2 = $con->query($elsql2);
 
     //var para agarra el id
     $elid = 0;
     $elcode = '0';
 
-    $output['aaData'] = [];
-    while ($aRow = $sqlt->fetch_assoc()) {
-        $row = array();
+    //$output['aaData'] = [];
 
-        for ( $i=0 ; $i<sizeof($aColumns) ; $i++ ) {
+    if($sqlt2->num_rows === 0){
+    
+        $chido = array();
+        echo json_encode( $chido );
 
-            //html para botones
-            if ($i == 5){
+    } else {  
+        while ($aRow = $sqlt2->fetch_assoc()) {
+            $row = array();
 
-                //calculo el code
-                $elcode = $aRow[$aColumns[$i + 1]];
+            for ( $i=0 ; $i<sizeof($aColumns) ; $i++ ) {
 
-                if($aRow[$aColumns[$i]] == '0'){
-                    $row[] = '<a href="#" onclick="assignme(\'parents_homework_do.php?qcode='.$elcode.'\',\'content\'); return false;" class="buttonM bGreen"><span class="icon-thumbs-up-2"></span><span>'.$texts['donow'].'</span></a>';
-                } else if($aRow[$aColumns[$i]] == '2'){
-                    $row[] = '<a href="#" onclick="assignme(\'parents_homework_do.php?qcode='.$elcode.'\',\'content\'); return false;" class="buttonM bRed"><span class="icol-refresh2"></span><span>'.$texts['review'].'</span></a>';
+                //html para botones
+                if ($i == 5){
+
+                    //calculo el code
+                    $elcode = $aRow[$aColumns[$i + 1]];
+
+                    if($aRow[$aColumns[$i]] == '0'){
+                        $row[] = '<a href="#" onclick="assignme(\'parents_homework_do.php?qcode='.$elcode.'\',\'content\'); return false;" class="buttonM bGreen"><span class="icon-thumbs-up-2"></span><span>'.$texts['donow'].'</span></a>';
+                    } else if($aRow[$aColumns[$i]] == '2'){
+                        $row[] = '<a href="#" onclick="assignme(\'parents_homework_do.php?qcode='.$elcode.'\',\'content\'); return false;" class="buttonM bRed"><span class="icol-refresh2"></span><span>'.$texts['review'].'</span></a>';
+                    }
+                } else {
+                    //seteamos el id
+                    if ($i == 0){
+                        $elid = $aRow[$aColumns[$i]];
+                    }
+                    //si no pus solo el valor        
+                    $row[] = $aRow[ $aColumns[$i] ];
                 }
-            } else {
-                //seteamos el id
-                if ($i == 0){
-                    $elid = $aRow[$aColumns[$i]];
-                }
-                //si no pus solo el valor        
-                $row[] = $aRow[ $aColumns[$i] ];
-            }
-                        
-        };
+                            
+            };
 
-        $output['aaData'][] = $row;
+            $output['aaData'][] = $row;
+        }
+
+        print json_encode($output);
+
     }
-
-    print json_encode($output);
     
 
 ?>

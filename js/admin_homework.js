@@ -14,16 +14,19 @@ if ($('#qlango').text() == 'es'){
 
 //EDITABLE
 oTable = $('#dTable').dataTable({
-	
+	"oLanguage": {
+        sEmptyTable: "No hay información por el momento.",
+        sZeroRecords: "No hay información por el momento."
+    },
 	"bJQueryUI": false,
     /*"bRetrieve": true,*/
 	"bAutoWidth": false,
 	"sPaginationType": "full_numbers",
 	"sDom": '<"H"fl>t<"F"ip>',
 	"sAjaxSource": 'clases/admin/admin_homework.php?qestudiante='+$('#qestudiante').text(),
-	"oLanguage": {
+	/*"oLanguage": {
         "sUrl": qlen
-    },
+    },*/
     "fnInitComplete": function(oSettings, json) {
       $.unblockUI();
     },
@@ -57,16 +60,19 @@ oTable = $('#dTable').dataTable({
 
 
 oTable = $('#dTable_done').dataTable({
-	
+	"oLanguage": {
+        sEmptyTable: "No hay información por el momento.",
+        sZeroRecords: "No hay información por el momento."
+    },
 	"bJQueryUI": false,
     /*"bRetrieve": true,*/
 	"bAutoWidth": false,
 	"sPaginationType": "full_numbers",
 	"sDom": '<"H"fl>t<"F"ip>',
 	"sAjaxSource": 'clases/admin/admin_homework_done.php?qestudiante='+$('#qestudiante').text(),
-	"oLanguage": {
+	/*"oLanguage": {
         "sUrl": qlen
-    },
+    },*/
 	"fnRowCallback": function( nRow, aData, iDisplayIndex, iDisplayIndexFull ) {
 		$(nRow).attr('id', aData[0]);
         return nRow;

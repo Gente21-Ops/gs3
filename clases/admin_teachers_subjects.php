@@ -10,12 +10,12 @@ include('../dict/admin/teachers.php');
     include('top.php');
 
     $sql = "SELECT nombre, apellidos FROM users WHERE idUsers = '".$_GET['qmaestro']."'";
-    $result = mysqli_query($con,$sql);
-    $row = mysqli_fetch_assoc($result);
+    $result = mysql_query($sql, $con);
+    $row = mysql_fetch_assoc($result);
     $qprof_nom = $row['nombre']." ".$row['apellidos'];
 
     $sql2 = "SELECT idMaterias, nombre FROM materias";
-    $result2 = mysqli_query($con,$sql2);
+    $result2 = mysql_query($sql2, $con);
     
 
 ?>  
@@ -75,7 +75,7 @@ include('../dict/admin/teachers.php');
         <br>
             <select id="materia" name="materia"> 
             <?php
-                while($row2 = mysqli_fetch_array($result2)){    
+                while($row2 = mysql_fetch_array($result2)){    
                       echo "<option value='".$row2['idMaterias']."'>".$row2['nombre']."</option>";
                 } 
 

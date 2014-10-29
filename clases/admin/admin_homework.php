@@ -54,7 +54,7 @@ ORDER BY qmatname ASC, tareas.fechaEntrega ASC";
     $elid = 0;
     $elcode = '0';
 
-    $output['aaData'] = [];
+    //$output['aaData'] = [];
     while ($aRow = $sqlt->fetch_assoc()) {
         $row = array();
 

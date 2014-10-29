@@ -6,7 +6,10 @@ var elano = new Date().getFullYear();
 
 //EDITABLE
 oTable = $('#dTable').dataTable({
-	
+	"oLanguage": {
+        sEmptyTable:     "No hay información por el momento.",
+        sZeroRecords: "No hay información por el momento."
+    },
 	"bJQueryUI": false,
 	"bAutoWidth": false,
 	"fnInitComplete": function(oSettings, json) {

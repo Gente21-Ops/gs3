@@ -17,11 +17,11 @@ ORDER BY faltas.fecha DESC";
 
 $result2 = $con->query($sql2);
 
-$output['aaData'] = [];
+$output['aaData'] = array();
 
 while ($row2 = $result2->fetch_assoc()) { 
 
-        $chido = [];
+       	$chido = array();
 
         $chido[] = $row2['idMaterias'];
         $chido[] = $row2['nombre'];

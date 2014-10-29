@@ -23,8 +23,8 @@ include('../dict/students_config.php');
 
 
     $query = "SELECT * FROM users WHERE idUsers = '".$_GET['qestudiante']."'";
-    $result = mysqli_query($con, $query);
-    $row = mysqli_fetch_assoc($result);
+    $result = mysql_query($query, $con);
+    $row = mysql_fetch_assoc($result);
 
     $nombre = $row['nombre']." ".$row['apellidos'];
 ?>  

@@ -11,6 +11,6 @@
   //echo $elsql;
   $sqlt = $con->query($elsql); 
 
-  echo "ok";
+  //echo "ok";
 
 ?>

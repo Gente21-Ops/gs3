@@ -50,10 +50,11 @@ ini_set('display_errors', '1');
             AND grupos_mapeo_materias.idMaterias = '".$aRow['qidmat']."'";
             //echo $sql2."<br>";
             $sqlt2 = $con->query($sql2); 
-            $chido = [];
+            $chido = array();
    
             while ($bRow = $sqlt2->fetch_assoc()) {
                 
+
                 $chido[] = $bRow['qidgrupo'];
                 $chido[] = $aRow['qnommateria'];
                 $chido[] = $bRow['qnombre'];  

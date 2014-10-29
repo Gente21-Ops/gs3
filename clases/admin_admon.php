@@ -39,9 +39,8 @@ include('../dict/admin/admon.php');
                     <th>ID</th>
                     <th><?php echo $texts['col_apellidos']; ?></th>
                     <th><?php echo $texts['col_nombre']; ?></th>
-                    <th><?php echo $texts['col_telefono']; ?></th>
-                    <th><?php echo $texts['col_correo']; ?></th>
-                    <th><?php echo $texts['col_dir']; ?></th>
+                    <th><?php echo $texts['col_env_correo']; ?></th>
+                    <th><?php echo $texts['col_datos']; ?></th>
                 </tr>
                 </thead>
                 <tbody>
@@ -73,10 +72,22 @@ include('../dict/admin/admon.php');
         <br>
         <label for="name"><?php echo $texts['col_nombre']; ?></label><input type="text" name="nombre" id="nombre" rel="2" />
         <br>
-        <label for="name">Contraseña</label><input type="text" name="pass" id="pass" />
+        <label for="name"><?php echo $texts['col_user']; ?></label><input type="text" name="nick" id="nick" />
         <br>
-        <label for="name"><?php echo $texts['col_dir']; ?></label><input type="text" name="direccion" id="direccion" rel="5" />
+        <label for="name"><?php echo $texts['col_pass']; ?></label><input type="text" name="pass" id="pass" />
         <br>
+        
+        <label for="name"><?php echo $texts['dir_calle']; ?></label><input type="text" name="calle_num" id="calle_num" rel="5" />
+        <br>
+        <label for="name"><?php echo $texts['dir_colonia']; ?></label><input type="text" name="colonia" id="colonia" rel="5" />
+        <br>
+        <label for="name"><?php echo $texts['dir_zip']; ?></label><input type="text" name="zip_code" id="zip_code" rel="5" />
+        <br>
+        <label for="name"><?php echo $texts['dir_municipio']; ?></label><input type="text" name="municipio" id="municipio" rel="5" />
+        <br>
+        <label for="name"><?php echo $texts['dir_estado']; ?></label><input type="text" name="estado" id="estado" rel="5" />
+        <br>
+        
         <label for="name"><?php echo $texts['col_telefono']; ?></label><input type="text" name="telefono" id="telefono" rel="3" />
         <br>
         <label for="name"><?php echo $texts['col_correo']; ?></label><input type="text" name="e_mail" id="e_mail" rel="4" />

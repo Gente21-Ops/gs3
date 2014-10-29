@@ -18,6 +18,6 @@
   mysqli_query($con,$query);
   //echo $query;
 
-  echo $value;
+  //echo $value;
 
 ?>

@@ -15,13 +15,16 @@ require_once('mysqlcon.php');
     $result2 = mysqli_query($con,$sql2);
     $row2 = mysqli_fetch_array($result2, MYSQLI_ASSOC);
 
+    $qparcial = 0;
+
     if(isset($_GET['qparcial'])){
         $qparcial = $_GET['qparcial'];
-    } /*else {
-        $row=mysqli_fetch_array($result,MYSQLI_ASSOC);
-        $qparcial = $row4['idParciales'];
+    } else {
+        //$row4 = mysqli_fetch_array($result2,MYSQLI_ASSOC);
+        echo $row2['idParciales'];
+        $qparcial = $row2['idParciales']."||";
         //echo '<div id="qparcial" style="display:none;">'.$_GET['qparcial'].'</div>';
-    }*/
+    }   
 
     //TOP
     $breads = $texts['title'].'^professor_takelist';
@@ -43,7 +46,8 @@ require_once('mysqlcon.php');
 <div id="t_present" style="display:none;"><?php echo $texts['col_asisok']; ?></div>
 <div id="t_notpresent" style="display:none;"><?php echo $texts['col_asisno']; ?></div>
 <div id="qlang" style="display:none;"><?php echo $_SESSION['qlen']; ?></div>
-<div id="qparcial" style="display:none;"><?php echo $_GET['qparcial']; ?></div>
+<div id="qparcial" style="display:none;"><?php echo $qparcial; ?></div>
+<!--<div id="qparcial" style="display:none;"><?php echo $_GET['qparcial']; ?></div>-->
     
     <!-- Main content -->
     <div class="wrapper">

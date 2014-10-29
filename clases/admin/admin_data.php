@@ -36,18 +36,18 @@ GROUP BY users.nombre";
 
 $result = $con->query($sql);
 
-$output['aaData'] = [];
+$output['aaData'] = array();
     
 while ($row = $result->fetch_assoc()) { 
 
-    $chido = [];
+    $chido = array();
 
     $chido[] = $row['idUsers'];
     $chido[] = $row['nombre'];
     $chido[] = $row['apellidos'];
-    $chido[] = '<a href="#" onclick="assignme(\'admin_grades?qestudiante='.$row['idUsers'].'\',\'content\'); return false;" class="buttonM bGreen"><span class="icon-bars"></span><span>'.$texts['but_tareas'].'</span></a>
-    			<a href="#" onclick="assignme(\'admin_faltas?qestudiante='.$row['idUsers'].'\',\'content\'); return false;" class="buttonM bGreen"><span class="icon-thumbs-up-2"></span><span>'.$texts['but_calif'].'</span></a>
-    			<a href="#" onclick="assignme(\'admin_homework?qestudiante='.$row['idUsers'].'\',\'content\'); return false;" class="buttonM bGreen"><span class="icon-cog"></span><span>'.$texts['but_faltas'].'</span></a>';
+    $chido[] = '<a href="#" onclick="assignme(\'admin_homework?qestudiante='.$row['idUsers'].'\',\'content\'); return false;" class="buttonM bGreen"><span class="icon-bars"></span><span>'.$texts['but_tareas'].'</span></a>
+    			<a href="#" onclick="assignme(\'admin_grades?qestudiante='.$row['idUsers'].'\',\'content\'); return false;" class="buttonM bGreen"><span class="icon-thumbs-up-2"></span><span>'.$texts['but_calif'].'</span></a>
+    			<a href="#" onclick="assignme(\'admin_faltas?qestudiante='.$row['idUsers'].'\',\'content\'); return false;" class="buttonM bGreen"><span class="icon-cog"></span><span>'.$texts['but_faltas'].'</span></a>';
     $output['aaData'][] = $chido;
 }
 

@@ -10,7 +10,7 @@
                 <ul class="quickStats">
                     <li>
                         <a href="" class="blueImg"><img src="images/icons/quickstats/plus.png" alt="" /></a>
-                        <div class="floatR"><strong class="blue">'.$qcalif.'</strong><span>promedio</span></div>
+                        <div class="floatR"><strong class="blue">'.number_format($qcalif,2).'</strong><span>promedio</span></div>
                     </li>
                     <li>
                         <a href="" class="redImg"><img src="images/icons/quickstats/user.png" alt="" /></a>
