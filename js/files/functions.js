@@ -42,8 +42,8 @@ GL.emoticons = {
         "(meh)":"Not-Amused.png"
       };
 
-//localStorage
-GL.oldmsg = 604800;
+//localStorage (604800000 = 7 days in ms)
+GL.oldmsg = 604800000;
 
 //global function for simple loading
 function assignme(url,target){
@@ -197,7 +197,7 @@ $(function() {
 
 	/*----LOCAL CHAT FUNCTIONS STARTS----*/
 	GL.ch_savedata = function(timestamp,senderid,recipientid,text){
-		GL.consol('Saving data here =D , SENDER:'+senderid+' RECIPIENT:'+recipientid+' ME:'+GL.userdata.coder);
+		//GL.consol('Saving data here =D , SENDER:'+senderid+' RECIPIENT:'+recipientid+' ME:'+GL.userdata.coder);
 
 		//who am i talking to? <-Prevents that I'm labeling a message as being sent to myself
 		var talkingto = senderid;
@@ -218,7 +218,9 @@ $(function() {
 			} else {
 				//GL.consol('Object found! appending data...');
 				var retrievedObject = localStorage.getItem(whoisit);
-				var chido = JSON.parse(retrievedObject);
+				//before saving the new uo the new object let's clear up old ones
+				var chido = ch_deleteold(JSON.parse(retrievedObject));
+				//add new MSG
 				chido.push({ 'tim': timestamp, 'sid': senderid, 'rid': recipientid, 'txt': text });
 				//save to local
 				localStorage.setItem(whoisit, JSON.stringify(chido));
@@ -237,11 +239,22 @@ $(function() {
 		var talkingto = 'c_'+recipientid+'_'+GL.userdata.coder;
 		//if the LSO doesn't have my id as a rpefix I will return nothing
 		var retrievedObject = localStorage.getItem(talkingto);
-		//GL.consol(retrievedObject);
-		return JSON.parse(retrievedObject);
+		var allmsgs = JSON.parse(retrievedObject);
+		return allmsgs;
 	}
-	function ch_deleteold(){
+	function ch_deleteold(allmsgs){
 	    //GL.oldmsg
+	    var timo = GL.now();
+	    var newob = [];
+		//we rebuild the MSGS		
+	    for (var key in allmsgs) {
+			//if difference in time is lower than olmsg we save the msg again
+			if ( (timo - allmsgs[key].tim) < GL.oldmsg ){
+				newob.push({ 'tim': allmsgs[key].tim, 'sid': allmsgs[key].sid, 'rid': allmsgs[key].rid, 'txt': allmsgs[key].txt });
+			}			
+		}
+		//we return the new cleaned up msg stream		
+		return newob;
 	}
 	/*-----LOCAL CHAT FUNCTIONS ENDS-----*/
 

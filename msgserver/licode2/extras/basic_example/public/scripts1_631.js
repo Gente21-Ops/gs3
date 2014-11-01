@@ -63,7 +63,6 @@ window.onload = function () {
 
     function rebuildmsgs(allmsgs){
         //GL.consol('rebuild...');
-        //falta encontrar la forma de prevenir esta salida si el objeto con los MSGS viene vacio
         var laststamp;
         for (var key in allmsgs) {            
             //GL.consol('Trying to rebuild MSG from user: '+allmsgs[key].rid);//
