@@ -50,6 +50,28 @@ window.onload = function () {
 
     GL.consol('TEST @'+GL.now());
 
+    //user remove
+    $('#diaremove').dialog({
+        autoOpen: false,
+        /*width: 500,*/
+        modal: true,
+        buttons: {
+            "Yes, remove": function () {
+                GL.getter('clases/ui/chat_deleteu.php',{ qfid:talkingto },'json',retdelu);
+                function retdelu(mydelu) {
+                    if (parseInt(mydelu) == 1){
+                        $.jGrowl('The user has been deleted from your friends\' list');
+                    } else {
+                        $.jGrowl('ERROR, unable to delete from list');
+                    }
+                }
+            },
+            "Cancel": function () {
+                $(this).dialog("close");
+            }
+        }
+    });
+
     function getfriendname(qid){
         //GL.consol('Trying to get friend\'s name:'+qid);
         var res = $.grep(myfriends, function(e){ return e.id == qid; });
@@ -86,7 +108,21 @@ window.onload = function () {
         //let's retrieve this person's name
         var res = $.grep(myfriends, function(e){ return e.id == who; });
         if(res && res.length == 1){
-            $('#talkto').html('<img src="images/users/37/'+who+'.jpg" style="width:37px; height:37px; vertical-align:middle;"><span> &nbsp; '+res[0].name+'</span>');
+            $('#talkto').html('<div>'
+                +'<div style="float:left;"><img src="images/users/37/'+who+'.jpg" style="width:37px; height:37px;"></div>'
+                +'<div style="float:left; line-height:98%;">'
+                +'<span> &nbsp;'+res[0].name+'</span><br>' 
+                +' <!--&nbsp; <span class="icos-user littleicon"></span>-->'
+                +' &nbsp; <img src="images/icons/usual/icon-trash_60.png" class="littleicon" id="trash_'+who+'">'
+                +'</div>'
+                +'</div>');
+
+            //hook delete
+            $('#trash_'+who).click(function(e){
+                $('#uname').text(res[0].name);
+                $('#diaremove').dialog('open');
+            });
+
             //now let's retrieve the messages from this person
             rebuildmsgs(GL.ch_getdata(GL.userdata.coder,who));
         }
@@ -368,7 +404,7 @@ window.onload = function () {
                             msg($('#qinput').val());
                             return false;
                         }
-                    }); 
+                    });
 
                     //===== TIMER STARTS =====//    
 				    //Increment the idle time counter every minute.

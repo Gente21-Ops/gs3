@@ -2386,3 +2386,9 @@ table .dropdown-menu.pull-right { right: auto; left: 0; }
     background-attachment: fixed;
     background-position: right middle; 	
 }
+
+/*LITTLE ICONS*/
+.littleicon{
+	margin-top:8px;
+	cursor: pointer; cursor: hand;
+}

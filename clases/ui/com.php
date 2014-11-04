@@ -1,5 +1,16 @@
+<?php
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+include('dict/com.php');
+?>
+<!-- REMOVE USER DIALOG -->
 
-
+<div id="diaremove" title="<?php echo $texts['rem_title']; ?>">
+    <?php echo $texts['rem_descone']; ?> <span id="uname" style="font-weight:bold;"></span> <?php echo $texts['rem_desctwo']; ?>
+    <br>
+    <br>
+    <strong><?php echo $texts['rem_sure']; ?></strong>
+</div>
 
 <!-- Secondary nav -->
     <div class="secNav">
