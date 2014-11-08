@@ -4,12 +4,54 @@ ini_set('display_errors', 1);
 include('dict/com.php');
 ?>
 <!-- REMOVE USER DIALOG -->
+<div id="closetxt" class="hide"><?php echo $texts['rem_cerrar']; ?></div>
+<div id="savedtxt" class="hide"><?php echo $texts['rem_saved']; ?></div>
+<div id="errortxt" class="hide"><?php echo $texts['rem_error']; ?></div>
 
-<div id="diaremove" title="<?php echo $texts['rem_title']; ?>">
-    <?php echo $texts['rem_descone']; ?> <span id="uname" style="font-weight:bold;"></span> <?php echo $texts['rem_desctwo']; ?>
-    <br>
-    <br>
-    <strong><?php echo $texts['rem_sure']; ?></strong>
+<div id="diaremove" title="..." class="hide">
+    <div class="formRow fluid">
+        <div class="grid4">
+            <img src="" id="blockthumb">
+        </div>
+        <div class="grid8">
+            <?php echo $texts['rem_desctwo']; ?>
+            <div class="grid9 on_off">
+                <div class="floatL mr10" id="cont_islisted">
+                    <input type="checkbox" id="c_visible" name="chbox" />
+                </div>
+            </div>
+            <br><br>
+            <?php echo $texts['rem_descthree']; ?>
+            <div class="grid9 on_off">
+                <div class="floatL mr10" id="cont_isblocked">
+                    <input type="checkbox" id="c_blocked" name="chbox" />
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="diaddf" title="<?php echo $texts['add_title']; ?>" class="hide">
+    <div class="formRow fluid">
+        <div class="grid12">
+            
+            <table cellpadding="0" cellspacing="0" border="0" class="dTable" id="dTable">
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th><?php echo $texts['col_nombre']; ?></th>                        
+                <th><?php echo $texts['col_actividad']; ?></th>
+                <th><?php echo $texts['col_ira']; ?></th>
+                <th><?php echo $texts['col_ver']; ?></th>
+                <th><?php echo $texts['col_publico']; ?></th>
+            </tr>
+            </thead>
+            <tbody>
+            </tbody>
+            </table> 
+
+        </div>
+    </div>
 </div>
 
 <!-- Secondary nav -->

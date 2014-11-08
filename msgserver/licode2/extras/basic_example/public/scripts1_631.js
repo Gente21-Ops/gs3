@@ -30,6 +30,8 @@ var state = 0;
 
 //who am I talking with?
 var talkingto = '0';
+var islisted = 0;
+var isblocked = 0;
 
 //GLOBAL VARS START
 function getParameterByName(name) {
@@ -49,28 +51,111 @@ function print_r(arr,name) {
 window.onload = function () {
 
     GL.consol('TEST @'+GL.now());
+    var txtclose = $('#closetxt').text();
 
-    //user remove
-    $('#diaremove').dialog({
+    //user add
+    $('#diaddf').dialog({
         autoOpen: false,
-        /*width: 500,*/
+        position: 'center',
+        width: $(window).width()-180,
+        height: $(window).height()-180,
         modal: true,
-        buttons: {
-            "Yes, remove": function () {
-                GL.getter('clases/ui/chat_deleteu.php',{ qfid:talkingto },'json',retdelu);
+        /*buttons: {
+            "Save": function () {
+                $.blockUI();
+                var isvisok = 0;
+                var isblook = 0;
+                if($('#ibutton').attr('checked')){ isvisok = 1 }
+                if($('#ibutton').attr('checked')){ isblook = 1 }
+                GL.getter('clases/ui/chat_deleteu.php',{ qfid:talkingto, qblock:isblook, qvis:isvisok },'json',retdelu);
                 function retdelu(mydelu) {
                     if (parseInt(mydelu) == 1){
+                        getfriends();
                         $.jGrowl('The user has been deleted from your friends\' list');
                     } else {
                         $.jGrowl('ERROR, unable to delete from list');
                     }
+
+                    $.unblockUI();
                 }
-            },
-            "Cancel": function () {
+
                 $(this).dialog("close");
             }
+        },
+        open: function () {
+            if (islisted == 1){
+                //$('#c_visible').prop('checked', true);
+                $('#c_visible').iButton('toggle',true);
+            } else {
+                //$('#c_visible').prop('checked', false);
+                $('#c_visible').iButton('toggle',false);
+            }
+            
+            if (parseInt(isblocked) == 1){
+                //$('#c_blocked').prop('checked', true);
+                $('#c_blocked').iButton('toggle',true);
+            } else {
+                //$('#c_blocked').prop('checked', false);
+                $('#c_blocked').iButton('toggle',false);
+            }
+            GL.consol('islisted'+islisted+' | isblocked'+isblocked);
+        }*/
+    });
+
+    //user remove
+    $('#diaremove').dialog({
+        autoOpen: false,
+        width: 480,
+        modal: true,
+        buttons: {
+            "Save": function () {
+                $.blockUI();
+                var isvisok = 0;
+                var isblook = 0;
+                if($('#ibutton').attr('checked')){ isvisok = 1 }
+                if($('#ibutton').attr('checked')){ isblook = 1 }
+                GL.getter('clases/ui/chat_deleteu.php',{ qfid:talkingto, qblock:isblook, qvis:isvisok },'json',retdelu);
+                function retdelu(mydelu) {
+                    if (parseInt(mydelu) == 1){
+                        getfriends();
+                        $.jGrowl('The user has been deleted from your friends\' list');
+                    } else {
+                        $.jGrowl('ERROR, unable to delete from list');
+                    }
+
+                    $.unblockUI();
+                }
+
+                $(this).dialog("close");
+            }
+        },
+        open: function () {
+        	if (islisted == 1){
+        		//$('#c_visible').prop('checked', true);
+        		$('#c_visible').iButton('toggle',true);
+        	} else {
+        		//$('#c_visible').prop('checked', false);
+        		$('#c_visible').iButton('toggle',false);
+        	}
+            
+        	if (parseInt(isblocked) == 1){
+        		//$('#c_blocked').prop('checked', true);
+        		$('#c_blocked').iButton('toggle',true);
+        	} else {
+        		//$('#c_blocked').prop('checked', false);
+        		$('#c_blocked').iButton('toggle',false);
+        	}
+        	GL.consol('islisted'+islisted+' | isblocked'+isblocked);
         }
     });
+
+    //block button
+    $('c_visible').iButton({
+		enableDrag: true 
+	});
+	$('c_blocked').iButton({
+		enableDrag: true 
+	});
 
     function getfriendname(qid){
         //GL.consol('Trying to get friend\'s name:'+qid);
@@ -101,28 +186,41 @@ window.onload = function () {
     }
 
     function tof(who){
-    	GL.consol('TOF - Trying to talk to:'+who);
+    	//GL.consol('TOF - Trying to talk to:'+who);
         //clearup text
         $("#texto").html('');
         talkingto = who;           
         //let's retrieve this person's name
         var res = $.grep(myfriends, function(e){ return e.id == who; });
         if(res && res.length == 1){
+        	islisted = parseInt(res[0].visible);
+        	isblocked = parseInt(res[0].blocked);
             $('#talkto').html('<div>'
                 +'<div style="float:left;"><img src="images/users/37/'+who+'.jpg" style="width:37px; height:37px;"></div>'
                 +'<div style="float:left; line-height:98%;">'
                 +'<span> &nbsp;'+res[0].name+'</span><br>' 
                 +' <!--&nbsp; <span class="icos-user littleicon"></span>-->'
-                +' &nbsp; <img src="images/icons/usual/icon-trash_60.png" class="littleicon" id="trash_'+who+'">'
+                +' &nbsp; <img src="images/icons/usual/icon-cog60.png" class="littleicon" id="trash_'+who+'">'
+                +' <span class="addfriends" id="add_'+who+'";> | &nbsp; [AGREGAR AMIGOS]</a></span>'
                 +'</div>'
                 +'</div>');
 
             //hook delete
             $('#trash_'+who).click(function(e){
-                $('#uname').text(res[0].name);
-                $('#diaremove').dialog('open');
+            	$('#diaremove').dialog('open');
+                $('#ui-dialog-title-diaremove').html('<span style="font-size:15px;">'+res[0].name.toUpperCase()+'</span>');                 
+                $('#blockthumb').attr('src','images/users/120/'+talkingto+'.jpg');
             });
-
+            //hook add friend
+            $('#add_'+who).click(function(e){
+                $('#diaddf').dialog('open');
+                /*
+                $('#ui-dialog-title-diaremove').html('<span style="font-size:15px;">'+res[0].name.toUpperCase()+'</span>');                 
+                $('#blockthumb').attr('src','images/users/120/'+talkingto+'.jpg');
+                */
+            });
+            //GL.consol('islisted'+islisted+' | isblocked'+isblocked);
+            //GL.consol(myfriends);
             //now let's retrieve the messages from this person
             rebuildmsgs(GL.ch_getdata(GL.userdata.coder,who));
         }
@@ -171,10 +269,12 @@ window.onload = function () {
         //ok so we're gonna create a li per connected friend
         var salida = '';
         var getpic = '';
+        $('#myfirends').html('Loading list of friends...');
         if (first == 0){ getpic = '?p='+GL.now(); };
         $.each( myfriends, function( key, value ) {
-            
-            salida += '<li id="li_'+value.id+'">'
+            //I add you unless you are not visible or blocked
+            if (value.visible != 0 || value.blocked != 0){
+                salida += '<li id="li_'+value.id+'">'
                 /*+'<a href="#" onclick="tof(\''+value.id+'\'); return false;" title="">'*/
                 +'<a href="#" title="">'
                 +'<img src="images/users/37/'+value.id+'.jpg'+getpic+'" style="width:22px; height:22px;" alt="" />'
@@ -188,6 +288,7 @@ window.onload = function () {
                 +'<span class="clear"></span>'
                 +'</a>'
                 +'</li >';
+            }            
         });        
         // onclick='talkingto(\'"+value.id+"\'); return false;'
         //console.log('recreating friend\'s list with data:');
@@ -198,7 +299,7 @@ window.onload = function () {
         $('[id^="li_"]').click(function(e){
             e.preventDefault();
             var whoisit = $(this).attr('id').split('_');
-            GL.consol('ID OF CLICKED: '+$(this).attr('id'));
+            //GL.consol('ID OF CLICKED: '+$(this).attr('id'));
             tof(whoisit[1]);
         });
 
