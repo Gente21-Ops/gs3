@@ -35,15 +35,15 @@ include('dict/com.php');
     <div class="formRow fluid">
         <div class="grid12">
             
-            <table cellpadding="0" cellspacing="0" border="0" class="dTable" id="dTable">
+            <table cellpadding="0" cellspacing="0" border="0" class="dfTable" id="dfTable">
             <thead>
             <tr>
                 <th>ID</th>
-                <th><?php echo $texts['col_nombre']; ?></th>                        
-                <th><?php echo $texts['col_actividad']; ?></th>
-                <th><?php echo $texts['col_ira']; ?></th>
-                <th><?php echo $texts['col_ver']; ?></th>
-                <th><?php echo $texts['col_publico']; ?></th>
+                <th><?php echo $texts['add_col_pic']; ?></th>                        
+                <th><?php echo $texts['add_col_nick']; ?></th>
+                <th><?php echo $texts['add_col_name']; ?></th>
+                <th><?php echo $texts['add_col_type']; ?></th>
+                <th><?php echo $texts['add_col_add']; ?></th>
             </tr>
             </thead>
             <tbody>

@@ -53,18 +53,34 @@ window.onload = function () {
     GL.consol('TEST @'+GL.now());
     var txtclose = $('#closetxt').text();
 
-    //user add
+
+
+    //user add (AQUI ME QUEDO, FALTA QUE LA VENTANA AGARRE EL TAMAÑO DE LA VENTANA
     $('#diaddf').dialog({
         autoOpen: false,
         position: 'center',
         width: $(window).width()-180,
         height: $(window).height()-180,
         modal: true,
-        /*buttons: {
-            "Save": function () {
-                $.blockUI();
-                var isvisok = 0;
-                var isblook = 0;
+        buttons: {
+            "Agregar amigos": function () {
+                //$.blockUI();
+
+                var sel_ids = [];
+                var sels = Array();
+                //retrieve all data
+                $('[id^="fcheck_"]').each(function( index ) {
+                    if($(this).attr('checked')){
+                        sels = $(this).attr('id').split('_');
+                        sel_ids.push(sels[1]);
+                    }                    
+                    GL.consol('SELECTED: '+$(this).attr('id'));
+                });
+                GL.consol(sel_ids);
+
+                //AQUI ME QUEDO HAY QUE ENVIAR LOS NUEVOS AMIGOAS A DB Y RECONSTRUIR LA LISTA
+
+                /*
                 if($('#ibutton').attr('checked')){ isvisok = 1 }
                 if($('#ibutton').attr('checked')){ isblook = 1 }
                 GL.getter('clases/ui/chat_deleteu.php',{ qfid:talkingto, qblock:isblook, qvis:isvisok },'json',retdelu);
@@ -80,26 +96,46 @@ window.onload = function () {
                 }
 
                 $(this).dialog("close");
+                */
             }
         },
         open: function () {
-            if (islisted == 1){
-                //$('#c_visible').prop('checked', true);
-                $('#c_visible').iButton('toggle',true);
-            } else {
-                //$('#c_visible').prop('checked', false);
-                $('#c_visible').iButton('toggle',false);
-            }
-            
-            if (parseInt(isblocked) == 1){
-                //$('#c_blocked').prop('checked', true);
-                $('#c_blocked').iButton('toggle',true);
-            } else {
-                //$('#c_blocked').prop('checked', false);
-                $('#c_blocked').iButton('toggle',false);
-            }
-            GL.consol('islisted'+islisted+' | isblocked'+isblocked);
-        }*/
+
+            //we need a list of those friends that I already have
+            //but that are not blocked
+            var igot = '';
+            $.each( myfriends, function( key, value ) { igot += '\''+value.id+'\','; });
+            igot = igot.substring(0, igot.length - 1);
+
+            //add friend's table
+            oTable = $('#dfTable').on("init", function() {
+                $('.on_off :checkbox').iButton({
+                    labelOn: "",
+                    labelOff: "",
+                    enableDrag: false 
+                });
+                //let's hide the missing pics      
+                $("#dfTable img").error(function () { $(this).hide(); });    
+            }).dataTable({            
+                "bJQueryUI": false,
+                "bRetrieve": true,
+                "bAutoWidth": false,
+                "sPaginationType": "full_numbers",
+                "sDom": '<"H"fl>t<"F"ip>',
+                "sAjaxSource": 'clases/ui/msg_add.php?igot='+igot,
+                "fnRowCallback": function( nRow, aData, iDisplayIndex, iDisplayIndexFull ) {
+                    $(nRow).attr('id', aData[0]);
+                    return nRow;
+                },
+                aoColumns: [
+                {
+                    sName: "id",
+                    bSearchable: false,
+                    bVisible: false
+                }, { sName: "pic" }, { sName: "nick" }, { sName: "name" }, { sName: "type" }, { sName: "add" }] 
+
+            });
+        }
     });
 
     //user remove
@@ -108,7 +144,7 @@ window.onload = function () {
         width: 480,
         modal: true,
         buttons: {
-            "Save": function () {
+            "Guardar cambios": function () {
                 $.blockUI();
                 var isvisok = 0;
                 var isblook = 0;

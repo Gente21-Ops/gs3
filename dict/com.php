@@ -20,7 +20,12 @@ if($_SESSION['qlen'] == "es"){
 	"table_nick" => "Nick",
 	"table_name" => "Nombre",
 	"table_tipo" => "Tipo",
-	"table_agregar" => "Agregar a lista de amigos"
+	"table_agregar" => "Agregar a lista de amigos",
+	"add_col_pic" => "Foto",
+	"add_col_nick" => "Nick",
+	"add_col_name" => "Nombre",
+	"add_col_type" => "Tipo",
+	"add_col_add" => "Agregar a la lista"
 	);
 } else if($_SESSION['qlen'] == "en"){
 	$texts = array(
@@ -39,7 +44,12 @@ if($_SESSION['qlen'] == "es"){
 	"table_nick" => "Nick",
 	"table_name" => "Name",
 	"table_tipo" => "Type",
-	"table_agregar" => "Add to friend's list"
+	"table_agregar" => "Add to friend's list",
+	"add_col_pic" => "Picture",
+	"add_col_nick" => "Nick",
+	"add_col_name" => "Name",
+	"add_col_type" => "Type",
+	"add_col_add" => "Add to friend's list"
 	);
 } else if($_SESSION['qlen'] == "fr"){
 	$texts = array(
