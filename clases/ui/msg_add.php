@@ -19,8 +19,9 @@ require_once('../mysqlcon.php');
         }
     }
     
-    $elsql = "SELECT idUsers, nick, nombre, apellidos, tipo, code FROM users WHERE code NOT IN (".$_GET['igot'].")";
-
+    //I'm going to add myself to the list because I don't want to add myself as friend
+    $elsql = "SELECT idUsers, nick, nombre, apellidos, tipo, code FROM users WHERE code NOT IN (".$_GET['igot'].",'".$_SESSION['code']."')";
+    //echo $elsql; exit();
     $sqlt = $con->query($elsql); 
    
     while ($aRow = $sqlt->fetch_assoc()) {
@@ -32,8 +33,8 @@ require_once('../mysqlcon.php');
         $row[] = $aRow['nombre'].' '.$aRow['apellidos'];
         $row[] = getmytype($aRow['tipo']);
         $row[] = '<div class="on_off">
-                                <input type="checkbox" id="fcheck_'.$aRow['idUsers'].'" />
-                            </div>';
+                <input type="checkbox" id="fcheck_'.$aRow['code'].'" data-name="'.$aRow['nombre'].' '.$aRow['apellidos'].'" />
+                </div>';
 
         $output['aaData'][] = $row;
         

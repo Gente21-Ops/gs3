@@ -53,9 +53,6 @@ window.onload = function () {
     GL.consol('TEST @'+GL.now());
     var txtclose = $('#closetxt').text();
 
-
-
-    //user add (AQUI ME QUEDO, FALTA QUE LA VENTANA AGARRE EL TAMAÑO DE LA VENTANA
     $('#diaddf').dialog({
         autoOpen: false,
         position: 'center',
@@ -64,39 +61,40 @@ window.onload = function () {
         modal: true,
         buttons: {
             "Agregar amigos": function () {
-                //$.blockUI();
+                $.blockUI();
 
                 var sel_ids = [];
-                var sels = Array();
+                var noms = '';
                 //retrieve all data
                 $('[id^="fcheck_"]').each(function( index ) {
                     if($(this).attr('checked')){
-                        sels = $(this).attr('id').split('_');
-                        sel_ids.push(sels[1]);
+                    	var dato = {};
+                    	var fullid = $(this).attr('id').split('_');
+                        dato.id = fullid[1];
+                        dato.name = $(this).data('name');
+                        sel_ids.push(dato);
                     }                    
                     GL.consol('SELECTED: '+$(this).attr('id'));
                 });
-                GL.consol(sel_ids);
+                var newf = JSON.stringify(sel_ids);
+                GL.consol(newf);
 
-                //AQUI ME QUEDO HAY QUE ENVIAR LOS NUEVOS AMIGOAS A DB Y RECONSTRUIR LA LISTA
-
-                /*
-                if($('#ibutton').attr('checked')){ isvisok = 1 }
-                if($('#ibutton').attr('checked')){ isblook = 1 }
-                GL.getter('clases/ui/chat_deleteu.php',{ qfid:talkingto, qblock:isblook, qvis:isvisok },'json',retdelu);
-                function retdelu(mydelu) {
-                    if (parseInt(mydelu) == 1){
-                        getfriends();
-                        $.jGrowl('The user has been deleted from your friends\' list');
+                GL.getter('clases/ui/chat_addu.php',{ qnewf:newf },'json',newgot);
+                function newgot(myigot) {
+                    if (myigot != '0'){
+                    	myfriends = myigot;
+                    	conectedfriends();
+                    	GL.consol('The friends list has been updated:');
+                    	GL.consol(myfriends);
+                        $.jGrowl('Users added to your friends\' list');
                     } else {
-                        $.jGrowl('ERROR, unable to delete from list');
+                        $.jGrowl('ERROR, unable to add friends');
                     }
 
                     $.unblockUI();
                 }
 
                 $(this).dialog("close");
-                */
             }
         },
         open: function () {
