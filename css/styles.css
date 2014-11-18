@@ -466,8 +466,8 @@ border-radius: 3px; -webkit-border-radius: 3px; -moz-border-radius: 3px;
 
 /* Contact list */
 
-.userList { border-top: 1px solid #c3c3c3; border-bottom: 1px solid #c3c3c3; }
-.userList li { border-top: 1px solid #fff; border-bottom: 1px solid #cecece; 
+.userList { /*border-top: 1px solid #c3c3c3; border-bottom: 1px solid #EDEDED;*/ }
+.userList li { /*border-top: 1px solid #fff;*/ border-bottom: 1px solid #EDEDED; 
 background: #f7f7f7;
 background: -moz-linear-gradient(top,  #f7f7f7 0%, #e6e6e6 100%);
 background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#f7f7f7), color-stop(100%,#e6e6e6));

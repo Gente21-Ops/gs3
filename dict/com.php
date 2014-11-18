@@ -25,7 +25,10 @@ if($_SESSION['qlen'] == "es"){
 	"add_col_nick" => "Nick",
 	"add_col_name" => "Nombre",
 	"add_col_type" => "Tipo",
-	"add_col_add" => "Agregar a la lista"
+	"add_col_add" => "Agregar a la lista",
+	"not_nof" => "¡No has agregado amigos!",
+	"not_clicktoadd" => "AGREGAR",
+	"chatwin" => "Mensajería"
 	);
 } else if($_SESSION['qlen'] == "en"){
 	$texts = array(
@@ -49,7 +52,10 @@ if($_SESSION['qlen'] == "es"){
 	"add_col_nick" => "Nick",
 	"add_col_name" => "Name",
 	"add_col_type" => "Type",
-	"add_col_add" => "Add to friend's list"
+	"add_col_add" => "Add to friend's list",
+	"not_nof" => "You have not added friends",
+	"not_clicktoadd" => "ADD SOME",
+	"chatwin" => "IM window"
 	);
 } else if($_SESSION['qlen'] == "fr"){
 	$texts = array(

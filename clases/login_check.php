@@ -3,6 +3,9 @@
     require_once('connection.php');
     // Connect to server and select databse.
 
+    error_reporting(E_ALL);
+    ini_set('display_errors', '1');
+
     //the array to hold the names is a session variable, 
     //so we can have all names at hand at all times
     $danames = array();

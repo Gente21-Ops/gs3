@@ -191,8 +191,10 @@ $(function() {
 	}
 
 	//-----------------------TRUNCATES A STRING
-	GL.trunkme = function(texto,lenght){
-	    return jQuery.trim(texto).substring(0,lenght).split(" ").slice(0, -1).join(" ") + "...";
+	GL.trunkme = function(texto,lenghto){
+		var trimmedString = texto.substr(0, lenghto);
+		trimmedString = trimmedString.substr(0, Math.min(trimmedString.length, trimmedString.lastIndexOf(" ")))
+	    return trimmedString;
 	}
 
 	/*----LOCAL CHAT FUNCTIONS STARTS----*/

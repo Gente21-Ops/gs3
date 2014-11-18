@@ -7,6 +7,8 @@ include('dict/com.php');
 <div id="closetxt" class="hide"><?php echo $texts['rem_cerrar']; ?></div>
 <div id="savedtxt" class="hide"><?php echo $texts['rem_saved']; ?></div>
 <div id="errortxt" class="hide"><?php echo $texts['rem_error']; ?></div>
+<div id="nof" class="hide"><?php echo $texts['not_nof']; ?></div>
+<div id="nof_add" class="hide"><?php echo $texts['not_clicktoadd']; ?></div>
 
 <div id="diaremove" title="..." class="hide">
     <div class="formRow fluid">
@@ -35,7 +37,7 @@ include('dict/com.php');
     <div class="formRow fluid">
         <div class="grid12">
             
-            <table cellpadding="0" cellspacing="0" border="0" class="dfTable" id="dfTable">
+            <table cellpadding="0" cellspacing="0" border="0" class="dfTable" id="dfTable" width="100%">
             <thead>
             <tr>
                 <th>ID</th>
@@ -117,7 +119,7 @@ include('dict/com.php');
                         <div class="sideWidget">
                             <div class="formRow">
                                 <div class="pageTitle" id="talkto">
-                                    Chat window
+                                    <?php echo $texts['chatwin']; ?>
                                 </div><!--<span>15 new messages</span>-->
                             </div>
                         </div>
@@ -130,7 +132,7 @@ include('dict/com.php');
                             </div>
                         </div>
 
-                        <div class="sideWidget top9">
+                        <div class="sideWidget top9" id="textbox" style="display:none;">
                             <div class="formRow">
                                 <!--<label>Usual textarea:</label>-->
                                 <textarea rows="8" style="height:56px;" name="textarea" id="qinput" placeholder="Write your message here"></textarea>
@@ -145,10 +147,10 @@ include('dict/com.php');
                             -->
                         </div>
 
-                    <div class="divider"><span></span></div>
+                    <div class="divider" style="display:none;"><span></span></div>
                 
                     <!-- Sidebar user list -->
-                    <ul class="userList" id="myfirends">
+                    <ul class="userList" id="myfirends" style="display:none; margin-top:16px;">
                         <!--
                         <li>
                             <a href="#" title="">

@@ -52,6 +52,42 @@ window.onload = function () {
 
     GL.consol('TEST @'+GL.now());
     var txtclose = $('#closetxt').text();
+    var oTable;
+
+    function hideimg(qdiv){
+        $("#"+qdiv+" img").error(function () { $(this).hide(); });
+    }
+
+    function flister(igot){
+    	$('#dfTable').dataTable().fnDestroy();
+    	//add friend's table
+        oTable = $('#dfTable').on("init", function() {
+            $('.on_off :checkbox').iButton({
+                labelOn: "",
+                labelOff: "",
+                enableDrag: false 
+            });
+            //let's hide the missing pics      
+            hideimg('dfTable');   
+        }).dataTable({            
+            "bJQueryUI": false,
+            "bRetrieve": true,
+            "bAutoWidth": false,
+            "sPaginationType": "full_numbers",
+            "sDom": '<"H"fl>t<"F"ip>',
+            "sAjaxSource": 'clases/ui/chat_add.php?igot='+igot,
+            "fnRowCallback": function( nRow, aData, iDisplayIndex, iDisplayIndexFull ) {
+                $(nRow).attr('id', aData[0]);
+                return nRow;
+            },
+            aoColumns: [
+            {
+                sName: "id",
+                bSearchable: false,
+                bVisible: false
+            }, { sName: "pic" }, { sName: "nick" }, { sName: "name" }, { sName: "type" }, { sName: "add" }] 
+        });
+    }
 
     $('#diaddf').dialog({
         autoOpen: false,
@@ -76,63 +112,43 @@ window.onload = function () {
                     }                    
                     GL.consol('SELECTED: '+$(this).attr('id'));
                 });
-                var newf = JSON.stringify(sel_ids);
-                GL.consol(newf);
 
-                GL.getter('clases/ui/chat_addu.php',{ qnewf:newf },'json',newgot);
-                function newgot(myigot) {
-                    if (myigot != '0'){
-                    	myfriends = myigot;
-                    	conectedfriends();
-                    	GL.consol('The friends list has been updated:');
-                    	GL.consol(myfriends);
-                        $.jGrowl('Users added to your friends\' list');
-                    } else {
-                        $.jGrowl('ERROR, unable to add friends');
+                if (sel_ids.length > 0){
+                    var newf = JSON.stringify(sel_ids);
+                    GL.consol(newf);
+                    GL.getter('clases/ui/chat_addu.php',{ qnewf:newf },'json',newgot);
+                    function newgot(myigot) {
+                        if (myigot != '0'){
+                            myfriends = myigot;
+                            conectedfriends();
+                            GL.consol('The friends list has been updated:');
+                            GL.consol(myfriends);
+                            $.jGrowl('Users added to your friends\' list');
+                        } else {
+                            $.jGrowl('ERROR, unable to add friends');
+                        }
+                        $('#texto').html('');
+                        $.unblockUI();
                     }
-
-                    $.unblockUI();
+                    $(this).dialog("close");
+                } else {
+                    alert('O_o no has agregado ningún amigo!');
                 }
-
-                $(this).dialog("close");
+                    
             }
+                
         },
         open: function () {
-
             //we need a list of those friends that I already have
             //but that are not blocked
             var igot = '';
             $.each( myfriends, function( key, value ) { igot += '\''+value.id+'\','; });
             igot = igot.substring(0, igot.length - 1);
+            GL.consol('Opening add firends window');
+            flister(igot);
 
-            //add friend's table
-            oTable = $('#dfTable').on("init", function() {
-                $('.on_off :checkbox').iButton({
-                    labelOn: "",
-                    labelOff: "",
-                    enableDrag: false 
-                });
-                //let's hide the missing pics      
-                $("#dfTable img").error(function () { $(this).hide(); });    
-            }).dataTable({            
-                "bJQueryUI": false,
-                "bRetrieve": true,
-                "bAutoWidth": false,
-                "sPaginationType": "full_numbers",
-                "sDom": '<"H"fl>t<"F"ip>',
-                "sAjaxSource": 'clases/ui/msg_add.php?igot='+igot,
-                "fnRowCallback": function( nRow, aData, iDisplayIndex, iDisplayIndexFull ) {
-                    $(nRow).attr('id', aData[0]);
-                    return nRow;
-                },
-                aoColumns: [
-                {
-                    sName: "id",
-                    bSearchable: false,
-                    bVisible: false
-                }, { sName: "pic" }, { sName: "nick" }, { sName: "name" }, { sName: "type" }, { sName: "add" }] 
-
-            });
+            //oTable.api().ajax.reload();
+      
         }
     });
 
@@ -220,8 +236,6 @@ window.onload = function () {
     }
 
     function tof(who){
-    	//GL.consol('TOF - Trying to talk to:'+who);
-        //clearup text
         $("#texto").html('');
         talkingto = who;           
         //let's retrieve this person's name
@@ -230,14 +244,15 @@ window.onload = function () {
         	islisted = parseInt(res[0].visible);
         	isblocked = parseInt(res[0].blocked);
             $('#talkto').html('<div>'
-                +'<div style="float:left;"><img src="images/users/37/'+who+'.jpg" style="width:37px; height:37px;"></div>'
+                +'<div style="float:left;"><img src="images/users/37/'+who+'.jpg?s='+GL.microtime()+'" style="width:37px; height:37px;"></div>'
                 +'<div style="float:left; line-height:98%;">'
-                +'<span> &nbsp;'+res[0].name+'</span><br>' 
+                +'<span> &nbsp;'+GL.trunkme(res[0].name, 16)+'</span><br>' 
                 +' <!--&nbsp; <span class="icos-user littleicon"></span>-->'
                 +' &nbsp; <img src="images/icons/usual/icon-cog60.png" class="littleicon" id="trash_'+who+'">'
                 +' <span class="addfriends" id="add_'+who+'";> | &nbsp; [AGREGAR AMIGOS]</a></span>'
                 +'</div>'
                 +'</div>');
+            hideimg('talkto');
 
             //hook delete
             $('#trash_'+who).click(function(e){
@@ -298,8 +313,45 @@ window.onload = function () {
         setTimeout(lower, 500); 
     }
 
+    //we get friend's list from server
+    function getfriends(){ 
+
+    	GL.getter('clases/ui/getfriends.php',{},'json',retmydat);
+        function retmydat(mydata) {
+            var check = JSON.stringify(mydata);
+            //Di I have any friends?
+            if (check.length > 4){
+                myfriends = mydata;
+                conectedfriends();
+                //I must get the current user's data before the sync!!!
+                //this is redundant since functions.js does it as well BUT not in sync
+                GL.getter('clases/ui/getmyadata.php',{},'json',returnData);
+                function returnData(param) {
+                    GL.userdata = param;
+                    whoiam = GL.userdata.coder;
+                    //$('#textbox').show();
+                    //ALL SET!!! we can get this show started
+                    if (first == 0){ runme(); }
+                }
+            } else {
+                $('#texto').html('<div style="text-align:center;"><br><br>'+
+                    '<span style="font-size:45px; color:#999; ">:P</span>'+
+                    '<br><br>'+$('#nof').text()+'<br>'+
+                    '<a id="nofopen">'+$('#nof_add').text()+'</small></div>');
+                $('#nofopen').click( function(){
+                    $('#diaddf').dialog('open'); return false;
+                })                
+            }            
+        };        
+    }
+
     //list of connected friends starts
     function conectedfriends(connectedness){
+    	GL.consol('conectedfriends in motion...');
+    	GL.consol(myfriends);
+    	//ALL SET!!! if it's the first time I get firends I run the MSG client
+        if (first == 0){ runme(); }
+
         //ok so we're gonna create a li per connected friend
         var salida = '';
         var getpic = '';
@@ -313,7 +365,7 @@ window.onload = function () {
                 +'<a href="#" title="">'
                 +'<img src="images/users/37/'+value.id+'.jpg'+getpic+'" style="width:22px; height:22px;" alt="" />'
                 +'<span class="contactName">'
-                +'<strong>'+value.name+' <span></span></strong>'
+                +'<strong>'+GL.trunkme(value.name,27)+' <span></span></strong>'
                 //+"<strong>"+value.name+" <span>(5)</span></strong>"
                 //+"<i>web &amp; ui designer</i>"
                 //+'<i>GS user (more data)</i>'
@@ -327,7 +379,11 @@ window.onload = function () {
         // onclick='talkingto(\'"+value.id+"\'); return false;'
         //console.log('recreating friend\'s list with data:');
         //GL.consol(myfriends);
-        $('#myfirends').html(salida);
+        $('#myfirends').html(salida);    
+        hideimg('myfirends');
+
+        $('#myfirends').show();
+        $('#textbox').show();
 
         //hooks de select friend
         $('[id^="li_"]').click(function(e){
@@ -385,26 +441,7 @@ window.onload = function () {
         GL.consol(myfriends);
     }
 
-    //we get friend's list from server
-    function getfriends(){  
 
-    	GL.getter('clases/ui/getfriends.php',{},'json',retmydat);
-        function retmydat(mydata) {
-            //new json format
-            myfriends = mydata;
-            conectedfriends();
-            //I must get the current user's data before the sync!!!
-            //this is redundant since functions.js does it as well BUT not in sync
-            GL.getter('clases/ui/getmyadata.php',{},'json',returnData);
-            function returnData(param) {
-                GL.userdata = param;
-                whoiam = GL.userdata.coder;
-                //ALL SET!!! we can get this show started
-                if (first == 0){ runme(); }
-            }
-        };
-        
-    }
 
     //INIT
     if (first == 0){ getfriends(); };
@@ -454,6 +491,7 @@ window.onload = function () {
             //console.log('>>-------------------------------------------------');
 
             localStream.addEventListener("access-accepted", function () {
+                GL.consol('>> Access accepted');
                 var subscribeToStreams = function (streams) {
                     for (var index in streams) {
                         var stream = streams[index];
@@ -465,12 +503,13 @@ window.onload = function () {
 
                 room.addEventListener("room-connected", function (roomEvent) {
                     room.publish(localStream);
-                    subscribeToStreams(roomEvent.streams); 
+                    subscribeToStreams(roomEvent.streams);
+                    GL.consol(roomEvent); 
                 });
 
                 room.addEventListener("stream-subscribed", function(streamEvent) {
                     var stream = streamEvent.stream;
-                    GL.consol('>> Stream suscribed!');
+                    //GL.consol(streamEvent);
                     
                     var div = document.createElement('div');
                     div.setAttribute("style", "width: 320px; height: 240px;");
@@ -494,6 +533,7 @@ window.onload = function () {
                     /*---------------START UP SYNC MSG---------------*/
                     //I identify myself (only once and we burn first)
                     if (first == 0){
+                        GL.consol('Sending SYNC msg...');
                     	broadcast(0,whoiamid,GL.userdata.coder,0,GL.userdata.qnick,'StartUp Sync MSG',state);
                     	interun();
                     	first = 1;
@@ -527,11 +567,13 @@ window.onload = function () {
 
                     //HOOK SEND BUTTON
                     $("#elbutto").click(function() {
+                        GL.consol('But clicked');
                         if ($('#qinput').val().length > 1){
                             msg($('#qinput').val()); 
                         }
                         return false;                   
                     });
+                    GL.consol('Are we there yet?');
                     //HOOK ENTER                  
                     $(document).keypress(function (e) {
                         //si se presiona enter y hay texto y el input tiene focus
@@ -620,7 +662,7 @@ window.onload = function () {
                                         GL.consol('I am NOT the talkingto user, evt.msg.qwho:'+evt.msg.qwho+' | talkingto:'+talkingto+' | evt.msg.qgsid:'+evt.msg.qgsid);
                                         $.jGrowl('<div class="msgpop" id="msgpop_'+evt.msg.qgsid+'" style="cursor: pointer; cursor: hand;">'+
                                             '<div style="float:left"><img src="images/users/37/'+evt.msg.qgsid+'.jpg" style="width:40px; height:40px; vertical-align:middle;"></div>'+
-                                            '<div style="float:left; margin-left:5px; width:180px;"><strong>'+getfriendname(evt.msg.qgsid)+'</strong><br>'+emoji(GL.trunkme(evt.msg.qdata,prevmsgw))+'</div>'+
+                                            '<div style="float:left; margin-left:5px; width:180px;"><strong>'+getfriendname(evt.msg.qgsid)+'</strong><br>'+emoji(evt.msg.qdata,prevmsgw)+'</div>'+
                                             '</div>', { 
                                             /**/open: function() {
                                                 //si soy el usuario seleccionado imprimo, si no espero el click 
@@ -663,36 +705,18 @@ window.onload = function () {
                         
                     });
                     //MSG PROCESSING FUNCTION ENDS
-
-
-
-                    
-                    
-                    //===== TIMER ENDS =====//
-                    /*
-                    //Zero the idle timer on mouse movement.
-                    $('body').mousemove(function (e) {
-                        idleTime = 0;
-                    });
-                    $('body').mouseover(function (e) {
-                        idleTime = 0;
-                    });
-                    $('body').keypress(function (e) {
-                        idleTime = 0;
-                    });
-					*/
                     
                 });
 
                 room.addEventListener("stream-added", function (streamEvent) {
-                    //console.log('>> Stream Added!');
+                    console.log('>> Stream Added!');
                     var streams = [];
                     streams.push(streamEvent.stream);
                     subscribeToStreams(streams);
                 });
 
                 room.addEventListener("stream-removed", function (streamEvent) {
-                    //console.log('>> Stream Removed!');                
+                    console.log('>> Stream Removed!');                
                     // Remove stream from DOM
                     var stream = streamEvent.stream;
                     if (stream.elementID !== undefined) {

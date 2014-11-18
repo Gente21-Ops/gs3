@@ -18,9 +18,14 @@ require_once('../mysqlcon.php');
             return 'Padre de familia';
         }
     }
+
+    $notin = " WHERE code <> '".$_SESSION['code']."'";
+    if (strlen($_GET['igot']) > 1){
+        $notin = " WHERE code NOT IN (".$_GET['igot'].",'".$_SESSION['code']."')";
+    }
     
     //I'm going to add myself to the list because I don't want to add myself as friend
-    $elsql = "SELECT idUsers, nick, nombre, apellidos, tipo, code FROM users WHERE code NOT IN (".$_GET['igot'].",'".$_SESSION['code']."')";
+    $elsql = "SELECT idUsers, nick, nombre, apellidos, tipo, code FROM users".$notin;
     //echo $elsql; exit();
     $sqlt = $con->query($elsql); 
    
