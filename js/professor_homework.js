@@ -27,21 +27,24 @@ oTable = $('.dTable').dataTable({
 		return nRow;
 	},
 	aoColumns: [{
-        sName: "idGrupos",
+        sName: "idtareas",
         bSearchable: false,
 		bVisible: false
     },
     {
-    	sName: "titulo"
+    	sName: "nombre"
     },
     {
-    	sName: "creado"
-    },
-    {
-    	sName: "fecha"
+    	sName: "descripcion"
     },
     {
     	sName: "fechaEntrega"
+    },
+    {
+    	sName: "editar"
+    },
+    {
+    	sName: "revisar"
     }] 
 
 }).makeEditable({

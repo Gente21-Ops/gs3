@@ -1,7 +1,7 @@
 <?php
 error_reporting(E_ALL);
 include("logon.php");
-include('../dict/admin/grupos.php');
+include('../dict/profesor_homework.php');
 
     ob_start();
 
@@ -36,21 +36,21 @@ include('../dict/admin/grupos.php');
             <div class="whead"><h6><?php echo $texts['tabletitle']; ?></h6><div class="clear"></div></div>
 
             <ul class="tToolbar">
-                <li id="btnAddNewRow"><a href="#" title=""><span class="icos-archive"></span><?php echo $texts['agregar_nuevo']; ?></a></li>
-                <li id="btnDeleteRow"><a href="#" title=""><span class="icos-cross"></span><?php echo $texts['borrar_existente']; ?></a></li>
+                <li id="btnAddNewRow"><a href="#" title=""><span class="icos-archive"></span><?php echo $texts['but_agregar']; ?></a></li>
+                <li id="btnDeleteRow"><a href="#" title=""><span class="icos-cross"></span><?php echo $texts['but_borrar']; ?></a></li>
             </ul>
 
             <div id="dyn2" class="shownpars">
 
-                <a class="tOptions act" title="Options"><img src="images/icons/options" alt="" /></a>
                 <table cellpadding="0" cellspacing="0" border="0" class="dTable">
                 <thead>
                 <tr>
                     <th>ID</th>
-                    <th>Título de tarea</th>
-                    <th>Creado</th>
-                    <th>Fecha de entrega</th>
-                    <th>Descripción</th>
+                    <th><?php echo $texts['col_titulo']; ?></th>
+                    <th><?php echo $texts['col_desc']; ?></th>
+                    <th><?php echo $texts['col_fentrega']; ?></th>
+                    <th><?php echo $texts['but_editar']; ?></th>
+                    <th><?php echo $texts['but_revisar']; ?></th>                    
                 </tr>
                 </thead>
                 <tbody>
