@@ -214,10 +214,10 @@ li.plupload_droptext { background: url(../images/elements/uploader/drag.png) no-
 
 
 
-/* ===== WYSUWYG editor ===== */
+/* ===== WYSIWYG editor ===== */
 
-.cleditorMain iframe { border:none; margin:0; padding:0 }
-.cleditorMain textarea { border: none!important; margin: 0; resize: none; outline: none; height: 127px; box-shadow: none!important; font-size: 12px; padding: 10px; color: #363636; }
+.cleditorMain iframe { border:none; margin:0; padding:0; width: 770px;}
+.cleditorMain textarea { border: none!important; margin: 0; resize: none; outline: none; height: 127px; width: 600px; box-shadow: none!important; font-size: 12px; padding: 10px; color: #363636; }
 .cleditorToolbar {background: url('../images/elements/wysiwyg/toolbar.gif') repeat}
 .cleditorGroup {float:left; height:26px}
 .cleditorButton {float:left; width:24px; height:24px; margin:1px 0 1px 0; background: url('../images/elements/wysiwyg/buttons.gif')}
@@ -229,7 +229,7 @@ li.plupload_droptext { background: url(../images/elements/uploader/drag.png) no-
 .cleditorColor div {float:left; width:14px; height:14px; margin:0 1px 1px 0}
 .cleditorPrompt {background-color:#F6F7F9; padding: 10px; font-size:8.5pt}
 .cleditorPrompt input[type=text],
-.cleditorPrompt textarea {font:8.5pt Arial,Verdana; width: auto; margin: 5px 0;}
+.cleditorPrompt textarea {font:8.5pt Arial,Verdana; width: auto; margin: 5px 0; width: 600px; }
 .cleditorMsg {background-color:#FDFCEE; width:150px; padding:4px; font-size:8.5pt}
 
 

@@ -318,6 +318,8 @@ window.onload = function () {
 
     	GL.getter('clases/ui/getfriends.php',{},'json',retmydat);
         function retmydat(mydata) {
+        	GL.consol('Consol recibe:');
+    		GL.consol(mydata);
             var check = JSON.stringify(mydata);
             //Di I have any friends?
             if (check.length > 4){
@@ -441,13 +443,8 @@ window.onload = function () {
         GL.consol(myfriends);
     }
 
-
-
     //INIT
     if (first == 0){ getfriends(); };
-
-
-
 
     //RUNME STARTS
     function runme(){ 

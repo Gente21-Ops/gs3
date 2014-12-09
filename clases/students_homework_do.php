@@ -66,9 +66,9 @@ include('student/students_homework_do.php');
                         <li>
                             <button class="buttonM bLightBlue floatL" id="simpleanswer"><span class="icol-pencil"></span><span><?php echo $texts['mod_tarea']; ?></span></button>
                         </li>
-                        <li>
+                        <!--<li>
                             <button class="buttonM bLightBlue floatL" id="newpad"><span class="icol-word"></span><span><?php echo $texts['generar_doc_compartido']; ?></span></button>
-                        </li>
+                        </li>-->
                         
                         <!--
                         <li><input type="submit" class="buttonS bLightBlue" value="RESPUESTA SIMPLE" /></li>
@@ -156,7 +156,7 @@ include('student/students_homework_do.php');
         <!-- 6 + 6 -->
         <div class="fluid">       
             
-            <!-- Table with opened toolbar -->
+            <!-- Table with opened toolbar 
             <div class="widget grid12">
                 <div class="whead"><h6><?php echo $texts['detalle_tarea']; ?></h6><div class="clear"></div></div>
                 <div class="body">
@@ -168,7 +168,7 @@ include('student/students_homework_do.php');
                         <input type="submit" class="buttonS bBlue" value="COMPLETAR TAREA" />
                     </div>
                 </div>
-            </div> 
+            </div> -->
 
         </div>
 

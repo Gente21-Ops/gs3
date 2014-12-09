@@ -11,7 +11,11 @@
 
     /*For some weird reason I have to double convert this json in order to be able to use it*/
     $se = json_decode($_SESSION['qfriends'],true);
-    $se1 = json_decode($se, true);
+    if(is_array($se)){
+        $se1 = $se;
+    } else {
+        $se1 = json_decode($se, true);
+    }    
     
     foreach($se1 as $item){
         $newitem = array();
@@ -23,29 +27,36 @@
                 'visible' => $item['visible']
             );
         } else {
-            //echo 'FOUND!'.$item['id']; exit();
             $newitem = array(
                 'id' => $item['id'],
                 'name' => $item['name'],
-                'blocked' => $_POST['qblock'],
-                'visible' => $_POST['qvis']
+                'blocked' => intval($_POST['qblock']),
+                'visible' => intval($_POST['qvis'])
             );
         }
         array_push($newlist, $newitem);        
     };
 
     $saljson = json_encode($newlist);
-        
-    //rebuild session
-    $_SESSION['qfriends'] = $saljson;
+    //echo $saljson; exit();
 
-    //save to DB
-    $sql = "UPDATE users SET friends = '".$saljson."' WHERE idUsers = ".$_SESSION['idUsers'];
-    //echo $sql; exit();
-    if (!$con->query($sql)){
-        echo '0';
+    //let's make sure we've got info before writting the list's friends
+    //otherwise why might lose our list foreva
+    if (sizeof($newlist) > 0){
+        //rebuild session
+        $_SESSION['qfriends'] = $saljson;
+
+        //save to DB
+        $sql = "UPDATE users SET friends = '".$saljson."' WHERE idUsers = ".$_SESSION['idUsers'];
+        //echo $sql; exit();
+        if (!$con->query($sql)){
+            echo '0';
+        } else {
+            echo '1';
+        }
     } else {
-        echo '1';
-    }
+        echo '0';
+    }        
+        
     
 ?>

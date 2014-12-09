@@ -21,11 +21,14 @@
     //echo "---------".$oldf."-------<br>";
 
     //If I've no friends this prevents to write to an empty array
-    if (strlen($oldf) > 16){
-        //$se1 = json_decode($se, true);
-        $se1 = $se;
-        //somnetimes the friend's list is enclosed within quotes, so let's remove them
-        //$se1 = trim($se,'"');
+    if (strlen($oldf) > 16){        
+        //sometimes the friend's list is enclosed within quotes, so let's remove them
+        if(is_array($se)){
+            $se1 = $se;
+        } else {
+            $se0 = trim($se,'"');
+            $se1 = json_decode($se0, true);
+        }        
     }    
 
     //these are my new fiends

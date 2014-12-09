@@ -20,7 +20,7 @@ oTable = $('#dTable').on("init", function() {
 	"bAutoWidth": false,
 	"sPaginationType": "full_numbers",
 	"sDom": '<"H"fl>t<"F"ip>',
-	"sAjaxSource": 'clases/profesor/professor_studentslist.php?qgroupid='+$('#gourpid').val(),
+	"sAjaxSource": 'clases/profesor/professor_studentslist.php?qgroupid='+$('#groupid').val(),
 	"oLanguage": {
         "sUrl": qlen
     },

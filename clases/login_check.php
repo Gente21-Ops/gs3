@@ -84,7 +84,6 @@
         $_SESSION['apellidos'] = $row['apellidos'];
         $_SESSION['pass'] = $row['qpass'];
 
-        //$_SESSION['direccion'] = $row['direccion']; 
         $_SESSION['calle_num'] = $row['calle_num']; 
         $_SESSION['colonia'] = $row['colonia']; 
         $_SESSION['zip_code'] = $row['zip_code']; 
@@ -101,15 +100,9 @@
         $_SESSION['qnick'] = $row['qnick'];
         $_SESSION['qstream'] = $row['qstream'];
         $_SESSION['qtimezone'] = $row['qtimezone'];
-        
-        /*$json_string = $row['qfriends'];
-        
-        $farray = array();
-        $parsed_json = json_decode($json_string, true);
-        foreach($parsed_json as $key => $value){ $farray[$key] = $value; }
-        $_SESSION['qfriends'] = $farray;        
-        */
         $_SESSION['qfriends'] = json_encode($row['qfriends']);
+
+        //print_r($_SESSION['qfriends']); exit();
 
         if ((int)$_SESSION['tipo'] == 1){ $_SESSION['tipofol'] = "teacher"; } 
         else if ((int)$_SESSION['tipo'] == 2) { $_SESSION['tipofol'] = "student"; } 
@@ -121,11 +114,5 @@
         echo "Wrong Username or Password";
         //header("location:../index?error=1");
     }
-
-
-
-    //------------ NAME TRANSLATOR ----------//
-
-
     ob_end_flush();
 ?>

@@ -63,7 +63,7 @@ ini_set('display_errors', '1');
                                     <a href="#" onclick="assignme(\'professor_takelist.php?qcode='.$bRow['qidgrupo'].'&qmat='.$aRow['qidmat'].'\',\'content\'); return false;" title=""><span class="icos-pencil"></span>'.$texts['asistencias'].' '.$bRow['qnombre'].'</a>
                                 </li>
                                 <li>
-                                    <a href="#" onclick="assignme(\'professor_takelist.php?qcode='.$bRow['qidgrupo'].'&qmat='.$aRow['qidmat'].'\',\'content\'); return false;" title=""><span class="icos-copypaste"></span>'.$texts['tareas'].' '.$bRow['qnombre'].'</a>
+                                    <a href="#" onclick="assignme(\'professor_homework.php?qcode='.$bRow['qidgrupo'].'&qmat='.$aRow['qidmat'].'\',\'content\'); return false;" title=""><span class="icos-copypaste"></span>'.$texts['tareas'].' '.$bRow['qnombre'].'</a>
                                 </li>
                                 <li>
                                     <a href="#" onclick="assignme(\'professor_takegrades.php?qcode='.$bRow['qidgrupo'].'&qmat='.$aRow['qidmat'].'\',\'content\'); return false;" title=""><span class="icos-stats"></span>'.$texts['calif'].' '.$bRow['qnombre'].'</a>

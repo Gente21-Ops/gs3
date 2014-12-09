@@ -89,7 +89,7 @@ $('#mod_wys').dialog({
                 if (parseInt(data) == 1){
                     //$.jGrowl($('#savedo').html());
                     $('#larespuesta').html(response).show('slow');
-                    $.jGrowl('Tu respuesta fue guarda. <br>No olvides completar la tarea!');
+                    $.jGrowl('Tu respuesta fue guardada. <br>No olvides completar la tarea!');
                     $('#mod_wys').dialog( "close" );
                 } else {
                     $.jGrowl('Problema al guardar');
