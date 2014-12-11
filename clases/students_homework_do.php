@@ -127,10 +127,6 @@ include('student/students_homework_do.php');
                                 }
 
                                 echo $html1;
-                                
-/*
-
-                                
 
                                 while($rowf = mysqli_fetch_array($resultf)){
                                     echo $rowf['name']."<br>";

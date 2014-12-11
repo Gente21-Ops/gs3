@@ -4,6 +4,9 @@ include("logon.php");
 include('../dict/profesor_homework.php');
 
     ob_start();
+    require_once('connection.php');
+    mysql_query('SET CHARACTER SET utf8');
+    mysql_query('SET NAMES "utf8"');
 
     //TOP
     $breads = $texts['title'].'^admin_grupos';
@@ -17,11 +20,10 @@ include('../dict/profesor_homework.php');
     } else {
         echo '<script src="http://jquery-ui.googlecode.com/svn/tags/latest/ui/i18n/jquery.ui.datepicker-en-GB.js"></script>';
     }
-?>  
-<script type="text/javascript" src="js/plugins/ui/jquery.jgrowl.js"></script>
-<script src="http://jquery-ui.googlecode.com/svn/tags/latest/ui/i18n/jquery.ui.datepicker-es.js"></script>
+?> 
 
 <div id="groupid" style="display:none;"><?php echo $_GET['qcode']; ?></div>
+<div id="qlang" style="display:none;"><?php echo $_SESSION['qlen']; ?></div>
 
 <!-- Main content -->
 <div class="wrapper">
@@ -60,28 +62,55 @@ include('../dict/profesor_homework.php');
             <div class="clear"></div> 
         </div> 
 
-
-    </div>
-
-       
-
-    
-    
+    </div>    
     
 </div>
 <!-- Main content ends -->
 
-
-
-<form id="formAddNewRow" action="#" title="<?php echo $texts['agregar']; ?>">
+<form id="formAddNewRow" action="#" title="<?php echo $texts['dia_diatitle']; ?>">
 
         <input type="hidden" name="idGrupos" id="idGrupos" value="<?php echo $_GET['qcode']; ?>" />
         <input type="hidden" name="idMateria" id="idMateria" value="<?php echo $_GET['qmat']; ?>" />
 
-        <label for="name">Título de la tarea</label><input type="text" name="nombre" id="nombre" rel="1" />
-        <label for="entrega">Fecha de entrega</label><input type="text" class="datepicker" name="entrega" id="entrega" rel="1" />
-        <label for="desc">Descripción</label><input type="text" name="desc" id="desc" rel="1" />
+        <label for="name"><?php echo $texts['dia_title']; ?></label>
+        <input type="text" name="nombre" id="nombre" rel="1" />
+        
+        <label for="entrega"><?php echo $texts['dia_entrega']; ?></label>
+        <input type="text" class="datepicker1" name="entrega" id="entrega" rel="1" value="<?php echo date('Y-m-d'); ?>" />
+        
+        <label for="desc"><?php echo $texts['dia_desc']; ?></label>
+        <textarea rows="7" name="desc" id="desc" rel="1"></textarea>
+
+        <label for="desc"><?php echo $texts['dia_files']; ?></label>
+        <div>
+            <div id="container" style="margin-top:35px;">
+                <div class="dropFiles<?php if ($_SESSION['qlen'] == 'es'){ echo "_es"; } else if ($_SESSION['qlen'] == 'fr'){ echo "_fr"; } ?>" id="jalo" class="margin-bottom:10px;"></div>
+                <!-- FILE UPLOADING STUFF -->
+                <ul id="filelist" class="filesDown">
+                    <?php 
+                        /*
+                        //already uploaded files                    
+                        $fid = 0;
+                        $html1 = '';                        
+                        while($rowf = mysqli_fetch_array($resultf)){
+                            $newname = str_replace('_', ' ', $rowf['name']);
+
+                            $html1 .= '<li class="currentFile" id="'.$fid.'">';
+                            $html1 .='<span class="fileSuccess"></span>'.$newname.' <span class="righto">';
+                            $html1 .='<a href="files/'.$_SESSION['qescuelacode'].'/'.$rowf['patho'].'" data-namo="'.$rowf['name'].'" id="prev_'.$fid.'" target="_blank"><span class="icos-inbox" style="padding:0; margin-right:10px;"></span></a> ';
+                            $html1 .='<a href="#" id="delo_'.$fid.'"><span class="icos-trash" style="padding:0; margin-right:0px;"></span></a></span>';
+                            $html1 .='</li>';
+                            $fid += 1;
+                        }
+                        echo $html1;
+                        while($rowf = mysqli_fetch_array($resultf)){
+                            echo $rowf['name']."<br>";
+                        } 
+                        */
+                    ?>
+                </ul>
+                <a href="#" class="buttonM bLightBlue" id="browse"><span class="icon-camera" style="color:#FFF;"></span><span style="color:#FFF;"><?php echo $texts['dia_filesup']; ?></span></a>
+            </div>
+        </div>
         
 </form>
-
-

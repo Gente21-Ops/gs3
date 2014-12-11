@@ -14,7 +14,13 @@ if($_SESSION['qlen'] == "es"){
 	"but_agregar" => "Agregar nueva tarea",
 	"but_borrar" => "Borrar",
 	"but_editar" => "Editar",
-	"but_revisar" => "Revisar"
+	"but_revisar" => "Revisar",
+	"dia_diatitle" => "Agregar nueva tarea",
+	"dia_title" => "T&iacute;tulo",
+	"dia_entrega" => "Fecha de entrega",
+	"dia_desc" => "Descripci&oacuten",
+	"dia_files" => "Aquí puede adjuntar archivos a la tarea",
+	"dia_filesup" => "Subir archivos",
 	);
 } else if($_SESSION['qlen'] == "en"){
 	$texts = array(
@@ -27,7 +33,13 @@ if($_SESSION['qlen'] == "es"){
 	"but_agregar" => "Add new homework",
 	"but_borrar" => "Delete",
 	"but_editar" => "Edit",
-	"but_revisar" => "Review              "
+	"but_revisar" => "Review",
+	"dia_diatitle" => "Agregar nueva tarea",
+	"dia_title" => "T&iacute;tulo",
+	"dia_entrega" => "Fecha de entrega",
+	"dia_desc" => "Descripci&oacuten",
+	"dia_files" => "Aquí puede adjuntar archivos a la tarea",
+	"dia_filesup" => "Upload files",
 	);
 } else if($_SESSION['qlen'] == "fr"){
 	$texts = array(
