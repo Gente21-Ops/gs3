@@ -20,10 +20,18 @@ include('../dict/profesor_homework.php');
     } else {
         echo '<script src="http://jquery-ui.googlecode.com/svn/tags/latest/ui/i18n/jquery.ui.datepicker-en-GB.js"></script>';
     }
+
+    $qcodetareas = '0';
+    if(isset($_GET['qcodetareas'])) { 
+        $qcodetareas = $_GET['qcodetareas'];
+    }
 ?> 
 
 <div id="groupid" style="display:none;"><?php echo $_GET['qcode']; ?></div>
 <div id="qlang" style="display:none;"><?php echo $_SESSION['qlen']; ?></div>
+<div id="qusercode" style="display:none;"><?php echo $_SESSION['code']; ?></div>
+<div id="qcodeschool" style="display:none;"><?php echo $_SESSION['qescuelacode']; ?></div>
+<div id="qcodetareas" style="display:none;"><?php echo $qcodetareas; ?></div>
 
 <!-- Main content -->
 <div class="wrapper">
@@ -69,48 +77,60 @@ include('../dict/profesor_homework.php');
 
 <form id="formAddNewRow" action="#" title="<?php echo $texts['dia_diatitle']; ?>">
 
-        <input type="hidden" name="idGrupos" id="idGrupos" value="<?php echo $_GET['qcode']; ?>" />
-        <input type="hidden" name="idMateria" id="idMateria" value="<?php echo $_GET['qmat']; ?>" />
+    <input type="hidden" name="idGrupos" id="idGrupos" value="<?php echo $_GET['qcode']; ?>" />
+    <input type="hidden" name="idMateria" id="idMateria" value="<?php echo $_GET['qmat']; ?>" />
 
-        <label for="name"><?php echo $texts['dia_title']; ?></label>
-        <input type="text" name="nombre" id="nombre" rel="1" />
-        
-        <label for="entrega"><?php echo $texts['dia_entrega']; ?></label>
-        <input type="text" class="datepicker1" name="entrega" id="entrega" rel="1" value="<?php echo date('Y-m-d'); ?>" />
-        
-        <label for="desc"><?php echo $texts['dia_desc']; ?></label>
-        <textarea rows="7" name="desc" id="desc" rel="1"></textarea>
+    <label for="name"><?php echo $texts['dia_title']; ?></label>
+    <input type="text" name="nombre" id="nombre" rel="1" />
+    
+    <label for="entrega"><?php echo $texts['dia_entrega']; ?></label>
+    <input type="text" class="datepicker1" name="entrega" id="entrega" rel="1" value="<?php echo date('Y-m-d'); ?>" />
+    
+    <label for="desc"><?php echo $texts['dia_desc']; ?></label>
+    <textarea rows="7" name="desc" id="desc" rel="1"></textarea>
 
-        <label for="desc"><?php echo $texts['dia_files']; ?></label>
-        <div>
-            <div id="container" style="margin-top:35px;">
-                <div class="dropFiles<?php if ($_SESSION['qlen'] == 'es'){ echo "_es"; } else if ($_SESSION['qlen'] == 'fr'){ echo "_fr"; } ?>" id="jalo" class="margin-bottom:10px;"></div>
-                <!-- FILE UPLOADING STUFF -->
-                <ul id="filelist" class="filesDown">
-                    <?php 
-                        /*
-                        //already uploaded files                    
-                        $fid = 0;
-                        $html1 = '';                        
-                        while($rowf = mysqli_fetch_array($resultf)){
-                            $newname = str_replace('_', ' ', $rowf['name']);
+    <label for="desc"><?php echo $texts['dia_files']; ?></label>
+    <div>
+        <div id="container" style="margin-top:35px;">
+            <div class="dropFiles<?php if ($_SESSION['qlen'] == 'es'){ echo "_es"; } else if ($_SESSION['qlen'] == 'fr'){ echo "_fr"; } ?>" id="jalo" class="margin-bottom:10px;"></div>
+            <!-- FILE UPLOADING STUFF -->
+            <ul id="filelist" class="filesDown">
+                <?php 
+                    /*
+                    //already uploaded files                    
+                    $fid = 0;
+                    $html1 = '';                        
+                    while($rowf = mysqli_fetch_array($resultf)){
+                        $newname = str_replace('_', ' ', $rowf['name']);
 
-                            $html1 .= '<li class="currentFile" id="'.$fid.'">';
-                            $html1 .='<span class="fileSuccess"></span>'.$newname.' <span class="righto">';
-                            $html1 .='<a href="files/'.$_SESSION['qescuelacode'].'/'.$rowf['patho'].'" data-namo="'.$rowf['name'].'" id="prev_'.$fid.'" target="_blank"><span class="icos-inbox" style="padding:0; margin-right:10px;"></span></a> ';
-                            $html1 .='<a href="#" id="delo_'.$fid.'"><span class="icos-trash" style="padding:0; margin-right:0px;"></span></a></span>';
-                            $html1 .='</li>';
-                            $fid += 1;
-                        }
-                        echo $html1;
-                        while($rowf = mysqli_fetch_array($resultf)){
-                            echo $rowf['name']."<br>";
-                        } 
-                        */
-                    ?>
-                </ul>
+                        $html1 .= '<li class="currentFile" id="'.$fid.'">';
+                        $html1 .='<span class="fileSuccess"></span>'.$newname.' <span class="righto">';
+                        $html1 .='<a href="files/'.$_SESSION['qescuelacode'].'/'.$rowf['patho'].'" data-namo="'.$rowf['name'].'" id="prev_'.$fid.'" target="_blank"><span class="icos-inbox" style="padding:0; margin-right:10px;"></span></a> ';
+                        $html1 .='<a href="#" id="delo_'.$fid.'"><span class="icos-trash" style="padding:0; margin-right:0px;"></span></a></span>';
+                        $html1 .='</li>';
+                        $fid += 1;
+                    }
+                    echo $html1;
+                    while($rowf = mysqli_fetch_array($resultf)){
+                        echo $rowf['name']."<br>";
+                    } 
+                    */
+                ?>
+            </ul>
+            <div id="container" style="margin-top:10px;">
                 <a href="#" class="buttonM bLightBlue" id="browse"><span class="icon-camera" style="color:#FFF;"></span><span style="color:#FFF;"><?php echo $texts['dia_filesup']; ?></span></a>
             </div>
+            <pre id="console"></pre>
+
         </div>
-        
+    </div>
 </form>
+
+
+
+<!-- FILE DELETING -->
+<div id="mod_del" title="Borrar archivo">
+    <div class="formRow" id="deltexto" style="padding-top:0px;">
+        File
+    </div>
+</div>  
