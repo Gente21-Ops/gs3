@@ -20,7 +20,7 @@ if($_SESSION['qlen'] == "es"){
 	"dia_entrega" => "Fecha de entrega",
 	"dia_desc" => "Descripci&oacuten",
 	"dia_files" => "Aquí puede adjuntar archivos a la tarea",
-	"dia_filesup" => "Subir archivos",
+	"dia_filesup" => "Buscar archivos",
 	);
 } else if($_SESSION['qlen'] == "en"){
 	$texts = array(
@@ -39,7 +39,7 @@ if($_SESSION['qlen'] == "es"){
 	"dia_entrega" => "Fecha de entrega",
 	"dia_desc" => "Descripci&oacuten",
 	"dia_files" => "Aquí puede adjuntar archivos a la tarea",
-	"dia_filesup" => "Upload files",
+	"dia_filesup" => "Look for files",
 	);
 } else if($_SESSION['qlen'] == "fr"){
 	$texts = array(

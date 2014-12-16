@@ -1,8 +1,11 @@
-console.log('PROFESSOR HOMEWORK SE PRESENTA 0634');
+console.log('PROFESSOR HOMEWORK SE PRESENTA @ '+GL.todaytime());
 var loadme;
 var tcount = 0;
 var delfile = '';
 var delobj = '';
+
+//list of files uploaded
+var allfiles = [];
 
 //localization (solo cuando hay calendario de UI)
 var qlen = '';
@@ -93,7 +96,7 @@ var uploader = new plupload.Uploader({
     runtimes : 'html5',
     browse_button: 'browse',
     dragdrop:true,
-    drop_element : 'jalo',
+    /*drop_element : 'jalo',*/
     max_file_size : '20mb',
     /*chunk_size : '1mb',*/
     /*multipart: true,*/
@@ -113,7 +116,7 @@ uploader.bind('FilesAdded', function(up, files) {
   plupload.each(files, function(file) {
     tcount += 1;
 
-    html1 += '<li class="currentFile" id="'+tcount+'">'
+    html1 += '<li class="currentFile" id="curr_'+file.id+'">'
         +'<div class="fileProcess">'
         +'<img src="images/elements/loaders/10s.gif" alt="" class="loader" />'
         +'<strong>' + file.name + '</strong>'
@@ -156,29 +159,32 @@ uploader.bind('Error', function(up, err) {
 });
 
 uploader.bind('FileUploaded', function(up, file, res) {
+	
+	allfiles.push(file.name);
+	GL.consol('>> file.name: '+file.name+' | file.id:'+file.id);
+	GL.consol(allfiles);
 
     //parsing json:
     var obj2 = eval(res);
-    console.log('HOLA '+res);
-
     var reto = JSON.parse(obj2.response);
-
     //we change png into jpg
     var newfn = reto['new'].replace('.png','.jpg');
-
     //en este caso sobreescribo el contenido del li
-    var fileok = '<span class="fileSuccess"></span>'+file.name+' <span class="righto">'
-    +'<a href="files/'+$('#qcodeschool').text()+'/'+newfn+'" data-namo="'+file.name+'" id="prev_'+tcount+'" target="_blank"><span class="icos-inbox" style="padding:0; margin-right:10px;"></span></a> '
-    +'<a href="#" id="delo_'+tcount+'"><span class="icos-trash" style="padding:0; margin-right:0px;"></span></a></span>';
-    $('#filelist').html(fileok);
+    var eltexto = $('#qcodeschool').text();
+    var fileok = '<li id="fil_'+file.id+'"><span class="fileSuccess"></span>'+file.name+' <span class="righto">'
+    +'<a href="files/'+eltexto+'/'+newfn+'" data-namo="'+file.name+'" id="prev_'+file.id+'" target="_blank"><span class="icos-inbox" style="padding:0; margin-right:10px;"></span></a> '
+    +'<a href="#" id="delo_'+file.id+'"><span class="icos-trash" style="padding:0; margin-right:0px;"></span></a></span></li>';
+    $('#filelist').append(fileok);
+
+    //delete current
+    $('#curr_'+file.id).hide('slow', function(){ $('#curr_'+file.id).remove(); });
 
     //if content is image we create a preview
     if (reto['isimg'] == '1'){
-        console.log('THIS IS AN IMAGE!!!, setting up fancybox...');
-        $("#prev_"+tcount).fancybox({ 'hideOnContentClick': true });
+        $("#prev_"+file.id).fancybox({ 'hideOnContentClick': true });
     }
 
-    setdel(tcount,reto['new'],file.name);    
+    setdel(file.id,reto['new'],file.name);    
 
     $.jGrowl('El archivo '+file.name+' se subió correctamente');
     
@@ -188,11 +194,8 @@ uploader.bind('FileUploaded', function(up, file, res) {
 function setdel(qobj,qfile,qname){
 
     GL.consol('-- SETTING DEL FOR OBJ : '+qobj);
-    GL.consol(arguments);
-    /*
     $('#delo_'+qobj).click(function () {
 
-        console.log('INTENTANDO OBTENER DATOS DE: #delo_'+qobj);
         //ahora si asignamos
         var prevfile = $('#prev_'+qobj).attr('href').split('/');
         if (prevfile.length > 1){
@@ -200,17 +203,19 @@ function setdel(qobj,qfile,qname){
         } else {
             delfile = $('#prev_'+qobj).attr('href');
         }
-        
         delobj = qobj;
+        GL.consol('QUERIENDO BORRAR ARCHIVO: '+qfile+' - delfile:'+delfile+' - qobj:'+delobj);
+        
+        //send this file to oblivion
+        GL.getter('clases/ui/delfile.php',{ qfile:qfile },'json',returnData);
+    	function returnData(param) {
+    		$('#fil_'+qobj).hide('slow', function(){ $('#fil_'+qobj).remove(); });
+    		GL.consol('File '+qname+' deleted from server');
+    	}
 
-        console.log('QUERIENDO BORRAR ARCHIVO: '+qfile+' - delfile:'+delfile+' - qobj:'+delobj);
-
-        //al click vamos a tomar los datos desde el objeto y meterlos en memoria, para que la asignación sea correcta
-        $('#deltexto').html('El archivo: <strong>'+$('#prev_'+qobj).attr('data-namo')+'</strong>('+delfile+')<br>será eliminado permanentemente');
-        $('#mod_del').dialog('open');
         return false;
     });
-*/
+
 }
 
 /*

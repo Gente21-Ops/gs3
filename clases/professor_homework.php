@@ -92,7 +92,8 @@ include('../dict/profesor_homework.php');
     <label for="desc"><?php echo $texts['dia_files']; ?></label>
     <div>
         <div id="container" style="margin-top:35px;">
-            <div class="dropFiles<?php if ($_SESSION['qlen'] == 'es'){ echo "_es"; } else if ($_SESSION['qlen'] == 'fr'){ echo "_fr"; } ?>" id="jalo" class="margin-bottom:10px;"></div>
+        	<!-- This is disabled until I get the dialog in two columns -->
+            <!-- <div class="dropFiles<?php if ($_SESSION['qlen'] == 'es'){ echo "_es"; } else if ($_SESSION['qlen'] == 'fr'){ echo "_fr"; } ?>" id="jalo" class="margin-bottom:10px;"></div> -->
             <!-- FILE UPLOADING STUFF -->
             <ul id="filelist" class="filesDown">
                 <?php 
@@ -118,7 +119,7 @@ include('../dict/profesor_homework.php');
                 ?>
             </ul>
             <div id="container" style="margin-top:10px;">
-                <a href="#" class="buttonM bLightBlue" id="browse"><span class="icon-camera" style="color:#FFF;"></span><span style="color:#FFF;"><?php echo $texts['dia_filesup']; ?></span></a>
+                <a href="#" class="buttonM bGreyish" id="browse"><span class="icon-download" style="color:#FFF;"></span><span style="color:#FFF;"><?php echo $texts['dia_filesup']; ?></span></a>
             </div>
             <pre id="console"></pre>
 
@@ -131,6 +132,6 @@ include('../dict/profesor_homework.php');
 <!-- FILE DELETING -->
 <div id="mod_del" title="Borrar archivo">
     <div class="formRow" id="deltexto" style="padding-top:0px;">
-        File
+        &nbsp;
     </div>
 </div>  

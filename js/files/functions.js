@@ -161,9 +161,15 @@ $(function() {
 		return Date.now();
 	}
 
-    //-----------------------TODAY'S DATE
+    //-----------------------TODAY'S DATE + TIME
+	GL.todaytime = function(num){
+		var d = new Date(), month = d.getMonth()+1, day = d.getDate(), h = d.getHours(), m = d.getMinutes(), s = d.getSeconds();
+    	return d.getFullYear()+'/'+(month<10 ? '0' : '')+month+'/'+(day<10 ? '0' : '')+day+' '+h+':'+m+':'+s;
+	}
+
+	//-----------------------TODAY'S DATE
 	GL.today = function(num){
-		var d = new Date(), month = d.getMonth()+1, day = d.getDate();
+		var d = new Date(), month = d.getMonth()+1, day = d.getDate(); 
     	return d.getFullYear()+'/'+(month<10 ? '0' : '')+month+'/'+(day<10 ? '0' : '')+day;
 	}
 
