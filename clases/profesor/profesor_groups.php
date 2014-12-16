@@ -58,17 +58,15 @@ ini_set('display_errors', '1');
                 $chido[] = $bRow['qidgrupo'];
                 $chido[] = $aRow['qnommateria'];
                 $chido[] = $bRow['qnombre'];  
-                $chido[] = '<ul class="tbar">
-                                <li>
-                                    <a href="#" onclick="assignme(\'professor_takelist.php?qcode='.$bRow['qidgrupo'].'&qmat='.$aRow['qidmat'].'\',\'content\'); return false;" title=""><span class="icos-pencil"></span>'.$texts['asistencias'].' '.$bRow['qnombre'].'</a>
-                                </li>
-                                <li>
-                                    <a href="#" onclick="assignme(\'professor_homework.php?qcode='.$bRow['qidgrupo'].'&qmat='.$aRow['qidmat'].'\',\'content\'); return false;" title=""><span class="icos-copypaste"></span>'.$texts['tareas'].' '.$bRow['qnombre'].'</a>
-                                </li>
-                                <li>
-                                    <a href="#" onclick="assignme(\'professor_takegrades.php?qcode='.$bRow['qidgrupo'].'&qmat='.$aRow['qidmat'].'\',\'content\'); return false;" title=""><span class="icos-stats"></span>'.$texts['calif'].' '.$bRow['qnombre'].'</a>
-                                </li>
-                            </ul>';
+                $chido[] = '<a href="#" onclick="assignme(\'professor_takelist.php?qcode='.$bRow['qidgrupo'].'&qmat='.$aRow['qidmat'].'\',\'content\'); return false;" class="buttonM bGreen">
+                            <span class="icon-thumbs-up-2"></span><span>'.$texts['asistencias'].' '.$bRow['qnombre'].'</span></a>
+                                
+                            <a href="#" onclick="assignme(\'professor_homework.php?qcode='.$bRow['qidgrupo'].'&qmat='.$aRow['qidmat'].'\',\'content\'); return false;" class="buttonM bGreen">
+                            <span class="icon-cog"></span><span>'.$texts['tareas'].' '.$bRow['qnombre'].'</span></a>
+                                
+                            <a href="#" onclick="assignme(\'professor_takegrades.php?qcode='.$bRow['qidgrupo'].'&qmat='.$aRow['qidmat'].'\',\'content\'); return false;" class="buttonM bGreen">
+                            <span class="icon-user"></span><span>'.$texts['calif'].' '.$bRow['qnombre'].'</span></a>
+                            ';
 
                 $output['aaData'][] = $chido;
             }

@@ -23,7 +23,7 @@ include('../dict/students_config.php');
         echo '<script src="http://jquery-ui.googlecode.com/svn/tags/latest/ui/i18n/jquery.ui.datepicker-en-GB.js"></script>';
     }
 
-    echo $qfaltas;
+    //echo $qfaltas;
 ?>  
 
     <div id="qlang" style="display:none;"><?php echo $_SESSION['qlen']; ?></div>
