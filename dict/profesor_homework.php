@@ -21,6 +21,8 @@ if($_SESSION['qlen'] == "es"){
 	"dia_desc" => "Descripci&oacuten",
 	"dia_files" => "Aquí puede adjuntar archivos a la tarea",
 	"dia_filesup" => "Buscar archivos",
+	"dia_filedel1" => "Archivo",
+	"dia_filedel2" => "borrado correctamente"
 	);
 } else if($_SESSION['qlen'] == "en"){
 	$texts = array(
@@ -40,6 +42,8 @@ if($_SESSION['qlen'] == "es"){
 	"dia_desc" => "Descripci&oacuten",
 	"dia_files" => "Aquí puede adjuntar archivos a la tarea",
 	"dia_filesup" => "Look for files",
+	"dia_filedel1" => "File",
+	"dia_filedel2" => "has been deleted"
 	);
 } else if($_SESSION['qlen'] == "fr"){
 	$texts = array(

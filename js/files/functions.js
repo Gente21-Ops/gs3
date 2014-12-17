@@ -120,8 +120,8 @@ $(function() {
 
 	//------------------------GETTER/SETTER
 	GL.getter = function(url,params,datatype,callback){
-		GL.consol('Trying to get data from '+url+' with request parameters:');
-		GL.consol(params);
+		//GL.consol('Trying to get data from '+url+' with request parameters:');
+		//GL.consol(params);
 		$.ajax({
 			url: url+'?'+GL.now(),
 			type: 'POST',
@@ -155,6 +155,13 @@ $(function() {
     	GL.userdata = param;
     }
     */
+
+    //------------------------This functions removes a match from array
+    GL.splicer = function (arr,qtext) {
+    	GL.consol('Trying to splice '+qtext);
+	    var index = arr.indexOf(qtext);
+		return arr.splice(index, 1);
+	}
 
     //------------------------TIMESTAMP
 	GL.now = function(num){

@@ -72,11 +72,11 @@ $fileName = $newname;
 
 $newpatho = str_replace('.png', '.jpg', $newname);
 
-//se va a la db
+//we cannot save into the DB until we get the code for this homework
+/*//se va a la db
 $sqlt = "INSERT INTO files (name, patho, code, codeUser) VALUES ('".$oldname."', '".$newpatho."', '".$_GET['qcodetareas']."', '".$_GET['qusercode']."')";
 //echo $sqlt."<br>";
-
-mysql_query($sqlt) or die(mysql_error());  
+mysql_query($sqlt) or die(mysql_error());  */
 
 
 //--termina hack de nombres--////////////////////////////////////////////////

@@ -28,7 +28,7 @@ session_start();
           '".mysql_real_escape_string($_REQUEST['idMateria'])."', 
           '".mysql_real_escape_string($_REQUEST['desc'])."', 
           '".$date."', 
-          '".mysql_real_escape_string($_REQUEST['fechaEntrega'])."', 
+          '".mysql_real_escape_string($_REQUEST['entrega'])."', 
           '".mysql_real_escape_string($_SESSION['idUsers'])."')";
 
   if (!mysqli_query($con,$sql)){

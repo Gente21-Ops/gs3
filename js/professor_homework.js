@@ -16,7 +16,6 @@ if ($('#qlang').text() == 'es'){
 } else if ($('#qlango').text() == 'fr'){
 	qlen = "js/datatablesloc/dataTables.francais.txt";
 }
-console.log(qlen);
 
 //new task date
 $.datepicker.regional[$('#qlang')];
@@ -102,7 +101,8 @@ var uploader = new plupload.Uploader({
     /*multipart: true,*/
     multi_selection : true,
     /*unique_names : true,*/    
-    url: 'clases/uploadFiles.php?qusercode='+$('#qusercode').text()+'&qcodetareas='+$('#qcodetareas').text()+'&qcodeschool='+$('#qcodeschool').text()+'&r='+ran(1,5000),
+    //url: 'clases/uploadFiles.php?qusercode='+$('#qusercode').text()+'&qcodetareas='+$('#qcodetareas').text()+'&qcodeschool='+$('#qcodeschool').text()+'&r='+ran(1,5000),
+    url: 'clases/uploadFiles.php?qcodeschool='+$('#qcodeschool').text(),
     filters : [
             {title : "Image files", extensions : "gif,GIF,jpg,jpeg,png,PNG,JPG,JPEG,doc,docx,xlsx,ppt,pptx,pdf,bmp,mp3,mkv,avi,mpeg,flv,mov,torrent,csv,zip,rar,gzip,odt,ods,odp"}
         ],
@@ -147,7 +147,6 @@ uploader.bind('UploadProgress', function(up, file) {
 
 
 uploader.bind('Error', function(up, err) {
-  //document.getElementById('console').innerHTML += "\nError #" + err.code + ": " + err.message;
   if (err.code == '-600'){
     $.jGrowl('ERROR: ¡Archivo demasiado grande!, el peso máximo es 20MB');
   } else if (err.code == '-200'){
@@ -160,19 +159,18 @@ uploader.bind('Error', function(up, err) {
 
 uploader.bind('FileUploaded', function(up, file, res) {
 	
-	allfiles.push(file.name);
-	GL.consol('>> file.name: '+file.name+' | file.id:'+file.id);
-	GL.consol(allfiles);
-
     //parsing json:
     var obj2 = eval(res);
     var reto = JSON.parse(obj2.response);
-    //we change png into jpg
-    var newfn = reto['new'].replace('.png','.jpg');
+    //GL.consol(reto);
+
+    allfiles.push(reto['new']);
+	GL.consol(allfiles);
+
     //en este caso sobreescribo el contenido del li
     var eltexto = $('#qcodeschool').text();
     var fileok = '<li id="fil_'+file.id+'"><span class="fileSuccess"></span>'+file.name+' <span class="righto">'
-    +'<a href="files/'+eltexto+'/'+newfn+'" data-namo="'+file.name+'" id="prev_'+file.id+'" target="_blank"><span class="icos-inbox" style="padding:0; margin-right:10px;"></span></a> '
+    +'<a href="files/'+eltexto+'/'+reto['new']+'" data-namo="'+file.name+'" id="prev_'+file.id+'" target="_blank"><span class="icos-inbox" style="padding:0; margin-right:10px;"></span></a> '
     +'<a href="#" id="delo_'+file.id+'"><span class="icos-trash" style="padding:0; margin-right:0px;"></span></a></span></li>';
     $('#filelist').append(fileok);
 
@@ -193,7 +191,6 @@ uploader.bind('FileUploaded', function(up, file, res) {
 
 function setdel(qobj,qfile,qname){
 
-    GL.consol('-- SETTING DEL FOR OBJ : '+qobj);
     $('#delo_'+qobj).click(function () {
 
         //ahora si asignamos
@@ -204,54 +201,21 @@ function setdel(qobj,qfile,qname){
             delfile = $('#prev_'+qobj).attr('href');
         }
         delobj = qobj;
-        GL.consol('QUERIENDO BORRAR ARCHIVO: '+qfile+' - delfile:'+delfile+' - qobj:'+delobj);
         
         //send this file to oblivion
         GL.getter('clases/ui/delfile.php',{ qfile:qfile },'json',returnData);
     	function returnData(param) {
+
+    		//we remove the file from the allfiles list
+    		GL.splicer( allfiles , qfile );
+    		GL.consol(allfiles);
+
     		$('#fil_'+qobj).hide('slow', function(){ $('#fil_'+qobj).remove(); });
-    		GL.consol('File '+qname+' deleted from server');
+    		var tx = $('#qdel1').text()+' '+qname+' '+$('#qdel2').text();
+    		$.jGrowl(tx);
     	}
 
         return false;
     });
 
 }
-
-/*
-//del file
-$('#mod_del').dialog({
-    autoOpen: false, 
-    width: 550,
-    modal: true,
-    hide: { effect: "fade", duration: 200 }, //put the fade effect
-    buttons: {
-        "Aceptar": function() {
-
-            //let's first check that the document exists on GS
-            
-            $.post('clases/delFile.php', { qdelfile:delfile }, function(ddata) {
-
-                if (parseInt(ddata) != 0){
-                    //we kill the li
-                    $("#"+delobj).fadeOut( "slow", function() {
-                        $("#"+delobj).remove();
-                    });
-                    console.log('Trying to remove object1: '+delobj);
-
-                    $.jGrowl('El archivo se borró correctamente');
-                } else {
-                    $.jGrowl('Problema al borrar el archivo');
-                }
-                $('#mod_del').dialog( "close" );
-
-            });
-            
-            
-        },
-        "Cancelar": function() {
-            $( this ).dialog( "close" );
-        }
-    }
-});
-*/

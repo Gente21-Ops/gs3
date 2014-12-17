@@ -32,6 +32,8 @@ include('../dict/profesor_homework.php');
 <div id="qusercode" style="display:none;"><?php echo $_SESSION['code']; ?></div>
 <div id="qcodeschool" style="display:none;"><?php echo $_SESSION['qescuelacode']; ?></div>
 <div id="qcodetareas" style="display:none;"><?php echo $qcodetareas; ?></div>
+<div id="qdel1" style="display:none;"><?php echo $texts['dia_filedel1']; ?></div>
+<div id="qdel2" style="display:none;"><?php echo $texts['dia_filedel2']; ?></div>
 
 <!-- Main content -->
 <div class="wrapper">
@@ -80,14 +82,17 @@ include('../dict/profesor_homework.php');
     <input type="hidden" name="idGrupos" id="idGrupos" value="<?php echo $_GET['qcode']; ?>" />
     <input type="hidden" name="idMateria" id="idMateria" value="<?php echo $_GET['qmat']; ?>" />
 
+    <input type="hidden" name="edito" id="edito" value="--edito--" />
+    <input type="hidden" name="reviso" id="reviso" value="--reviso--" />		
+
     <label for="name"><?php echo $texts['dia_title']; ?></label>
     <input type="text" name="nombre" id="nombre" rel="1" />
     
     <label for="entrega"><?php echo $texts['dia_entrega']; ?></label>
-    <input type="text" class="datepicker1" name="entrega" id="entrega" rel="1" value="<?php echo date('Y-m-d'); ?>" />
+    <input type="text" class="datepicker1" name="entrega" id="entrega" rel="3" value="<?php echo date('Y-m-d'); ?>" />
     
     <label for="desc"><?php echo $texts['dia_desc']; ?></label>
-    <textarea rows="7" name="desc" id="desc" rel="1"></textarea>
+    <textarea rows="7" name="desc" id="desc" rel="2"></textarea>
 
     <label for="desc"><?php echo $texts['dia_files']; ?></label>
     <div>

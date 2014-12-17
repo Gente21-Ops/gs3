@@ -6,14 +6,13 @@
 	include("../logon.php");
     require_once('../connection.php');
     
-    $file = $_SESSION['qescuelacode'].'/'.$_POST['qfile'];
-    /*echo $file;*/
-    
-    if ( !unlink($file) ){
-		echo 'Coulndt delete: '.$file);
-    } else {
-    	echo '1';
-    } 
+    $file = '../../files/'.$_SESSION['qescuelacode'].'/'.$_POST['qfile'];
+
+    if( !unlink($file) ){
+	    echo '0';
+	} else { 
+	    echo '1';
+	} 
 
 
 ?>
