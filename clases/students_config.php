@@ -31,7 +31,7 @@ include('../dict/students_config.php');
     <div id="qerror" style="display:none;"><?php echo $texts['savederror']; ?></div>
     <div style="display:none;" id="quser"><?php echo $_SESSION['code']; ?></div>
     <div style="display:none;" id="qcalif"><?php echo $qcalif; ?></div>
-    <div style="display:none;" id="qfaltas"><?php echo $qfaltas; ?></div>
+    <div style="display:none;" id="qfaltas"><?php echo $qfaltas; ?></div> 
 
     
     
