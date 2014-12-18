@@ -58,13 +58,13 @@ ini_set('display_errors', '1');
                 $chido[] = $bRow['qidgrupo'];
                 $chido[] = $aRow['qnommateria'];
                 $chido[] = $bRow['qnombre'];  
-                $chido[] = '<a href="#" onclick="assignme(\'professor_takelist.php?qcode='.$bRow['qidgrupo'].'&qmat='.$aRow['qidmat'].'\',\'content\'); return false;" class="buttonM bGreen">
+                $chido[] = '<a href="#" onclick="assignme(\'professor_takelist.php?qcode='.$bRow['qidgrupo'].'&qmat='.$aRow['qidmat'].'\',\'content\'); return false;" class="buttonM bGreyish">
                             <span class="icon-thumbs-up-2"></span><span>'.$texts['asistencias'].' '.$bRow['qnombre'].'</span></a>
                                 
-                            <a href="#" onclick="assignme(\'professor_homework.php?qcode='.$bRow['qidgrupo'].'&qmat='.$aRow['qidmat'].'\',\'content\'); return false;" class="buttonM bGreen">
+                            <a href="#" onclick="assignme(\'professor_homework.php?qcode='.$bRow['qidgrupo'].'&qmat='.$aRow['qidmat'].'\',\'content\'); return false;" class="buttonM bGreyish">
                             <span class="icon-cog"></span><span>'.$texts['tareas'].' '.$bRow['qnombre'].'</span></a>
                                 
-                            <a href="#" onclick="assignme(\'professor_takegrades.php?qcode='.$bRow['qidgrupo'].'&qmat='.$aRow['qidmat'].'\',\'content\'); return false;" class="buttonM bGreen">
+                            <a href="#" onclick="assignme(\'professor_takegrades.php?qcode='.$bRow['qidgrupo'].'&qmat='.$aRow['qidmat'].'\',\'content\'); return false;" class="buttonM bGreyish">
                             <span class="icon-user"></span><span>'.$texts['calif'].' '.$bRow['qnombre'].'</span></a>
                             ';
 
