@@ -1,6 +1,7 @@
 <?php
 
 require_once('../mysqlcon.php');
+include '../general/passgen.php';
 session_start();
   //AddData.php
   //extract($_REQUEST);
@@ -18,11 +19,13 @@ session_start();
    
   //$stmt = $mysqli->stmt_init();
 
+  $code = generatePassword(16);
   $date = date('Y-m-d');
+
   $sql="INSERT INTO 
-        tareas (/*code, */nombre, idGrupos, idMaterias, descripcion, fecha, fechaEntrega, idProfesor) 
+        tareas (code, nombre, idGrupos, idMaterias, descripcion, fecha, fechaEntrega, idProfesor) 
         VALUES (
-          /*'".mysql_real_escape_string($_REQUEST['nombre'])."', */
+          '".$code."',
           '".mysql_real_escape_string($_REQUEST['nombre'])."', 
           '".mysql_real_escape_string($_REQUEST['idGrupos'])."', 
           '".mysql_real_escape_string($_REQUEST['idMateria'])."', 
@@ -30,6 +33,11 @@ session_start();
           '".$date."', 
           '".mysql_real_escape_string($_REQUEST['entrega'])."', 
           '".mysql_real_escape_string($_SESSION['idUsers'])."')";
+
+  
+  
+  
+  
 
   if (!mysqli_query($con,$sql)){
     die('Error: ' . mysqli_error($con));
