@@ -6,6 +6,7 @@ var delobj = '';
 
 //list of files uploaded
 var allfiles = [];
+var allnames = [];
 
 //localization (solo cuando hay calendario de UI)
 var qlen = '';
@@ -112,7 +113,7 @@ var uploader = new plupload.Uploader({
     /*multipart: true,*/
     multi_selection : true,
     /*unique_names : true,*/    
-    //url: 'clases/uploadFiles.php?qusercode='+$('#qusercode').text()+'&qcodetareas='+$('#qcodetareas').text()+'&qcodeschool='+$('#qcodeschool').text()+'&r='+ran(1,5000),
+    //url: 'clases/uploadFiles.php?qusercode='+$('#qusercode').text()+'&qcodetareas='+$('#code').val()+'&qcodeschool='+$('#qcodeschool').text()+'&r='+ran(1,5000),
     url: 'clases/uploadFiles.php?qcodeschool='+$('#qcodeschool').text(),
     filters : [
             {title : "Image files", extensions : "gif,GIF,jpg,jpeg,png,PNG,JPG,JPEG,doc,docx,xlsx,ppt,pptx,pdf,bmp,mp3,mkv,avi,mpeg,flv,mov,torrent,csv,zip,rar,gzip,odt,ods,odp"}
@@ -168,6 +169,8 @@ uploader.bind('Error', function(up, err) {
 });
 
 uploader.bind('FileUploaded', function(up, file, res) {
+
+
 	
     //parsing json:
     var obj2 = eval(res);
@@ -175,6 +178,14 @@ uploader.bind('FileUploaded', function(up, file, res) {
     //GL.consol(reto);
 
     allfiles.push(reto['new']);
+    allnames.push(file.name);
+
+    var allfilo = allfiles.toString();
+    $('#allfiles').val(allfilo);
+
+    var allnamo = allnames.toString();
+    $('#allnames').val(allnamo);
+
 	GL.consol(allfiles);
 
     //en este caso sobreescribo el contenido del li
@@ -218,7 +229,16 @@ function setdel(qobj,qfile,qname){
 
     		//we remove the file from the allfiles list
     		GL.splicer( allfiles , qfile );
+            GL.splicer( allnames , qfile );
+
+            var allfilo = allfiles.toString();
+            $('#allfiles').val(allfilo);
+
+            var allnamo = allnames.toString();
+            $('#allnames').val(allnamo);
+
     		GL.consol(allfiles);
+            GL.consol(allnames);
 
     		$('#fil_'+qobj).hide('slow', function(){ $('#fil_'+qobj).remove(); });
     		var tx = $('#qdel1').text()+' '+qname+' '+$('#qdel2').text();

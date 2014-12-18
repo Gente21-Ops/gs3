@@ -89,6 +89,9 @@ include('general/passgen.php');
     
     <input type="hidden" name="code" id="code" value="<?php echo generatePassword(16); ?>" rel="1" />
 
+    <input type="hidden" name="allfiles" id="allfiles" value="" rel="1" />
+    <input type="hidden" name="allnames" id="allnames" value="" rel="1" />
+
     <label for="name"><?php echo $texts['dia_title']; ?></label>
     <input type="text" name="nombre" id="nombre" rel="2" />
     
