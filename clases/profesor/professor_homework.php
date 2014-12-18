@@ -19,7 +19,7 @@ $texts = array(
     );
 }
 
-$elsql = "SELECT idTareas, nombre, descripcion, fecha, fechaEntrega
+$elsql = "SELECT idTareas, code, nombre, descripcion, fecha, fechaEntrega
             FROM tareas 
             WHERE idProfesor = '".$_SESSION['idUsers']."' AND idGrupos = '".$_GET['qgroupid']."'";
 
@@ -35,6 +35,7 @@ if($sqlt->num_rows === 0){
     while ($aRow = $sqlt->fetch_assoc()) {
         $chido = array();
         $chido[] = $aRow['idTareas'];
+        $chido[] = $aRow['code'];
         $chido[] = $aRow['nombre'];
         $chido[] = $aRow['descripcion'];
         $chido[] = $aRow['fechaEntrega'];

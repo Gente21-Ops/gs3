@@ -99,6 +99,17 @@ $(function() {
 	//======INIT==============//
 	assignme('students_msgs','content');  
 
+	//------------------------PASS GENERATOR
+	GL.generatePassword = function(len){
+		var length = len,
+	    charset = "abcdefghijklnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789",
+	    retVal = "";
+	    for (var i = 0, n = charset.length; i < length; ++i) {
+	        retVal += charset.charAt(Math.floor(Math.random() * n));
+	    }
+	    return retVal;
+	}
+
 	//------------------------GLOBAL ERROR OUTPUT
 	GL.consol = function(msg){
 		if ( window.console && window.console.log ) {

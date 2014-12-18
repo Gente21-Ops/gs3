@@ -54,6 +54,11 @@ oTable = $('.dTable').dataTable({
 		bVisible: false
     },
     {
+        sName: "code",
+        bSearchable: false,
+		bVisible: false
+    },
+    {
     	sName: "nombre"
     },
     {
@@ -70,18 +75,24 @@ oTable = $('.dTable').dataTable({
     }] 
 
 }).makeEditable({
-sAddURL: "clases/profesor/homework_add.php",
-sDeleteURL: "clases/profesor/homework_delete.php",
-sUpdateURL: "clases/profesor/homework_update.php",
-fnOnAdded: function(){     
-        $.jGrowl('Registro agregado.');
-    },
-    fnOnDeleted: function(){    
-        $.jGrowl("Registro eliminado.");
-    },
-    fnOnEdited: function(){     
-        $.jGrowl("Registro actualizado.");
-    }
+	sAddURL: "clases/profesor/homework_add.php",
+	sDeleteURL: "clases/profesor/homework_delete.php",
+	sUpdateURL: "clases/profesor/homework_update.php",
+		fnOnAdding: function(){
+			return true;
+		},
+		fnOnAdded: function(status){
+			var newcode =  GL.generatePassword(16);
+			$('#code').val( newcode );	
+			GL.consol('Added, new code: '+$('#code').val());    
+		    $.jGrowl('Registro agregado: '+status);
+	    },
+	    fnOnDeleted: function(){    
+	        $.jGrowl("Registro eliminado.");
+	    },
+	    fnOnEdited: function(){     
+	        $.jGrowl("Registro actualizado.");
+	    }
 });
 
 //select on click
@@ -127,7 +138,6 @@ uploader.bind('FilesAdded', function(up, files) {
         +'</div>'
     +'</li>';
 
-    //html += '<li id="' + file.id + '">' + file.name + ' (' + plupload.formatSize(file.size) + ') <b></b></li>';
   });
 
   $('#filelist').append(html1);
