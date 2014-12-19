@@ -21,32 +21,33 @@ session_start();
 	if (!mysqli_query($con,$sql)){ //insert new TAREA
 		die('Error: ' . mysqli_error($con));
 	}
+
+	$inserted = mysqli_insert_id($con);
 	
-	$sql2 = "SELECT code FROM tareas WHERE idTareas = '".mysqli_insert_id($con)."'"; //get CODE from last TAREA inserted
-	$result = mysqli_query($con, $sql2);
-	$row = mysqli_fetch_assoc($result);
-	$lastcode = $row['code'];
+	$lastcode = $_REQUEST['code'];
 
-	//echo "||".$lastcode."||";
+	//esto evita que se guarden records vacios
+	if ( strlen($_REQUEST['allfiles']) > 2 && strlen($_REQUEST['allnames']) > 2 ){
+		$arrayFotos = explode(",", $_REQUEST['allfiles']); //get file new name array 
+		$arrayNames = explode(",", $_REQUEST['allnames']); //get file old name array
+		$length = count($arrayFotos);
 
-	$arrayFotos = explode(",", $_REQUEST['allfiles']); //get file new name array 
-	$arrayNames = explode(",", $_REQUEST['allnames']); //get file old name array
-	$length = count($arrayFotos);
+		for ($i=0; $i<$length; $i++) { //insert file
 
-	for ($i=0; $i<$length; $i++) { //insert file
+			$sqlt = "INSERT INTO 
+			files (name, patho, code, codeUser) 
+			VALUES ('".mysqli_real_escape_string($con,$arrayNames[$i])."', 
+				'".mysqli_real_escape_string($con,$arrayFotos[$i])."', 
+			  	'".$lastcode."', 
+			  	'".$_SESSION['code']."')";
 
-		$sqlt = "INSERT INTO 
-		files (name, patho, code, codeUser) 
-		VALUES ('".mysqli_real_escape_string($con,$arrayNames[$i])."', 
-			'".mysqli_real_escape_string($con,$arrayFotos[$i])."', 
-		  	'".$lastcode."', 
-		  	'".$_SESSION['code']."')";
-
-		if (!mysqli_query($con,$sqlt)){
-			die('Error: ' . mysqli_error($con));
+			if (!mysqli_query($con,$sqlt)){
+				die('Error: ' . mysqli_error($con));
+			}
 		}
+	}	
 
-	}
+	echo $inserted;
 
 	mysqli_close($con);
 

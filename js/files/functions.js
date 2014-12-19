@@ -76,6 +76,8 @@ function assignme(url,target){
 			console.log('JS LOADED: js/'+pageData+'.js?cual='+cach);			
 		});
 	});
+
+	
 }
 
 window.addEventListener("popstate", function(e) {

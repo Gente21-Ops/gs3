@@ -83,10 +83,29 @@ oTable = $('.dTable').dataTable({
 			return true;
 		},
 		fnOnAdded: function(status){
+			//reasign the code when the action completes
 			var newcode =  GL.generatePassword(16);
-			$('#code').val( newcode );	
-			GL.consol('Added, new code: '+$('#code').val());    
-		    $.jGrowl('Registro agregado: '+status);
+			$( ".changecode" ).each(function( index ) {
+				$( this ).val(newcode);
+			});
+			
+			//we clear the filelist
+			$('#filelist').html('');
+		    $.jGrowl('Registro agregado: '+status);		    
+
+		    var editbtn = '<a href="#" onclick="assignme(\'profesor_homework_do?qid=ONE\',\'content\'); return false;" class="buttonM bBlue"><span>Editar</span></a>';
+		    var revbtn = '<a href="#" onclick="assignme(\'profesor_homework_review.php?qid=ONE\',\'content\'); return false;" class="buttonM bGreen"></span><span>Revisar</span></a>';
+
+		    //convert the buttons
+		    $( "td:contains('--edito--')" ).html(editbtn);
+		    $( "td:contains('--reviso--')" ).html(revbtn);
+
+		    /*
+		    //This is a hack #$%&#&
+			//we delete all instances of the iu-dialog and ui-datepicker in order to avoid repetitions
+			$( ".ui-dialog" ).remove();
+			$( ".ui-datepicker" ).remove();
+			*/
 	    },
 	    fnOnDeleted: function(){    
 	        $.jGrowl("Registro eliminado.");
@@ -109,10 +128,7 @@ var uploader = new plupload.Uploader({
     dragdrop:true,
     /*drop_element : 'jalo',*/
     max_file_size : '20mb',
-    /*chunk_size : '1mb',*/
-    /*multipart: true,*/
-    multi_selection : true,
-    /*unique_names : true,*/    
+    multi_selection : true,  
     //url: 'clases/uploadFiles.php?qusercode='+$('#qusercode').text()+'&qcodetareas='+$('#code').val()+'&qcodeschool='+$('#qcodeschool').text()+'&r='+ran(1,5000),
     url: 'clases/uploadFiles.php?qcodeschool='+$('#qcodeschool').text(),
     filters : [

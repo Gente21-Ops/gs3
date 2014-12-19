@@ -2,7 +2,7 @@
 //echo "SE<br>";
 include("../logon.php");
 require_once('../mysqlcon.php');
-
+require_once('../general/passgen.php');
 
 error_reporting(E_ALL);
 ini_set('display_errors', '1');
@@ -54,17 +54,18 @@ ini_set('display_errors', '1');
    
             while ($bRow = $sqlt2->fetch_assoc()) {
                 
+                $rando = generatePassword(9);
 
                 $chido[] = $bRow['qidgrupo'];
                 $chido[] = $aRow['qnommateria'];
                 $chido[] = $bRow['qnombre'];  
-                $chido[] = '<a href="#" onclick="assignme(\'professor_takelist.php?qcode='.$bRow['qidgrupo'].'&qmat='.$aRow['qidmat'].'\',\'content\'); return false;" class="buttonM bGreyish">
+                $chido[] = '<a href="#" onclick="assignme(\'professor_takelist.php?qcode='.$bRow['qidgrupo'].'&qmat='.$aRow['qidmat'].'&r='.$rando.'\',\'content\'); return false;" class="buttonM bGreyish">
                             <span class="icon-thumbs-up-2"></span><span>'.$texts['asistencias'].' '.$bRow['qnombre'].'</span></a>
                                 
-                            <a href="#" onclick="assignme(\'professor_homework.php?qcode='.$bRow['qidgrupo'].'&qmat='.$aRow['qidmat'].'\',\'content\'); return false;" class="buttonM bGreyish">
+                            <a href="#" onclick="assignme(\'professor_homework.php?qcode='.$bRow['qidgrupo'].'&qmat='.$aRow['qidmat'].'&r='.$rando.'\',\'content\'); return false;" class="buttonM bGreyish">
                             <span class="icon-cog"></span><span>'.$texts['tareas'].' '.$bRow['qnombre'].'</span></a>
                                 
-                            <a href="#" onclick="assignme(\'professor_takegrades.php?qcode='.$bRow['qidgrupo'].'&qmat='.$aRow['qidmat'].'\',\'content\'); return false;" class="buttonM bGreyish">
+                            <a href="#" onclick="assignme(\'professor_takegrades.php?qcode='.$bRow['qidgrupo'].'&qmat='.$aRow['qidmat'].'&r='.$rando.'\',\'content\'); return false;" class="buttonM bGreyish">
                             <span class="icon-user"></span><span>'.$texts['calif'].' '.$bRow['qnombre'].'</span></a>
                             ';
 

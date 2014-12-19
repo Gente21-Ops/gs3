@@ -4,6 +4,13 @@ include("logon.php");
 include('../dict/profesor_homework.php');
 include('general/passgen.php');
 
+//cache killers
+header("Last-Modified: " . gmdate("D, d M Y H:i:s") . " GMT");
+header("Cache-Control: no-store, no-cache, must-revalidate"); // HTTP/1.1
+header("Cache-Control: post-check=0, pre-check=0", false);
+header("Pragma: no-cache"); // HTTP/1.0
+header("Expires: Sat, 26 Jul 1997 05:00:00 GMT"); // Date in the past
+
     ob_start();
     require_once('connection.php');
     mysql_query('SET CHARACTER SET utf8');
@@ -87,10 +94,10 @@ include('general/passgen.php');
     <input type="hidden" name="edito" id="edito" value="--edito--" rel="5" />
     <input type="hidden" name="reviso" id="reviso" value="--reviso--" rel="6" />
     
-    <input type="hidden" name="code" id="code" value="<?php echo generatePassword(16); ?>" rel="1" />
+    <input type="hidden" name="code" class="changecode" value="<?php echo generatePassword(16); ?>" rel="1" />
 
-    <input type="hidden" name="allfiles" id="allfiles" value="" rel="1" />
-    <input type="hidden" name="allnames" id="allnames" value="" rel="1" />
+    <input type="hidden" name="allfiles" id="allfiles" value="" />
+    <input type="hidden" name="allnames" id="allnames" value="" />
 
     <label for="name"><?php echo $texts['dia_title']; ?></label>
     <input type="text" name="nombre" id="nombre" rel="2" />
@@ -130,9 +137,9 @@ include('general/passgen.php');
                     */
                 ?>
             </ul>
-            <div id="container" style="margin-top:10px;">
-                <a href="#" class="buttonM bGreyish" id="browse"><span class="icon-download" style="color:#FFF;"></span><span style="color:#FFF;"><?php echo $texts['dia_filesup']; ?></span></a>
-            </div>
+            
+            <a href="#" class="buttonM bGreyish" id="browse"><span class="icon-download" style="color:#FFF;"></span><span style="color:#FFF;"><?php echo $texts['dia_filesup']; ?></span></a>
+            
             <pre id="console"></pre>
 
         </div>
