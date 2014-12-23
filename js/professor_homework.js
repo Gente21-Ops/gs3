@@ -120,6 +120,8 @@ $("div.dyn2 > table > tbody > tr").click(function(){
     $(this).closest('table tbody tr').addClass('thisRow');
 });
 
+
+
 //----------------UPLOAD FILES STARTS------------------//
 //init de plupload
 var uploader = new plupload.Uploader({
@@ -136,7 +138,11 @@ var uploader = new plupload.Uploader({
         ],
     resize : {width : 1200, height : 900, quality : 86}
 });
+
+
 uploader.init();
+
+
 
 uploader.bind('FilesAdded', function(up, files) {
   var html = '';
@@ -185,8 +191,6 @@ uploader.bind('Error', function(up, err) {
 });
 
 uploader.bind('FileUploaded', function(up, file, res) {
-
-
 	
     //parsing json:
     var obj2 = eval(res);
@@ -224,6 +228,7 @@ uploader.bind('FileUploaded', function(up, file, res) {
     $.jGrowl('El archivo '+file.name+' se subió correctamente');
     
 });
+
 //----------------UPLOAD FILES ENDS------------------//
 
 function setdel(qobj,qfile,qname){

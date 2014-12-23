@@ -14,6 +14,8 @@ include('student/students_homework_do.php');
     //TOP
     $breads = $texts['title'].'^students_homework_do';
     include('top.php');
+
+    $files = $con->query("SELECT name, patho FROM files WHERE code = '".$_GET['qcode']."'");
 ?>
 
 <div id="deldialog" style="display:none;"><strong><?php echo $texts['deldialog']; ?></strong></div>
@@ -91,8 +93,11 @@ include('student/students_homework_do.php');
                     <div class="whead"><h6><?php echo $texts['archivos_apoyo']; ?></h6><div class="clear"></div></div>
                     <div class="body">
                         <ul class="liInfo">
-                            <li>Ut dictum felis eget eros porta vehicula</li>
-                            <li>Duis egestas mollis neque eu faucibus</li>
+                            <?php
+                                while($rowFiles = mysqli_fetch_array($files)){
+                                    echo '<li><a href="files/'.$_SESSION['qescuelacode'].'/'.$rowFiles['patho'].'" target="_blank">'.$rowFiles['name'].'</a></li>';
+                                }   
+                            ?>
                         </ul>
                     </div>
                 </div>
@@ -131,7 +136,7 @@ include('student/students_homework_do.php');
                                 while($rowf = mysqli_fetch_array($resultf)){
                                     echo $rowf['name']."<br>";
                                 }   
-                            */
+                            
                             ?>
 
                         </ul>
