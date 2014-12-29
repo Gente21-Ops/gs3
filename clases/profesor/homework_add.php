@@ -34,10 +34,14 @@ session_start();
 
 		for ($i=0; $i<$length; $i++) { //insert file
 
+			$name = str_replace(".png",".jpg",$arrayNames[$i]);
+			$patho = str_replace(".png",".jpg",$arrayFotos[$i]);
+			
+
 			$sqlt = "INSERT INTO 
 			files (name, patho, code, codeUser) 
-			VALUES ('".mysqli_real_escape_string($con,$arrayNames[$i])."', 
-				'".mysqli_real_escape_string($con,$arrayFotos[$i])."', 
+			VALUES ('".mysqli_real_escape_string($con,$name)."', 
+				'".mysqli_real_escape_string($con,$patho)."', 
 			  	'".$lastcode."', 
 			  	'".$_SESSION['code']."')";
 

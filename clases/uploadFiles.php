@@ -70,7 +70,7 @@ $newname = $new0.'.'.end($exte);
 //echo "FIRSTFILENAME: ".$oldname." -  SECONDFILENAME: ".$newname."<br>";
 $fileName = $newname;
 
-$newpatho = str_replace('.png', '.jpg', $newname);
+//$newpatho = str_replace('.png', '.jpg', $newname);
 
 //we cannot save into the DB until we get the code for this homework
 /*//se va a la db
@@ -199,7 +199,7 @@ if (!$chunks || $chunk == $chunks - 1) {
 		//echo "<br>This is an image, it will be postprocessed!<br>";
 
 		$isimg = 1;
-
+		/*
 		///CHECK IF PNG///
 		if (strpos($filePath,'png') !== false) {
 			
@@ -219,7 +219,7 @@ if (!$chunks || $chunk == $chunks - 1) {
 			unlink($input_file);
 
 			$filePath = str_replace("png","jpg",$filePath);
-		}
+		}*/
 		///CHECK IF PNG ENDS///
 		createthumb($filePath);
 	} else {
