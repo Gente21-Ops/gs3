@@ -108,7 +108,6 @@ $('#mod_wys').dialog({
 //show editor
 $('#simpleanswer').click(function () {
     $('#mod_wys').dialog('open');
-    
     return false;
 });
 
