@@ -208,8 +208,8 @@ include('dict/com.php');
 
 
 <!--COM SCRIPTS-->
-<script type="text/javascript" src="msgserver/licode2/extras/basic_example/public/erizo.js"></script>
-<script type="text/javascript" src="msgserver/licode2/extras/basic_example/public/scripts1_631.js?<?php echo(rand(1,100000)); ?>"></script> 
+<script type="text/javascript" src="msgserver/licode/extras/basic_example/public/erizo.js"></script>
+<script type="text/javascript" src="msgserver/licode/extras/basic_example/public/scripts1_631.js?<?php echo(rand(1,100000)); ?>"></script> 
 
 <script>
 $( document ).ready(function() {
