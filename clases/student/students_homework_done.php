@@ -40,8 +40,10 @@ require_once('../mysqlcon.php');
     tareas.nombre, 
     tareas.fecha, 
     tareas.fechaEntrega, 
-     tareas.code AS qcode, 
-    tareas_status.status AS qstatus, tareas_status.grade AS qgrade, materias.nombre AS qmatname 
+    tareas.code AS qcode, 
+    tareas_status.status AS qstatus, 
+    tareas_status.grade AS qgrade, 
+    materias.nombre AS qmatname 
 FROM tareas 
 INNER JOIN materias ON (materias.idMaterias = tareas.idMaterias) 
 INNER JOIN tareas_status ON (tareas_status.code = tareas.code) 

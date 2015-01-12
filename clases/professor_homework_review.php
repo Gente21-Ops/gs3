@@ -35,7 +35,7 @@ header("Expires: Sat, 26 Jul 1997 05:00:00 GMT"); // Date in the past
     }
 ?> 
 
-<div id="groupid" style="display:none;"><?php echo $_GET['qcode']; ?></div>
+<div id="qGroupId" style="display:none;"><?php echo $_GET['qGroupId']; ?></div>
 <div id="qlang" style="display:none;"><?php echo $_SESSION['qlen']; ?></div>
 <div id="qusercode" style="display:none;"><?php echo $_SESSION['code']; ?></div>
 <div id="qcodeschool" style="display:none;"><?php echo $_SESSION['qescuelacode']; ?></div>
@@ -86,8 +86,8 @@ header("Expires: Sat, 26 Jul 1997 05:00:00 GMT"); // Date in the past
 
 <form id="formAddNewRow" action="#" title="<?php echo $texts['dia_diatitle']; ?>">
 
-    <input type="hidden" name="idGrupos" id="idGrupos" value="<?php echo $_GET['qcode']; ?>" />
-    <input type="hidden" name="idMateria" id="idMateria" value="<?php echo $_GET['qmat']; ?>" />
+    <!--<input type="hidden" name="idGrupos" id="idGrupos" value="<?php echo $_GET['qcode']; ?>" />-->
+    <!--<input type="hidden" name="idMateria" id="idMateria" value="<?php echo $_GET['qmat']; ?>" />-->
 
     <input type="hidden" name="edito" id="edito" value="--edito--" rel="5" />
     <input type="hidden" name="reviso" id="reviso" value="--reviso--" rel="6" />
@@ -152,3 +152,13 @@ header("Expires: Sat, 26 Jul 1997 05:00:00 GMT"); // Date in the past
         &nbsp;
     </div>
 </div>  
+
+
+<!-- PAD -->
+<div id="mod_pad" title="Nuevo documento compartido">
+    <div class="formRow" id="pcreate1st" style="padding-top:0px;">
+        <label>Da un nombre al documento, si usas un nombre que ya existe, se abrirá el documento que existía anteriormente</label>
+        <input type="hidden" value="" id="qpadtext">
+        <input type="text" id="qpadname" value="" placeholder="Nombre del documento" />
+    </div>
+</div>
