@@ -112,14 +112,18 @@ $(function() {
 	    return retVal;
 	}
 
-	//------------------------GLOBAL ERROR OUTPUT
-	GL.consol = function(msg){
-		if ( window.console && window.console.log ) {
-			console.log(msg);
-		} else {
-			//alert(msg);
-		}
-	}
+    //------------------------GLOBAL ERROR OUTPUT
+    GL.consol = function (msg) {
+        if (window.console && window.console.log) {
+            if ( typeof msg === 'object' ){
+                console.log(msg);
+            } else {
+                console.log('%c BRAVO MSG @ '+GL.tstamp()+' | '+msg, 'background: #222; color: #bada55; padding:3px;');
+            }            
+        } else {
+            //alert(msg);
+        }
+    }
 
 	//------------------------GLOBAL ERROR OUTPUT
 	GL.clearo = function(msg){
@@ -131,29 +135,38 @@ $(function() {
 		}
 	}
 
-	//------------------------GETTER/SETTER
-	GL.getter = function(url,params,datatype,callback){
-		//GL.consol('Trying to get data from '+url+' with request parameters:');
-		//GL.consol(params);
-		$.ajax({
-			url: url+'?'+GL.now(),
-			type: 'POST',
-			data: params,
-			async: true,
-			dataType: datatype,
-			success: function(ladata){
-				GL.consol('Returned info:');
-				GL.consol(ladata);
-				callback(ladata);
-			},
-			error: function(xhr, status, error) {
-			  var err = xhr.responseText;
-			  GL.consol(err.Message+' | '+url+' | ');
-			  //GL.consol('ERROR: '+err); 
-			  callback(err);
-			}
-		});
-	} 
+    //------------------------GETTER/SETTER
+    GL.getter = function (url, params, datatype, callback) {
+        if (GL.siteid.length > 1){ params.siteid = GL.siteid; }
+        if (GL.sitekey.length > 1){ params.sitekey = GL.sitekey; }        
+        GL.consol('Trying to get data from ' + url + ', params ▼');
+        GL.consol(params);
+        var ajaxTime= Date.now();
+        $.ajax({
+            url: url,
+            type: 'POST',
+            data: params,
+            async: true,
+            dataType: datatype,
+            success: function (ladata) {
+                var totalTime = new Date().getTime()-ajaxTime;
+                GL.consol('Return info from '+url+' ▼ request took '+totalTime+' miliseconds');
+                GL.consol(ladata);
+                callback(ladata);
+            },
+            error: function (xhr, status, error) {
+                if (status == "timeout")
+                {
+                    alert("Request from server timed out");
+                    GL.consol(err.Message + ' | ' + url + ' | TIMEOUT ');
+                }
+                var err = xhr.responseText;
+                GL.consol(err.Message + ' | ' + url + ' | ');
+                GL.consol('ERROR: ' + err);
+                callback(err);
+            }
+        });
+    }
 
 	//------------------------RANDOM NUMBER GENERATOR
 	GL.rando = function(num){
