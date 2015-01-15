@@ -265,51 +265,11 @@ function setdel(qobj,qfile,qname){
 
 
 //new doc
-$('#mod_pad').dialog({
+$('#mod_respuesta').dialog({
     autoOpen: false, 
-    width: 400,
+    width: 1000,
     modal: true,
-    hide: { effect: "fade", duration: 200 },
-    buttons: {
-        "Generar nuevo documento": function() {
-
-            //let's first check that the document exists on GS
-            $.post('clases/general/padCheck.php', { qpadname:$('#qpadname').val() }, function(rdata) {
-
-                if (parseInt(rdata) != 0){
-                    //alert('EL PAD YA EXISTE: '+rdata);
-
-                    $.jGrowl('ABRIENDO EL DOCUMENTO EXISTENTE...');
-                    assignme('students_pad?qcode='+rdata,'content');
-                    $('#mod_pad').dialog( "close" );
-
-                } else {
-                    console.log('No existe el PAD!, se va a crear uno nuevo: '+rdata);
-
-                    
-                    $.post('clases/general/padCreate.php', { qpadname:$('#qpadname').val(), qpadtext:$('#qpadtext').val() }, function(pdata) {
-                        var presp = pdata.split('ˆ');
-                        if (presp[0] == '0'){
-                            $.jGrowl('ERROR: '+presp[1]);
-                            $('#mod_pad').dialog( "close" );
-                        } else {
-                            //console.log('NO SE ENCONTRÓ: '+pdata);                            
-                            console.log('SUCCESS: '+presp[1]);                            
-                            $.jGrowl('ESPERA UN MOMENTO MIENTRAS SE GENERA EL DOCUMENTO...');
-                            assignme('students_pad?qcode='+presp[1],'content');
-                            $('#mod_pad').dialog( "close" );
-                            
-                        }
-                    });
-                }
-
-            });
-            
-        },
-        "Cancelar": function() {
-            $( this ).dialog( "close" );
-        }
-    }
+    hide: { effect: "fade", duration: 200 }
 });
 
 /*$('#newpad').click(function () {
@@ -319,7 +279,21 @@ $('#mod_pad').dialog({
 });*/
 
 function openPoptareas(qid){
-    //
-    $('#mod_pad').dialog('open');
+    GL.getter('clases/profesor/homework_review.php',{ qnewid:qid },'json',newgot);
+    function newgot(myidgot) {
+        //console.log(myidgot);
+        //console.log("hola:"+myidgot[6]);
+        console.log("hola:"+myidgot['qNombreAlumno']);
+        console.log("hola:"+myidgot['qRespuesta']);
+        console.log("hola:"+myidgot['qCalif']);
+
+        $('#qNombreAlumno').text(myidgot['qNombreAlumno']);
+        $('#qRespuestaTarea').text(myidgot['qRespuesta']);
+        //$('#qCalifTarea').value(myidgot['qCalif']);
+        //$('#mod_respuesta').title('LACAC');
+        $('#mod_respuesta').dialog('open');
+
+    }
+
     return false;
 }

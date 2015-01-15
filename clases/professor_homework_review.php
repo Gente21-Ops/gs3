@@ -155,10 +155,16 @@ header("Expires: Sat, 26 Jul 1997 05:00:00 GMT"); // Date in the past
 
 
 <!-- PAD -->
-<div id="mod_pad" title="Nuevo documento compartido">
+<div id="mod_respuesta" title="Tarea">
     <div class="formRow" id="pcreate1st" style="padding-top:0px;">
-        <label>Da un nombre al documento, si usas un nombre que ya existe, se abrirá el documento que existía anteriormente</label>
-        <input type="hidden" value="" id="qpadtext">
-        <input type="text" id="qpadname" value="" placeholder="Nombre del documento" />
+        Tarea del alumnoooooooooo: <span id="qNombreAlumno"></span>
+        Nombre de la tarea: <span id="qRespuestaTarea"></span>
+        <div>Contenido: <div id="qRespuestaTarea"></div></div>
+        <div class="divider"><span></span></div>
+        <div>       
+            <span class="floatL"><input type="text" id="qCalif" name="qCalif" class="clear" placeholder="0" /><label>Calificación</label></span>
+            <span class="floatR"><input type="checkbox" id="che_" name="chbox" /><label>Solicitar revisión</label></span>
+            <span class="clear"></span>
+        </div>
     </div>
 </div>
