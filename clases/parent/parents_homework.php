@@ -4,7 +4,8 @@ include("../logon.php");
 require_once('../mysqlcon.php');
 
     //these array of columns is the order in which they wil appear on the table
-    $aColumns = array('idTareas','nombre','fecha','fechaEntrega','qmatname','qstatus','qcode');
+    //$aColumns = array('idTareas','nombre','fecha','fechaEntrega','qmatname','qstatus','qcode');
+    $aColumns = array('idTareas','nombre','fecha','fechaEntrega','qmatname','qcode');
     
     //este query obtiene el nombre de otra columna (materias) dado el id (JOIN)
     //elegimos las tareas abiertas y con errores (status 0 & 2)
@@ -15,9 +16,9 @@ require_once('../mysqlcon.php');
     /*$qgrupo = $_SESSION['qidgrupo'];    */
     $qalumno = $_GET['qestudiante'];
 
-    $elsql = "SELECT idGrupos FROM map_grupos WHERE idUsers = '".$qalumno."'";
+    $elsql2 = "SELECT idGrupos FROM map_grupos WHERE idUsers = '".$qalumno."'";
 
-    $sqlt = $con->query($elsql);
+    $sqlt = $con->query($elsql2);
     $row2 = $sqlt->fetch_assoc();
 
     $qgrupo = $row2['idGrupos'];
@@ -38,46 +39,68 @@ require_once('../mysqlcon.php');
         "review" => "Faites une revisi&oacute;n S.V.P.");
     }
 
-    $elsql2 = "SELECT tareas.idTareas, tareas.code AS qcode, tareas.nombre, tareas.fecha, tareas.fechaEntrega, 
+    /*$elsql2 = "SELECT tareas.idTareas, tareas.code AS qcode, tareas.nombre, tareas.fecha, tareas.fechaEntrega, 
     tareas_status.status AS qstatus, materias.nombre AS qmatname 
 FROM tareas 
 INNER JOIN materias ON (materias.idMaterias = tareas.idMaterias) 
 INNER JOIN tareas_status ON (tareas_status.code = tareas.code) 
 WHERE tareas.idGrupos = '".$qgrupo."' AND (tareas_status.status = '0' OR tareas_status.status = '2') AND tareas_status.idAlumno = '".$qalumno."' 
-ORDER BY qmatname ASC, tareas.fechaEntrega ASC";
+ORDER BY qmatname ASC, tareas.fechaEntrega ASC";*/
+
+$elsql = "SELECT 
+    tareas.idTareas, 
+    tareas.code AS qcode, 
+    tareas.nombre, 
+    tareas.fecha, 
+    tareas.fechaEntrega, 
+    materias.nombre AS qmatname 
+    FROM tareas, tareas_status, materias 
+    /*INNER JOIN materias ON (materias.idMaterias = tareas.idMaterias) 
+    INNER JOIN tareas_status ON (tareas_status.code = tareas.code) */
+    WHERE materias.idMaterias = tareas.idMaterias 
+    AND tareas.idGrupos = '".$qgrupo."' 
+    AND tareas_status.idAlumno = '".$qalumno."' 
+    GROUP BY tareas.idTareas 
+    ORDER BY qmatname ASC, tareas.fechaEntrega ASC";
     
     //echo $_SESSION['qidgrupo']."<br><br>";
     //echo $elsql;
-    $sqlt2 = $con->query($elsql2);
+    $sqlt = $con->query($elsql);
 
     //var para agarra el id
     $elid = 0;
     $elcode = '0';
 
-    //$output['aaData'] = [];
-
-    if($sqlt2->num_rows === 0){
+    $output['aaData'] = array();
     
-        $chido = array();
-        echo json_encode( $chido );
+if($sqlt->num_rows === 0){
+    
+    //$chido = array();
+    echo json_encode( $output );
 
-    } else {  
-        while ($aRow = $sqlt2->fetch_assoc()) {
+} else {
+
+    //$output['aaData'] = [];
+    while ($aRow = $sqlt->fetch_assoc()) {
+        $query = mysqli_query($con, "SELECT code FROM tareas_status WHERE code = '".$aRow['qcode']."'");
+
+        if(mysqli_num_rows($query) < 1){
+
             $row = array();
-
             for ( $i=0 ; $i<sizeof($aColumns) ; $i++ ) {
 
                 //html para botones
                 if ($i == 5){
 
                     //calculo el code
-                    $elcode = $aRow[$aColumns[$i + 1]];
+                    //$elcode = $aRow[$aColumns[$i + 1]];
+                    $elcode = $aRow[$aColumns[$i]];
 
-                    if($aRow[$aColumns[$i]] == '0'){
-                        $row[] = '<a href="#" onclick="assignme(\'parents_homework_do.php?qcode='.$elcode.'\',\'content\'); return false;" class="buttonM bGreen"><span class="icon-thumbs-up-2"></span><span>'.$texts['donow'].'</span></a>';
-                    } else if($aRow[$aColumns[$i]] == '2'){
-                        $row[] = '<a href="#" onclick="assignme(\'parents_homework_do.php?qcode='.$elcode.'\',\'content\'); return false;" class="buttonM bRed"><span class="icol-refresh2"></span><span>'.$texts['review'].'</span></a>';
-                    }
+                    //if($aRow[$aColumns[$i]] == '0'){
+                        $row[] = '<a href="#" onclick="assignme(\'students_homework_do.php?qcode='.$elcode.'\',\'content\'); return false;" class="buttonM bGreen"><span class="icon-thumbs-up-2"></span><span>'.$texts['donow'].'</span></a>';
+                    /*} else if($aRow[$aColumns[$i]] == '2'){
+                        $row[] = '<a href="#" onclick="assignme(\'students_homework_do.php?qcode='.$elcode.'\',\'content\'); return false;" class="buttonM bRed"><span class="icol-refresh2"></span><span>'.$texts['review'].'</span></a>';
+                    }*/
                 } else {
                     //seteamos el id
                     if ($i == 0){
@@ -87,14 +110,17 @@ ORDER BY qmatname ASC, tareas.fechaEntrega ASC";
                     $row[] = $aRow[ $aColumns[$i] ];
                 }
                             
-            };
-
+            }
+            
             $output['aaData'][] = $row;
         }
 
-        print json_encode($output);
 
+        
     }
+    print json_encode($output);
+
+}
     
 
 ?>

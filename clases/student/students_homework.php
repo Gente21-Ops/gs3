@@ -44,7 +44,7 @@ INNER JOIN tareas_status ON (tareas_status.code = tareas.code)
 WHERE tareas.idGrupos = '".$qgrupo."' AND (tareas_status.status = '0' OR tareas_status.status = '2') AND tareas_status.idAlumno = '".$qalumno."' 
 ORDER BY qmatname ASC, tareas.fechaEntrega ASC";*/
 
-    $elsql = "SELECT 
+    /*$elsql = "SELECT 
     tareas.idTareas, 
     tareas.code AS qcode, 
     tareas.nombre, 
@@ -54,6 +54,22 @@ ORDER BY qmatname ASC, tareas.fechaEntrega ASC";*/
     FROM tareas 
     INNER JOIN materias ON (materias.idMaterias = tareas.idMaterias) 
     WHERE tareas.idGrupos = '".$qgrupo."' 
+    ORDER BY qmatname ASC, tareas.fechaEntrega ASC";*/
+
+    $elsql = "SELECT 
+    tareas.idTareas, 
+    tareas.code AS qcode, 
+    tareas.nombre, 
+    tareas.fecha, 
+    tareas.fechaEntrega, 
+    materias.nombre AS qmatname 
+    FROM tareas, tareas_status, materias 
+    /*INNER JOIN materias ON (materias.idMaterias = tareas.idMaterias) 
+    INNER JOIN tareas_status ON (tareas_status.code = tareas.code) */
+    WHERE materias.idMaterias = tareas.idMaterias 
+    AND tareas.idGrupos = '".$qgrupo."' 
+    AND tareas_status.idAlumno = '".$qalumno."' 
+    GROUP BY tareas.idTareas 
     ORDER BY qmatname ASC, tareas.fechaEntrega ASC";
     
     //echo $_SESSION['qidgrupo']."<br><br>";

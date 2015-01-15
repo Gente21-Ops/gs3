@@ -44,7 +44,7 @@ oTable = $('.dTable').dataTable({
 	"bAutoWidth": false,
 	"sPaginationType": "full_numbers",
 	"sDom": '<"H"fl>t<"F"ip>',
-	"sAjaxSource": 'clases/profesor/professor_homework_review.php?qgroupid='+$('#groupid').text()+'&qcodetareas='+$('#groupid').text(),
+	"sAjaxSource": 'clases/profesor/professor_homework_review.php?qGroupId='+$('#qGroupId').text()+'&qcodetareas='+$('#qcodetareas').text(),
 	"fnRowCallback": function( nRow, aData, iDisplayIndex, iDisplayIndexFull ) {
 		$(nRow).attr('id', aData[0]);
 		return nRow;
@@ -53,7 +53,7 @@ oTable = $('.dTable').dataTable({
         sName: "idtareas",
         bSearchable: false,
 		bVisible: false
-    }
+    },
     {
     	sName: "nombre"
     },
@@ -261,4 +261,65 @@ function setdel(qobj,qfile,qname){
         return false;
     });
 
+}
+
+
+//new doc
+$('#mod_pad').dialog({
+    autoOpen: false, 
+    width: 400,
+    modal: true,
+    hide: { effect: "fade", duration: 200 },
+    buttons: {
+        "Generar nuevo documento": function() {
+
+            //let's first check that the document exists on GS
+            $.post('clases/general/padCheck.php', { qpadname:$('#qpadname').val() }, function(rdata) {
+
+                if (parseInt(rdata) != 0){
+                    //alert('EL PAD YA EXISTE: '+rdata);
+
+                    $.jGrowl('ABRIENDO EL DOCUMENTO EXISTENTE...');
+                    assignme('students_pad?qcode='+rdata,'content');
+                    $('#mod_pad').dialog( "close" );
+
+                } else {
+                    console.log('No existe el PAD!, se va a crear uno nuevo: '+rdata);
+
+                    
+                    $.post('clases/general/padCreate.php', { qpadname:$('#qpadname').val(), qpadtext:$('#qpadtext').val() }, function(pdata) {
+                        var presp = pdata.split('ˆ');
+                        if (presp[0] == '0'){
+                            $.jGrowl('ERROR: '+presp[1]);
+                            $('#mod_pad').dialog( "close" );
+                        } else {
+                            //console.log('NO SE ENCONTRÓ: '+pdata);                            
+                            console.log('SUCCESS: '+presp[1]);                            
+                            $.jGrowl('ESPERA UN MOMENTO MIENTRAS SE GENERA EL DOCUMENTO...');
+                            assignme('students_pad?qcode='+presp[1],'content');
+                            $('#mod_pad').dialog( "close" );
+                            
+                        }
+                    });
+                }
+
+            });
+            
+        },
+        "Cancelar": function() {
+            $( this ).dialog( "close" );
+        }
+    }
+});
+
+/*$('#newpad').click(function () {
+    //agarrar id del objeto
+    $('#mod_pad').dialog('open');
+    return false;
+});*/
+
+function openPoptareas(qid){
+    //
+    $('#mod_pad').dialog('open');
+    return false;
 }

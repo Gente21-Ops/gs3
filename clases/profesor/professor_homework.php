@@ -39,8 +39,8 @@ if($sqlt->num_rows === 0){
         $chido[] = $aRow['nombre'];
         $chido[] = $aRow['descripcion'];
         $chido[] = $aRow['fechaEntrega'];
-        $chido[] = '<a href="#" onclick="assignme(\'profesor_homework_do?qid='.$aRow['idTareas'].'\',\'content\'); return false;" class="buttonM bBlue"><span>'.$texts['edit'].'</span></a>';  
-        $chido[] = '<a href="#" onclick="assignme(\'profesor_homework_review.php?qid='.$aRow['idTareas'].'&qTareaCode='.$aRow['code'].'\',\'content\'); return false;" class="buttonM bGreen"></span><span>'.$texts['view'].'</span></a>';   
+        $chido[] = '<a href="#" onclick="assignme(\'professor_homework_do?qid='.$aRow['idTareas'].'\',\'content\'); return false;" class="buttonM bBlue"><span>'.$texts['edit'].'</span></a>';  
+        $chido[] = '<a href="#" onclick="assignme(\'professor_homework_review.php?qGroupId='.$_GET['qgroupid'].'&qTareaCode='.$aRow['code'].'\',\'content\'); return false;" class="buttonM bGreen"></span><span>'.$texts['view'].'</span></a>';   
         $output['aaData'][] = $chido;
     }
     
