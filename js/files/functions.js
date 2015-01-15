@@ -99,7 +99,7 @@ function removeactive(url){
 $(function() {
 
 	//======INIT==============//
-	assignme('students_msgs','content');  
+	//assignme('students_msgs','content');  
 
 	//------------------------PASS GENERATOR
 	GL.generatePassword = function(len){

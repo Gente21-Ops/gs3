@@ -1,4 +1,7 @@
-
+<?php
+header('Access-Control-Allow-Origin: http://107.22.250.130');
+header('Access-Control-Allow-Credentials: true');
+?>
 <!-- Sidebar begins -->
 <div id="sidebar">
     <div class="mainNav">

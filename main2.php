@@ -1,4 +1,8 @@
 <?php
+
+header('Access-Control-Allow-Origin: http://107.22.250.130');
+header('Access-Control-Allow-Credentials: true');
+
 include("clases/logon.php");
 include('dict/main.php');
 
