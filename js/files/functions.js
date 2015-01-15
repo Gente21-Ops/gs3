@@ -206,6 +206,16 @@ $(function() {
     	return d.getFullYear()+'/'+(month<10 ? '0' : '')+month+'/'+(day<10 ? '0' : '')+day;
 	}
 
+	//-----------------------TIMESTAMP
+    GL.tstamp = function () {
+        var unix_timestamp = new Date().getTime();
+        var date = new Date(unix_timestamp);
+        var hours = date.getHours();
+        var minutes = "0" + date.getMinutes();
+        var seconds = "0" + date.getSeconds();
+        return hours + ':' + minutes.substr(minutes.length-2) + ':' + seconds.substr(seconds.length-2);        
+    }
+
 	//-----------------------CHAT TIME
 	GL.mytime = function(){
 	    var currentdate = new Date(); 
