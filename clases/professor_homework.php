@@ -56,13 +56,13 @@ header("Expires: Sat, 26 Jul 1997 05:00:00 GMT"); // Date in the past
             <div class="whead"><h6><?php echo $texts['tabletitle']; ?></h6><div class="clear"></div></div>
 
             <ul class="tToolbar">
-                <li id="btnAddNewRow"><a href="#" title=""><span class="icos-archive"></span><?php echo $texts['but_agregar']; ?></a></li>
-                <li id="btnDeleteRow"><a href="#" title=""><span class="icos-cross"></span><?php echo $texts['but_borrar']; ?></a></li>
+                <li id="btnAddNewRow"><a title="" onclick="unsetPL(); setPL(); return false;"><span class="icos-archive"></span><?php echo $texts['but_agregar']; ?></a></li>
+                <li id="btnDeleteRow"><a title=""><span class="icos-cross"></span><?php echo $texts['but_borrar']; ?></a></li>
             </ul>
 
             <div id="dyn2" class="shownpars">
 
-                <table cellpadding="0" cellspacing="0" border="0" class="dTable">
+                <table cellpadding="0" cellspacing="0" border="0" id="addHomeTable">
                 <thead>
                 <tr>
                     <th>ID</th>

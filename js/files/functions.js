@@ -47,13 +47,13 @@ GL.oldmsg = 604800000;
 
 //global function for simple loading
 function assignme(url,target){
-	console.log('Trying to load: clases/'+url);
+	GL.consol('Trying to load: clases/'+url);
 	var cach = Math.floor(Math.random()*8000);
 	//let's check if url has params (cache killer goes at the end)
 	var newurl = '';
 	var pars = url.split('?');
 	if (pars.length >= 2){
-		console.log('PARSL: '+pars.length+')');
+		//console.log('PARSL: '+pars.length+')');
 		newurl = url + '&c='+cach;
 	} else {
 		newurl = url + '?c='+cach;
@@ -73,7 +73,7 @@ function assignme(url,target){
 
 		//let's load the processing js
 		$.getScript( 'js/'+pageData+'.js?cual='+cach, function() {
-			console.log('JS LOADED: js/'+pageData+'.js?cual='+cach);			
+			GL.consol('JS LOADED: js/'+pageData+'.js?cual='+cach);			
 		});
 	});
 
@@ -83,7 +83,7 @@ function assignme(url,target){
 window.addEventListener("popstate", function(e) {
 	//we get the last part
 	var urlo = location.pathname.split('/');
-	console.log('TRYING TO RELOAD FROM: '+urlo[urlo.length - 1]);
+	GL.consol('TRYING TO RELOAD FROM: '+urlo[urlo.length - 1]);
     assignme(urlo[urlo.length - 1]);
 });
 
@@ -118,7 +118,7 @@ $(function() {
             if ( typeof msg === 'object' ){
                 console.log(msg);
             } else {
-                console.log('%c BRAVO MSG @ '+GL.tstamp()+' | '+msg, 'background: #222; color: #bada55; padding:3px;');
+                console.log('%c GS SAYS @ '+GL.tstamp()+' | '+msg, 'background: #222; color: #bada55; padding:3px;');
             }            
         } else {
             //alert(msg);
@@ -213,7 +213,8 @@ $(function() {
         var hours = date.getHours();
         var minutes = "0" + date.getMinutes();
         var seconds = "0" + date.getSeconds();
-        return hours + ':' + minutes.substr(minutes.length-2) + ':' + seconds.substr(seconds.length-2);        
+        var mili = "0" + date.getMilliseconds();
+        return hours + ':' + minutes.substr(minutes.length-2) + ':' + seconds.substr(seconds.length-2) + ':' + mili.substr(mili.length-2);        
     }
 
 	//-----------------------CHAT TIME
