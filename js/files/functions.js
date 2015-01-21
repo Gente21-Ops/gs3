@@ -45,8 +45,17 @@ GL.emoticons = {
 //localStorage (604800000 = 7 days in ms)
 GL.oldmsg = 604800000;
 
+//all acceptable extensions
+GL.allext = "gif,GIF,jpg,jpeg,png,PNG,JPG,JPEG,doc,docx,xlsx,ppt,pptx,pdf,PDF,bmp,mp3,mkv,avi,mpeg,flv,mov,torrent,csv,zip,rar,gzip,odt,ods,odp";
+
 //global function for simple loading
 function assignme(url,target){
+
+	//This is a hack #$%&#&, jquery dialogs tend to duplicate
+    //so we'll get rid of this particular id in order to avoid repetitions
+    GL.consol('Getting rid of id formAddNewRow');
+    $("#formAddNewRow" ).dialog('destroy').remove();
+
 	GL.consol('Trying to load: clases/'+url);
 	var cach = Math.floor(Math.random()*8000);
 	//let's check if url has params (cache killer goes at the end)
@@ -68,8 +77,6 @@ function assignme(url,target){
 		var pageData = url.split('.')[0];
 		// Create a new history item.
 		history.pushState(pageData, 'TITULILLO', newurl);
-
-		//console.log('>>LOADED FROM ASSIGNME:'+newurl+' wil get class: js/'+pageData+'.js PAGEDATA:'+pageData);
 
 		//let's load the processing js
 		$.getScript( 'js/'+pageData+'.js?cual='+cach, function() {

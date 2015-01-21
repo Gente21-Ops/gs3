@@ -140,7 +140,7 @@
             </div>
         </div>
         
-        <input type="text" name="nombre" placeholder="Nombre" value="Raul" class="loginUsername" />
+        <input type="text" name="nombre" placeholder="Nombre" value="Eduardo" class="loginUsername" />
         <input type="password" name="pass" placeholder="Password" value="123" class="loginPassword" />
         
         <div class="logControl">

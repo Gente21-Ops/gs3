@@ -1,7 +1,5 @@
 GL.consol('PROFESSOR HOMEWORK SE PRESENTA @923 '+GL.todaytime()); 
 
-var uploader;
-
 var loadme;
 var tcount = 0;
 var delfile = '';
@@ -101,14 +99,12 @@ oTable = $('#addHomeTable').dataTable({
 
             //convert the buttons
             $( "td:contains('--edito--')" ).html(editbtn);
-            $( "td:contains('--reviso--')" ).html(revbtn);
+            $( "td:contains('--reviso--')" ).html(revbtn);            
+            
+            GL.consol('Unsetting allfiles and allnames');
+            allfiles = [];
+            allnames = [];
 
-            /*
-            //This is a hack #$%&#&
-            //we delete all instances of the iu-dialog and ui-datepicker in order to avoid repetitions
-            $( ".ui-dialog" ).remove();
-            $( ".ui-datepicker" ).remove();
-            */
         },
         fnOnDeleted: function(){    
             $.jGrowl("Registro eliminado.");
@@ -124,117 +120,106 @@ $("div.dyn2 > table > tbody > tr").click(function(){
 });
 
 //----------------UPLOAD FILES STARTS------------------//
-//init de plupload
-function unsetPL(){
-    GL.consol('Unsetting PL 1001');
-    delete window.uploader;
-}
-//init de plupload
-function setPL(){
-    GL.consol('Setting PL');
-    uploader = new plupload.Uploader({
-        runtimes : 'html5',
-        browse_button: 'browse',
-        dragdrop:true,
-        /*drop_element : 'jalo',*/
-        max_file_size : '20mb',
-        multi_selection : true,  
-        //url: 'clases/uploadFiles.php?qusercode='+$('#qusercode').text()+'&qcodetareas='+$('#code').val()+'&qcodeschool='+$('#qcodeschool').text()+'&r='+ran(1,5000),
-        url: 'clases/uploadFiles.php?qcodeschool='+$('#qcodeschool').text(),
-        filters : [
-                {title : "Image files", extensions : "gif,GIF,jpg,jpeg,png,PNG,JPG,JPEG,doc,docx,xlsx,ppt,pptx,pdf,bmp,mp3,mkv,avi,mpeg,flv,mov,torrent,csv,zip,rar,gzip,odt,ods,odp"}
-            ],
-        resize : {width : 1200, height : 900, quality : 86}
-    });
+GL.consol('Setting PL');
+uploader = new plupload.Uploader({
+    runtimes : 'html5',
+    browse_button: 'browse',
+    dragdrop:true,
+    /*drop_element : 'jalo',*/
+    max_file_size : '20mb',
+    multi_selection : true,  
+    //url: 'clases/uploadFiles.php?qusercode='+$('#qusercode').text()+'&qcodetareas='+$('#code').val()+'&qcodeschool='+$('#qcodeschool').text()+'&r='+ran(1,5000),
+    url: 'clases/uploadFiles.php?qcodeschool='+$('#qcodeschool').text(),
+    filters : [
+            {title : "Image files", extensions : GL.allext }
+        ],
+    resize : {width : 1200, height : 900, quality : 86}
+});
 
-    uploader.bind('FilesAdded', function(up, files) {
-      var html = '';
-      var html1 = '';
-      plupload.each(files, function(file) {
-        tcount += 1;
+uploader.bind('FilesAdded', function(up, files) {
+  var html = '';
+  var html1 = '';
+  plupload.each(files, function(file) {
+    tcount += 1;
 
-        html1 += '<li class="currentFile" id="curr_'+file.id+'">'
-            +'<div class="fileProcess">'
-            +'<img src="images/elements/loaders/10s.gif" alt="" class="loader" />'
-            +'<strong>' + file.name + '</strong>'
-            +'<div class="fileProgress" id="fprog_'+file.id+'">'
-            +'<span>0Kb of '+plupload.formatSize(file.size)+'</span> - <span>0KB/sec</span>'
-            +'</div>'           
-            +'<div class="contentProgress" id="pcon_'+file.id+'"><div class="barG tipN" title="0%" id="'+file.id+'_prog"></div></div>'
-            +'</div>'
-        +'</li>';
+    html1 += '<li class="currentFile" id="curr_'+file.id+'">'
+        +'<div class="fileProcess">'
+        +'<img src="images/elements/loaders/10s.gif" alt="" class="loader" />'
+        +'<strong>' + file.name + '</strong>'
+        +'<div class="fileProgress" id="fprog_'+file.id+'">'
+        +'<span>0Kb of '+plupload.formatSize(file.size)+'</span> - <span>0KB/sec</span>'
+        +'</div>'           
+        +'<div class="contentProgress" id="pcon_'+file.id+'"><div class="barG tipN" title="0%" id="'+file.id+'_prog"></div></div>'
+        +'</div>'
+    +'</li>';
 
-      });
+  });
 
-      $('#filelist').append(html1);
-      $('.tipN').tipsy({gravity: 'n',fade: true, html:true});
-      //document.getElementById('filelist').innerHTML += html;
-      //auto start
-      uploader.start();
-    });
+  $('#filelist').append(html1);
+  $('.tipN').tipsy({gravity: 'n',fade: true, html:true});
+  //document.getElementById('filelist').innerHTML += html;
+  //auto start
+  uploader.start();
+});
 
-    uploader.bind('UploadProgress', function(up, file) {
-        var speed2 = parseInt(uploader.total.bytesPerSec/1024);
-        $('#fprog_'+file.id).html('<span>'+Math.round(uploader.total.loaded/1024)+'Kb out of '+Math.round(uploader.total.size/1024)+'Kb</span> - <span>'+speed2+'Kb/sec</span>');
-        $('#'+file.id+'_prog').attr('title',file.percent+'%');
-        var perc = Math.round( (file.percent * $('#pcon_'+file.id).width())/100 );
-        $('#'+file.id+'_prog').width(perc+'px');
-    });
+uploader.bind('UploadProgress', function(up, file) {
+    var speed2 = parseInt(uploader.total.bytesPerSec/1024);
+    $('#fprog_'+file.id).html('<span>'+Math.round(uploader.total.loaded/1024)+'Kb out of '+Math.round(uploader.total.size/1024)+'Kb</span> - <span>'+speed2+'Kb/sec</span>');
+    $('#'+file.id+'_prog').attr('title',file.percent+'%');
+    var perc = Math.round( (file.percent * $('#pcon_'+file.id).width())/100 );
+    $('#'+file.id+'_prog').width(perc+'px');
+});
 
-    uploader.bind('Error', function(up, err) {
-      if (err.code == '-600'){
-        $.jGrowl('ERROR: ¡Archivo demasiado grande!, el peso máximo es 20MB');
-      } else if (err.code == '-200'){
-        $.jGrowl('ERROR: Porfavor sube hasta tres archivos a la vez');
-      } else {
-        $.jGrowl('ERROR: ' + err.code + ": " + err.message);
-      }
-      
-    });
+uploader.bind('Error', function(up, err) {
+  if (err.code == '-600'){
+    $.jGrowl('ERROR: ¡Archivo demasiado grande!, el peso máximo es 20MB');
+  } else if (err.code == '-200'){
+    $.jGrowl('ERROR: Porfavor sube hasta tres archivos a la vez');
+  } else {
+    $.jGrowl('ERROR: ' + err.code + ": " + err.message);
+  }
+  
+});
 
-    uploader.bind('FileUploaded', function(up, file, res) {
-        
-        //parsing json:
-        var obj2 = eval(res);
-        var reto = JSON.parse(obj2.response);
-        //GL.consol(reto);
+uploader.bind('FileUploaded', function(up, file, res) {    
+    //parsing json:
+    var obj2 = eval(res);
+    var reto = JSON.parse(obj2.response);
+    //GL.consol(reto);
 
-        allfiles.push(reto['new']);
-        allnames.push(file.name);
+    allfiles.push(reto['new']);
+    allnames.push(file.name);
 
-        var allfilo = allfiles.toString();
-        $('#allfiles').val(allfilo);
+    var allfilo = allfiles.toString();
+    $('#allfiles').val(allfilo);
 
-        var allnamo = allnames.toString();
-        $('#allnames').val(allnamo);
+    var allnamo = allnames.toString();
+    $('#allnames').val(allnamo);
 
-        GL.consol(allfiles);
+    GL.consol(allfiles);
 
-        //en este caso sobreescribo el contenido del li
-        var eltexto = $('#qcodeschool').text();
-        var fileok = '<li id="fil_'+file.id+'"><span class="fileSuccess"></span>'+file.name+' <span class="righto">'
-        +'<a href="files/'+eltexto+'/'+reto['new']+'" data-namo="'+file.name+'" id="prev_'+file.id+'" target="_blank"><span class="icos-inbox" style="padding:0; margin-right:10px;"></span></a> '
-        +'<a href="#" id="delo_'+file.id+'"><span class="icos-trash" style="padding:0; margin-right:0px;"></span></a></span></li>';
-        $('#filelist').append(fileok);
+    //en este caso sobreescribo el contenido del li
+    var eltexto = $('#qcodeschool').text();
+    var fileok = '<li id="fil_'+file.id+'"><span class="fileSuccess"></span>'+file.name+' <span class="righto">'
+    +'<a href="files/'+eltexto+'/'+reto['new']+'" data-namo="'+file.name+'" id="prev_'+file.id+'" target="_blank"><span class="icos-inbox" style="padding:0; margin-right:10px;"></span></a> '
+    +'<a href="#" id="delo_'+file.id+'"><span class="icos-trash" style="padding:0; margin-right:0px;"></span></a></span></li>';
+    $('#filelist').append(fileok);
 
-        //delete current
-        $('#curr_'+file.id).hide('slow', function(){ $('#curr_'+file.id).remove(); });
+    //delete current
+    $('#curr_'+file.id).hide('slow', function(){ $('#curr_'+file.id).remove(); });
 
-        //if content is image we create a preview
-        if (reto['isimg'] == '1'){
-            $("#prev_"+file.id).fancybox({ 'hideOnContentClick': true });
-        }
+    //if content is image we create a preview
+    if (reto['isimg'] == '1'){
+        $("#prev_"+file.id).fancybox({ 'hideOnContentClick': true });
+    }
 
-        setdel(file.id,reto['new'],file.name);    
+    setdel(file.id,reto['new'],file.name);    
 
-        $.jGrowl('El archivo '+file.name+' se subió correctamente');
-        
-    });
+    $.jGrowl('El archivo '+file.name+' se subió correctamente');
+    
+});
 
-    uploader.init();
-}
-
-
+uploader.init();
 //----------------UPLOAD FILES ENDS------------------//
 
 function setdel(qobj,qfile,qname){
