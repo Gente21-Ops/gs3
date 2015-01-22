@@ -120,12 +120,17 @@ $(function() {
 	}
 
     //------------------------GLOBAL ERROR OUTPUT
-    GL.consol = function (msg) {
+    GL.consol = function (msg,qcolor) {
+    	
+    	var color = '#bada55';
+        if (qcolor != undefined){ color = qcolor; }
+        
         if (window.console && window.console.log) {
             if ( typeof msg === 'object' ){
                 console.log(msg);
             } else {
-                console.log('%c GS SAYS @ '+GL.tstamp()+' | '+msg, 'background: #222; color: #bada55; padding:3px;');
+            	
+                console.log('%c GS MSG @ '+GL.tstamp()+' | '+msg, 'background: #222; color: '+color+'; padding:3px;');
             }            
         } else {
             //alert(msg);

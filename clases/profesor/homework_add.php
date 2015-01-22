@@ -51,8 +51,5 @@ session_start();
 		}
 	}	
 
-	echo $inserted;
-
-	mysqli_close($con);
-
+	echo trim($inserted);
 ?>

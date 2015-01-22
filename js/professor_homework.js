@@ -1,4 +1,4 @@
-GL.consol('PROFESSOR HOMEWORK SE PRESENTA @923 '+GL.todaytime()); 
+GL.consol('PROFESSOR HOMEWORK SE PRESENTA @720 '+GL.todaytime()); 
 
 var loadme;
 var tcount = 0;
@@ -47,8 +47,10 @@ oTable = $('#addHomeTable').dataTable({
     "sDom": '<"H"fl>t<"F"ip>',
     "sAjaxSource": 'clases/profesor/professor_homework.php?qgroupid='+$('#groupid').text(),
     "fnRowCallback": function( nRow, aData, iDisplayIndex, iDisplayIndexFull ) {
-        $(nRow).attr('id', aData[0]);
-        return nRow;
+        GL.consol('RET ARGS aData');
+        GL.consol(nRow);
+        $(nRow).attr('idtareas', aData[0]);
+        return nRow; 
     },
     aoColumns: [{
         sName: "idtareas",

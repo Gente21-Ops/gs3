@@ -94,6 +94,7 @@ header("Expires: Sat, 26 Jul 1997 05:00:00 GMT"); // Date in the past
     <input type="hidden" name="edito" id="edito" value="--edito--" rel="5" />
     <input type="hidden" name="reviso" id="reviso" value="--reviso--" rel="6" />
     
+    <input type="hidden" name="idtareas" class="changecode" value="" rel="0" />
     <input type="hidden" name="code" class="changecode" value="<?php echo generatePassword(16); ?>" rel="1" />
 
     <input type="hidden" name="allfiles" id="allfiles" value="" />
