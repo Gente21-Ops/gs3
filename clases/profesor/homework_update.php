@@ -10,14 +10,12 @@
   $columnPosition = $_REQUEST['columnPosition'] ;
   $columnId = $_REQUEST['columnId'] ;
   $rowId = $_REQUEST['rowId'] ;
-
-  /* Update a record using information about id, columnName (property
-     of the object or column in the table) and value that should be
-     set */
   
   $query = "UPDATE tareas SET $column = '$value' WHERE idTareas = '$id'";
-  mysqli_query($con,$query);
-  //echo $query;
 
-  //echo $value;
+  if (!mysqli_query($con,$query)){ //insert new TAREA
+    die('Error: ' . mysqli_error($con));
+  }
+
+  echo trim($value);
 ?>

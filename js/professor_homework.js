@@ -36,7 +36,7 @@ $( ".datepicker1" ).datepicker({
 });
 
 //EDITABLE
-oTable = $('#addHomeTable').dataTable({
+var oTable = $('#addHomeTable').dataTable({
     "oLanguage": {
         sEmptyTable:     "No hay información por el momento.",
         sZeroRecords: "No hay información por el momento."
@@ -47,9 +47,7 @@ oTable = $('#addHomeTable').dataTable({
     "sDom": '<"H"fl>t<"F"ip>',
     "sAjaxSource": 'clases/profesor/professor_homework.php?qgroupid='+$('#groupid').text(),
     "fnRowCallback": function( nRow, aData, iDisplayIndex, iDisplayIndexFull ) {
-        GL.consol('RET ARGS aData');
-        GL.consol(nRow);
-        $(nRow).attr('idtareas', aData[0]);
+        $(nRow).attr('id', aData[0]);
         return nRow; 
     },
     aoColumns: [{
@@ -96,7 +94,7 @@ oTable = $('#addHomeTable').dataTable({
             $('#filelist').html('');
             $.jGrowl('Registro agregado: '+status);         
 
-            var editbtn = '<a href="#" onclick="assignme(\'profesor_homework_do?qid=ONE\',\'content\'); return false;" class="buttonM bBlue"><span>Editar</span></a>';
+            var editbtn = '<a href="#" onclick="assignme(\'profesor_homework_do?qid=ONE\',\'content\'); return false;" class="buttonM bBlue"><span>Archivos</span></a>';
             var revbtn = '<a href="#" onclick="assignme(\'profesor_homework_review.php?qid=ONE\',\'content\'); return false;" class="buttonM bGreen"></span><span>Revisar</span></a>';
 
             //convert the buttons
@@ -113,6 +111,13 @@ oTable = $('#addHomeTable').dataTable({
         },
         fnOnEdited: function(){     
             $.jGrowl("Registro actualizado.");
+        },
+        /*fnOnCellUpdated: function(sStatus, sValue, settings){
+            GL.consol('Cell has been updated, refreshing: '+sValue);
+            oTable.fnDraw(); //return sValue;
+        }*/
+        fnOnEdited: function(status){       
+          GL.consol("Edit action finished. Status - " + status);
         }
 });
 

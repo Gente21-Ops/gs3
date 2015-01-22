@@ -9,12 +9,12 @@ ini_set('display_errors', '1');
 //DICCIONARIO
 if($_SESSION['qlen'] == "es"){
 $texts = array(
-    "edit" => "Editar",
+    "edit" => "Archivos",
     "view" => "Revisar"
     );
 } else if($_SESSION['qlen'] == "en"){
     $texts = array(
-    "edit" => "Edit",
+    "edit" => "Files",
     "view" => "Review"
     );
 }
