@@ -149,8 +149,8 @@ $(function() {
 
     //------------------------GETTER/SETTER
     GL.getter = function (url, params, datatype, callback) {
-        if (GL.siteid.length > 1){ params.siteid = GL.siteid; }
-        if (GL.sitekey.length > 1){ params.sitekey = GL.sitekey; }        
+        /*if (GL.siteid.length > 1){ params.siteid = GL.siteid; }
+        if (GL.sitekey.length > 1){ params.sitekey = GL.sitekey; }*/        
         GL.consol('Trying to get data from ' + url + ', params ▼');
         GL.consol(params);
         var ajaxTime= Date.now();

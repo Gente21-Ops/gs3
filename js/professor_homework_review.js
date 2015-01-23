@@ -267,7 +267,7 @@ function setdel(qobj,qfile,qname){
 //new doc
 $('#mod_respuesta').dialog({
     autoOpen: false, 
-    width: 1000,
+    width: 400,
     modal: true,
     hide: { effect: "fade", duration: 200 }
 });
@@ -279,16 +279,23 @@ $('#mod_respuesta').dialog({
 });*/
 
 function openPoptareas(qid){
+
     GL.getter('clases/profesor/homework_review.php',{ qnewid:qid },'json',newgot);
+    
     function newgot(myidgot) {
+        //console.log("myidgot");
         //console.log(myidgot);
         //console.log("hola:"+myidgot[6]);
         console.log("hola:"+myidgot['qNombreAlumno']);
         console.log("hola:"+myidgot['qRespuesta']);
         console.log("hola:"+myidgot['qCalif']);
 
-        $('#qNombreAlumno').text(myidgot['qNombreAlumno']);
-        $('#qRespuestaTarea').text(myidgot['qRespuesta']);
+        document.getElementById('qNombreAlumno').value = myidgot['qNombreAlumno']; 
+        document.getElementById('qRespuesta').value = myidgot['qRespuesta']; 
+        document.getElementById('qTareaNombre').value = myidgot['qTareaNombre']; 
+        //$('#qNombreAlumno').value = myidgot['qNombreAlumno'];
+        //$('#qRespuestaTarea').text(myidgot['qRespuesta']);
+        //$('#qTareaNombre').text(myidgot['qTareaNombre']);
         //$('#qCalifTarea').value(myidgot['qCalif']);
         //$('#mod_respuesta').title('LACAC');
         $('#mod_respuesta').dialog('open');
