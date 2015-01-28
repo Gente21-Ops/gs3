@@ -9,7 +9,7 @@ var delobj = '';
 var allfiles = [];
 var allnames = [];
 
-//localization (solo cuando hay calendario de UI)
+//localization (solo cuando hay calendario de UI) 
 var qlen = '';
 if ($('#qlang').text() == 'es'){
     qlen = "js/datatablesloc/dataTables.spanish.txt";
@@ -268,3 +268,44 @@ function setdel(qobj,qfile,qname){
     });
 
 }
+
+//files mod
+$('#mod_files').dialog({
+    autoOpen: false, 
+    /*width: 800,*/
+    modal: true,
+    hide: { effect: "fade", duration: 200 },
+    buttons: {
+        "Guardar": function() {
+            
+            GL.consol('Saving...');
+            
+        },
+        "Cancelar": function() {
+            $( this ).dialog( "close" );
+        }
+    }
+});
+
+//show editor
+function filer(qhwid){
+	$('#mod_files_inst').text('Loading files...');
+	$('#mod_files').dialog('open');
+
+	//route the plcontainer to this modal instead of add dialog
+	var element = $('#container').detach();
+	$('#plcont_modif').append(element);
+
+	//get all files for this
+	GL.getter('clases/profesor/getHwFiles.php',{ qhwid:qhwid },'json',returnData);
+    function returnData(param) {
+    	if (param.length > 0){
+    		GL.consol(param);
+    	} else {
+    		$('#mod_files_inst').text('There are no files attached to this homework, fell free to add some now.');
+    	}
+    }
+
+    return false;
+}
+    

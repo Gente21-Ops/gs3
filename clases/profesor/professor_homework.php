@@ -21,7 +21,8 @@ $texts = array(
 
 $elsql = "SELECT idTareas, code, nombre, descripcion, fecha, fechaEntrega
             FROM tareas 
-            WHERE idProfesor = '".$_SESSION['idUsers']."' AND idGrupos = '".$_GET['qgroupid']."'";
+            WHERE idProfesor = '".$_SESSION['idUsers']."' AND idGrupos = '".$_GET['qgroupid']."' 
+            ORDER BY idTareas DESC";
 
 //echo $elsql;
 $sqlt = $con->query($elsql);   
@@ -39,7 +40,7 @@ if($sqlt->num_rows === 0){
         $chido[] = $aRow['nombre'];
         $chido[] = $aRow['descripcion'];
         $chido[] = $aRow['fechaEntrega'];
-        $chido[] = '<a href="#" onclick="assignme(\'professor_homework_do?qid='.$aRow['idTareas'].'\',\'content\'); return false;" class="buttonM bBlue"><span>'.$texts['edit'].'</span></a>';  
+        $chido[] = '<a href="#" onclick="filer(\'professor_homework_do?qid='.$aRow['code'].'\',\'content\'); return false;" class="buttonM bBlue"><span>'.$texts['edit'].'</span></a>';  
         $chido[] = '<a href="#" onclick="assignme(\'professor_homework_review.php?qGroupId='.$_GET['qgroupid'].'&qTareaCode='.$aRow['code'].'\',\'content\'); return false;" class="buttonM bGreen"></span><span>'.$texts['view'].'</span></a>';   
         $output['aaData'][] = $chido;
     }

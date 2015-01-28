@@ -110,33 +110,13 @@ header("Expires: Sat, 26 Jul 1997 05:00:00 GMT"); // Date in the past
     <textarea rows="7" name="descripcion" id="descripcion" rel="3"></textarea>
 
     <label for="desc"><?php echo $texts['dia_files']; ?></label>
-    <div>
+    <div id="plcont_add">
         <div id="container" style="margin-top:35px;">
         	<!-- This is disabled until I get the dialog in two columns -->
             <!-- <div class="dropFiles<?php if ($_SESSION['qlen'] == 'es'){ echo "_es"; } else if ($_SESSION['qlen'] == 'fr'){ echo "_fr"; } ?>" id="jalo" class="margin-bottom:10px;"></div> -->
             <!-- FILE UPLOADING STUFF -->
             <ul id="filelist" class="filesDown">
-                <?php 
-                    /*
-                    //already uploaded files                    
-                    $fid = 0;
-                    $html1 = '';                        
-                    while($rowf = mysqli_fetch_array($resultf)){
-                        $newname = str_replace('_', ' ', $rowf['name']);
-
-                        $html1 .= '<li class="currentFile" id="'.$fid.'">';
-                        $html1 .='<span class="fileSuccess"></span>'.$newname.' <span class="righto">';
-                        $html1 .='<a href="files/'.$_SESSION['qescuelacode'].'/'.$rowf['patho'].'" data-namo="'.$rowf['name'].'" id="prev_'.$fid.'" target="_blank"><span class="icos-inbox" style="padding:0; margin-right:10px;"></span></a> ';
-                        $html1 .='<a href="#" id="delo_'.$fid.'"><span class="icos-trash" style="padding:0; margin-right:0px;"></span></a></span>';
-                        $html1 .='</li>';
-                        $fid += 1;
-                    }
-                    echo $html1;
-                    while($rowf = mysqli_fetch_array($resultf)){
-                        echo $rowf['name']."<br>";
-                    } 
-                    */
-                ?>
+                ...
             </ul>
             
             <a class="buttonM bGreyish" id="browse"><span class="icon-download" style="color:#FFF;"></span><span style="color:#FFF;"><?php echo $texts['dia_filesup']; ?></span></a>
@@ -147,11 +127,23 @@ header("Expires: Sat, 26 Jul 1997 05:00:00 GMT"); // Date in the past
     </div>
 </form>
 
-
-
 <!-- FILE DELETING -->
 <div id="mod_del" title="Borrar archivo">
     <div class="formRow" id="deltexto" style="padding-top:0px;">
         &nbsp;
+    </div>
+</div>  
+
+<!-- FILE LIST -->
+<div id="mod_files" title="View attached files">
+    <div class="formRow" id="allfiles" style="padding-top:0px;">
+
+        <div id="mod_files_inst">...</div>
+        
+
+        <div id="plcont_modif" style="margin-top:35px;">
+            
+        </div>
+
     </div>
 </div>  
