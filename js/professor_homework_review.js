@@ -71,40 +71,40 @@ oTable = $('.dTable').dataTable({
 	sAddURL: "clases/profesor/homework_add.php",
 	sDeleteURL: "clases/profesor/homework_delete.php",
 	sUpdateURL: "clases/profesor/homework_update.php",
-		fnOnAdding: function(){
-			return true;
-		},
-		fnOnAdded: function(status){
-			//reasign the code when the action completes
-			var newcode =  GL.generatePassword(16);
-			$( ".changecode" ).each(function( index ) {
-				$( this ).val(newcode);
-			});
-			
-			//we clear the filelist
-			$('#filelist').html('');
-		    $.jGrowl('Registro agregado: '+status);		    
+	fnOnAdding: function(){
+		return true;
+	},
+	fnOnAdded: function(status){
+		//reasign the code when the action completes
+		var newcode =  GL.generatePassword(16);
+		$( ".changecode" ).each(function( index ) {
+			$( this ).val(newcode);
+		});
+		
+		//we clear the filelist
+		$('#filelist').html('');
+	    $.jGrowl('Registro agregado: '+status);		    
 
-		    var editbtn = '<a href="#" onclick="assignme(\'profesor_homework_do?qid=ONE\',\'content\'); return false;" class="buttonM bBlue"><span>Editar</span></a>';
-		    var revbtn = '<a href="#" onclick="assignme(\'profesor_homework_review.php?qid=ONE\',\'content\'); return false;" class="buttonM bGreen"></span><span>Revisar</span></a>';
+	    var editbtn = '<a href="#" onclick="assignme(\'profesor_homework_do?qid=ONE\',\'content\'); return false;" class="buttonM bBlue"><span>Editar</span></a>';
+	    var revbtn = '<a href="#" onclick="assignme(\'profesor_homework_review.php?qid=ONE\',\'content\'); return false;" class="buttonM bGreen"></span><span>Revisar</span></a>';
 
-		    //convert the buttons
-		    $( "td:contains('--edito--')" ).html(editbtn);
-		    $( "td:contains('--reviso--')" ).html(revbtn);
+	    //convert the buttons
+	    $( "td:contains('--edito--')" ).html(editbtn);
+	    $( "td:contains('--reviso--')" ).html(revbtn);
 
-		    /*
-		    //This is a hack #$%&#&
-			//we delete all instances of the iu-dialog and ui-datepicker in order to avoid repetitions
-			$( ".ui-dialog" ).remove();
-			$( ".ui-datepicker" ).remove();
-			*/
-	    },
-	    fnOnDeleted: function(){    
-	        $.jGrowl("Registro eliminado.");
-	    },
-	    fnOnEdited: function(){     
-	        $.jGrowl("Registro actualizado.");
-	    }
+	    /*
+	    //This is a hack #$%&#&
+		//we delete all instances of the iu-dialog and ui-datepicker in order to avoid repetitions
+		$( ".ui-dialog" ).remove();
+		$( ".ui-datepicker" ).remove();
+		*/
+    },
+    fnOnDeleted: function(){    
+        $.jGrowl("Registro eliminado.");
+    },
+    fnOnEdited: function(){     
+        $.jGrowl("Registro actualizado.");
+    }
 });
 
 //select on click
@@ -269,7 +269,15 @@ $('#mod_respuesta').dialog({
     autoOpen: false, 
     width: 400,
     modal: true,
-    hide: { effect: "fade", duration: 200 }
+    hide: { effect: "fade", duration: 200 },
+    buttons: {
+        "Actualizar calificación": function () {
+            $(this).dialog("close");
+        },
+        "Cancelar": function () {
+            $(this).dialog("close");
+        }
+    }
 });
 
 /*$('#newpad').click(function () {
@@ -284,21 +292,14 @@ function openPoptareas(qid){
     
     function newgot(myidgot) {
         //console.log("myidgot");
-        //console.log(myidgot);
-        //console.log("hola:"+myidgot[6]);
-        console.log("hola:"+myidgot['qNombreAlumno']);
-        console.log("hola:"+myidgot['qRespuesta']);
         console.log("hola:"+myidgot['qCalif']);
 
         document.getElementById('qNombreAlumno').value = myidgot['qNombreAlumno']; 
         document.getElementById('qRespuesta').value = myidgot['qRespuesta']; 
         document.getElementById('qTareaNombre').value = myidgot['qTareaNombre']; 
-        //$('#qNombreAlumno').value = myidgot['qNombreAlumno'];
-        //$('#qRespuestaTarea').text(myidgot['qRespuesta']);
-        //$('#qTareaNombre').text(myidgot['qTareaNombre']);
-        //$('#qCalifTarea').value(myidgot['qCalif']);
-        //$('#mod_respuesta').title('LACAC');
+        document.getElementById('qCalif').value = myidgot['qCalif']; 
         $('#mod_respuesta').dialog('open');
+        return false;
 
     }
 

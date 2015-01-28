@@ -49,7 +49,7 @@ if($sqlt->num_rows === 0){
         $elnombre = $aRow['qnombre']." ".$aRow['qapellidos'];
 
         $chido = array();
-        $chido[] = $aRow['qiduser'];
+        $chido[] = $aRow['qidRespuesta'];
         $chido[] = $elnombre;
         $chido[] = $aRow['qfecha'];
         $chido[] = $aRow['qgrade'];

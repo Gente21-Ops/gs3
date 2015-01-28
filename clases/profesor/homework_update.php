@@ -11,11 +11,11 @@
   $columnId = $_REQUEST['columnId'] ;
   $rowId = $_REQUEST['rowId'] ;
   
-  $query = "UPDATE tareas SET $column = '$value' WHERE idTareas = '$id'";
+  $query = "UPDATE tareas_status SET $column = '$value' WHERE idTareas_status = '$id'";
 
   if (!mysqli_query($con,$query)){ //insert new TAREA
     die('Error: ' . mysqli_error($con));
   }
-
+  //echo $id;
   echo trim($value);
 ?>

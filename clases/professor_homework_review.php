@@ -169,8 +169,11 @@ header("Expires: Sat, 26 Jul 1997 05:00:00 GMT"); // Date in the past
 
             <div class="divider"><span></span></div>
             <div>       
-                <span class="floatL"><input type="text" id="qCalif" name="qCalif" class="clear" placeholder="0" /><label>Calificación</label></span>
-                <span class="floatR"><input type="checkbox" id="che_" name="chbox" /><label>Solicitar revisión</label></span>
-                <span class="clear"></span>
+                <label>Calificación</label><input type="text" id="qCalif" name="qCalif" class="clear" />
+            </div> 
+            <div class="divider"><span></span></div>
+            <div>
+                <span><input type="checkbox" class="chbox" name="dialogCheck" /><label>Solicitar Revisión</label></span>
             </div>
+            <span class="clear"></span>
 </div>
