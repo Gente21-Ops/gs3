@@ -41,6 +41,7 @@ var oTable = $('#addHomeTable').dataTable({
         sEmptyTable:     "No hay información por el momento.",
         sZeroRecords: "No hay información por el momento."
     },
+    aaSorting : [[0, 'desc']],
     "bJQueryUI": false,
     "bAutoWidth": false,
     "sPaginationType": "full_numbers",
@@ -79,8 +80,9 @@ var oTable = $('#addHomeTable').dataTable({
 }).makeEditable({
     sAddURL: "clases/profesor/homework_add.php",
     sDeleteURL: "clases/profesor/homework_delete.php",
-    sUpdateURL: "clases/profesor/homework_update.php",
+    /*sUpdateURL: "clases/profesor/homework_update.php",*/
         fnOnAdding: function(){
+            GL.consol('Agregando...');
             return true;
         },
         fnOnAdded: function(status){
@@ -220,7 +222,7 @@ uploader.bind('FileUploaded', function(up, file, res) {
         $("#prev_"+file.id).fancybox({ 'hideOnContentClick': true });
     }
 
-    setdel(file.id,reto['new'],file.name);    
+    setdel(file.id,reto['new'],file.name);
 
     $.jGrowl('El archivo '+file.name+' se subió correctamente');
     
@@ -276,10 +278,8 @@ $('#mod_files').dialog({
     modal: true,
     hide: { effect: "fade", duration: 200 },
     buttons: {
-        "Guardar": function() {
-            
-            GL.consol('Saving...');
-            
+        "Guardar cambios": function() {            
+            GL.consol('Saving...');            
         },
         "Cancelar": function() {
             $( this ).dialog( "close" );
@@ -287,14 +287,22 @@ $('#mod_files').dialog({
     }
 });
 
+function teleTransport(to){
+    //move position of the form that conyains the PL
+    GL.consol('Teletransporting plconto to: #'+to);
+    var element = $('#plconto').detach();
+    $('#'+to).append(element);
+}
+
 //show editor
 function filer(qhwid){
 	$('#mod_files_inst').text('Loading files...');
 	$('#mod_files').dialog('open');
 
-	//route the plcontainer to this modal instead of add dialog
-	var element = $('#container').detach();
-	$('#plcont_modif').append(element);
+    teleTransport('plcont_list');
+
+    //clear list
+    $('#filelist').html('');
 
 	//get all files for this
 	GL.getter('clases/profesor/getHwFiles.php',{ qhwid:qhwid },'json',returnData);
@@ -308,4 +316,8 @@ function filer(qhwid){
 
     return false;
 }
-    
+
+//hook para que el botón de agregar obtenga pl
+$('#btnAddNewRow').mousedown( function(){
+    teleTransport('formAddNewRow');
+});

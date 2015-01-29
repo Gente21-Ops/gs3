@@ -87,63 +87,62 @@ header("Expires: Sat, 26 Jul 1997 05:00:00 GMT"); // Date in the past
 <!-- Main content ends -->
 
 <form id="formAddNewRow" action="#" title="<?php echo $texts['dia_diatitle']; ?>">
-
-    <input type="hidden" name="idGrupos" id="idGrupos" value="<?php echo $_GET['qcode']; ?>" />
-    <input type="hidden" name="idMateria" id="idMateria" value="<?php echo $_GET['qmat']; ?>" />
-
-    <input type="hidden" name="edito" id="edito" value="--edito--" rel="5" />
-    <input type="hidden" name="reviso" id="reviso" value="--reviso--" rel="6" />
-    
-    <input type="hidden" name="idtareas" class="changecode" value="" rel="0" />
-    <input type="hidden" name="code" class="changecode" value="<?php echo generatePassword(16); ?>" rel="1" />
-
-    <input type="hidden" name="allfiles" id="allfiles" value="" />
-    <input type="hidden" name="allnames" id="allnames" value="" />
-
-    <label for="name"><?php echo $texts['dia_title']; ?></label>
-    <input type="text" name="nombre" id="nombre" rel="2" />
-    
-    <label for="entrega"><?php echo $texts['dia_entrega']; ?></label>
-    <input type="text" class="datepicker1" name="fechaEntrega" id="fechaEntrega" rel="4" value="<?php echo date('Y-m-d'); ?>" />
-    
-    <label for="desc"><?php echo $texts['dia_desc']; ?></label>
-    <textarea rows="7" name="descripcion" id="descripcion" rel="3"></textarea>
-
-    <label for="desc"><?php echo $texts['dia_files']; ?></label>
-    <div id="plcont_add">
-        <div id="container" style="margin-top:35px;">
-        	<!-- This is disabled until I get the dialog in two columns -->
-            <!-- <div class="dropFiles<?php if ($_SESSION['qlen'] == 'es'){ echo "_es"; } else if ($_SESSION['qlen'] == 'fr'){ echo "_fr"; } ?>" id="jalo" class="margin-bottom:10px;"></div> -->
-            <!-- FILE UPLOADING STUFF -->
-            <ul id="filelist" class="filesDown">
-                ...
-            </ul>
-            
-            <a class="buttonM bGreyish" id="browse"><span class="icon-download" style="color:#FFF;"></span><span style="color:#FFF;"><?php echo $texts['dia_filesup']; ?></span></a>
-            
-            <pre id="console"></pre>
-
-        </div>
-    </div>
+    &nbsp;
 </form>
 
 <!-- FILE DELETING -->
 <div id="mod_del" title="Borrar archivo">
     <div class="formRow" id="deltexto" style="padding-top:0px;">
-        &nbsp;
     </div>
-</div>  
+</div>
 
-<!-- FILE LIST -->
-<div id="mod_files" title="View attached files">
-    <div class="formRow" id="allfiles" style="padding-top:0px;">
+<!-- TEMP CONTAINER -->
+<div id="plcont_tmp" title="View attached files">
+    <!-- FORM CONTAINER -->
+    <div id="plconto">
 
-        <div id="mod_files_inst">...</div>
+        <input type="hidden" name="idGrupos" id="idGrupos" value="<?php echo $_GET['qcode']; ?>" />
+        <input type="hidden" name="idMateria" id="idMateria" value="<?php echo $_GET['qmat']; ?>" />
+
+        <input type="hidden" name="edito" id="edito" value="--edito--" rel="5" />
+        <input type="hidden" name="reviso" id="reviso" value="--reviso--" rel="6" />
         
+        <input type="hidden" name="idtareas" class="changecode" value="" rel="0" />
+        <input type="hidden" name="code" class="changecode" value="<?php echo generatePassword(16); ?>" rel="1" />
 
-        <div id="plcont_modif" style="margin-top:35px;">
-            
+        <input type="hidden" name="allfiles" id="allfiles" value="" />
+        <input type="hidden" name="allnames" id="allnames" value="" />
+
+        <label for="name"><?php echo $texts['dia_title']; ?></label>
+        <input type="text" name="nombre" id="nombre" rel="2" />
+        
+        <label for="entrega"><?php echo $texts['dia_entrega']; ?></label>
+        <input type="text" class="datepicker1" name="fechaEntrega" id="fechaEntrega" rel="4" value="<?php echo date('Y-m-d'); ?>" />
+        
+        <label for="desc"><?php echo $texts['dia_desc']; ?></label>
+        <textarea rows="7" name="descripcion" id="descripcion" rel="3"></textarea>
+
+        <label for="desc"><?php echo $texts['dia_files']; ?></label>
+        
+        
+        <div>
+            <div id="container" style="margin-top:35px;">
+                <ul id="filelist" class="filesDown">
+                    <small>Attached files</small>
+                </ul>
+                
+                <a class="buttonM bGreyish" id="browse"><span class="icon-download" style="color:#FFF;"></span><span style="color:#FFF;"><?php echo $texts['dia_filesup']; ?></span></a>
+                
+                <pre id="console"></pre>
+
+            </div>
         </div>
 
+    </div>
+</div>
+
+<!-- FILE LIST -->
+<div id="mod_files" title="Modify homework">
+    <div class="formRow" id="plcont_list" style="padding-top:0px;">        
     </div>
 </div>  
