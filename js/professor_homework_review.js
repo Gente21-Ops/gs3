@@ -3,6 +3,9 @@ var loadme;
 var tcount = 0;
 var delfile = '';
 var delobj = '';
+var selectedID = 0;
+var nomTarea = '';
+var rando = Math.floor(Math.random() * 6000) + 1;
 
 //list of files uploaded
 var allfiles = [];
@@ -287,21 +290,60 @@ $('#mod_respuesta').dialog({
 });*/
 
 function openPoptareas(qid){
-
+    selectedID = qid;
     GL.getter('clases/profesor/homework_review.php',{ qnewid:qid },'json',newgot);
-    
+    //GL.consol('el id es: '+selectedID);
     function newgot(myidgot) {
         //console.log("myidgot");
-        console.log("hola:"+myidgot['qCalif']);
-
+        //console.log("hola:"+myidgot['qCalif']);
         document.getElementById('qNombreAlumno').value = myidgot['qNombreAlumno']; 
         document.getElementById('qRespuesta').value = myidgot['qRespuesta']; 
         document.getElementById('qTareaNombre').value = myidgot['qTareaNombre']; 
         document.getElementById('qCalif').value = myidgot['qCalif']; 
+        nomTarea = myidgot['qTareaNombre'];
         $('#mod_respuesta').dialog('open');
         return false;
 
     }
-
     return false;
+}
+
+function askReview(element){
+    //document.getElementById('checkReview').onclick = function() {
+        // access properties using this keyword
+        if ( element.checked ) {
+            setmissed(selectedID,true,nomTarea);
+        } else {
+            setmissed(selectedID,false,nomTarea);
+        }
+    //};
+
+    /*if ($('#checkReview').prop('checked')){
+        setmissed(selectedID,true,nomTarea);
+    } else {
+        setmissed(selectedID,false,nomTarea);
+    }*/   
+}
+
+function setmissed(qiduser,asist,nameTarea){
+    $.blockUI();
+    $.post( 'clases/profesor/askReview.php?rando='+rando, {
+        qasistio: asist,
+        qiduser: qiduser,
+        //qidmateria: $('#qidmat').text(),
+        //qidgrupo: $('#qidgrupo').text(),
+        //qdate: $('#qyear').text()+'-'+$('#qmonth').text()+'-'+$('#qday').text(),
+    },
+        function(rdata){
+            if (rdata == '1'){
+                if (asist){
+                    $.jGrowl($('#ask_review').text()+'<br>'+nameTarea);
+                } else {
+                    $.jGrowl($('#dont_ask_review').text()+'<br>'+nameTarea);
+                }
+            } else {
+                $.jGrowl($('#ask_review').text()+'<br>'+nameTarea);
+            }
+            $.unblockUI();
+    });
 }

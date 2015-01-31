@@ -23,7 +23,9 @@ if($_SESSION['qlen'] == "es"){
 	"dia_files" => "Aquí puede adjuntar archivos a la tarea",
 	"dia_filesup" => "Buscar archivos",
 	"dia_filedel1" => "Archivo",
-	"dia_filedel2" => "borrado correctamente"
+	"dia_filedel2" => "borrado correctamente",
+	"askReview" => "Se solicitó revisión para la tarea: ",
+	"dontAskReview" => "No se solicita revisión para la tarea: "
 	);
 } else if($_SESSION['qlen'] == "en"){
 	$texts = array(
@@ -45,7 +47,9 @@ if($_SESSION['qlen'] == "es"){
 	"dia_files" => "Aquí puede adjuntar archivos a la tarea",
 	"dia_filesup" => "Look for files",
 	"dia_filedel1" => "File",
-	"dia_filedel2" => "has been deleted"
+	"dia_filedel2" => "has been deleted",
+	"askReview" => "This homework needs to be reviewed: ",
+	"dontAskReview" => "This homework does not need a review: "
 	);
 } else if($_SESSION['qlen'] == "fr"){
 	$texts = array(

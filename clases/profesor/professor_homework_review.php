@@ -54,7 +54,7 @@ if($sqlt->num_rows === 0){
         $chido[] = $aRow['qfecha'];
         $chido[] = $aRow['qgrade'];
         //botón VER TAREA
-        $chido[] = '<a href="#" id="newpad" onclick="openPoptareas(\''.$aRow['qidRespuesta'].'\')" return false;" class="buttonM bRed"><span class="icol-refresh2"></span><span>'.$texts['view'].'</span></a>';  
+        $chido[] = '<a href="#" id="newpad" onclick="openPoptareas('.$aRow['qidRespuesta'].')" return false;" class="buttonM bRed"><span class="icol-refresh2"></span><span>'.$texts['view'].'</span></a>';  
 
         $output['aaData'][] = $chido;
     }

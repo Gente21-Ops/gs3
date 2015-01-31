@@ -42,6 +42,8 @@ header("Expires: Sat, 26 Jul 1997 05:00:00 GMT"); // Date in the past
 <div id="qcodetareas" style="display:none;"><?php echo $qcodetareas; ?></div>
 <div id="qdel1" style="display:none;"><?php echo $texts['dia_filedel1']; ?></div>
 <div id="qdel2" style="display:none;"><?php echo $texts['dia_filedel2']; ?></div>
+<div id="ask_review" style="display:none;"><?php echo $texts['askReview']; ?></div>
+<div id="dont_ask_review" style="display:none;"><?php echo $texts['dontAskReview']; ?></div>
 
 <!-- Main content -->
 <div class="wrapper">
@@ -172,8 +174,6 @@ header("Expires: Sat, 26 Jul 1997 05:00:00 GMT"); // Date in the past
                 <label>Calificación</label><input type="text" id="qCalif" name="qCalif" class="clear" />
             </div> 
             <div class="divider"><span></span></div>
-            <div>
-                <span><input type="checkbox" class="chbox" name="dialogCheck" /><label>Solicitar Revisión</label></span>
-            </div>
+            <input type="checkbox" id="checkReview" onchange="askReview(this)" name="chbox" /><label>Solicitar Revisión</label>
             <span class="clear"></span>
 </div>
