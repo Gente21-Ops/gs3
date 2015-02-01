@@ -300,6 +300,12 @@ function openPoptareas(qid){
         document.getElementById('qRespuesta').value = myidgot['qRespuesta']; 
         document.getElementById('qTareaNombre').value = myidgot['qTareaNombre']; 
         document.getElementById('qCalif').value = myidgot['qCalif']; 
+
+        if(parseInt(myidgot['qStatus']) == 2){
+            $('#checkReview').prop('checked',true);
+        }
+        
+
         nomTarea = myidgot['qTareaNombre'];
         $('#mod_respuesta').dialog('open');
         return false;

@@ -39,6 +39,7 @@ $elsql = "SELECT
     tareas_status.simpleanswer as qRespuesta, 
     tareas_status.grade as qCalif, 
     tareas_status.answered as qCuando, 
+    tareas_status.status as qStatus, 
     users.nombre as qnombre,
     users.apellidos as qapellidos, 
     tareas.nombre qTareaNombre, 
@@ -62,7 +63,8 @@ $row = mysqli_fetch_array($result,MYSQLI_ASSOC);
         "qCuando"=>$row['qCuando'], 
         "qTareaNombre"=>$row['qTareaNombre'], 
         "qNombreAlumno"=>$elnombre, 
-        "qTareaDesc"=>$row['qTareaDesc']);
+        "qTareaDesc"=>$row['qTareaDesc'],
+        "qStatus"=>$row['qStatus']);
     /*$chido[] = $row['qidRespuesta'];
     $chido[] = $row['qRespuesta'];
     $chido[] = $row['qCalif'];
