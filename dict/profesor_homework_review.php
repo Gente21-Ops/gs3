@@ -25,7 +25,9 @@ if($_SESSION['qlen'] == "es"){
 	"dia_filedel1" => "Archivo",
 	"dia_filedel2" => "borrado correctamente",
 	"askReview" => "Se solicitó revisión para la tarea: ",
-	"dontAskReview" => "No se solicita revisión para la tarea: "
+	"dontAskReview" => "No se solicita revisión para la tarea: ",
+	"grade_updated" => "Calificación actualizada correctamente.",
+	"grade_not_updated" => "Hubo un problema al actualizar la calificación."
 	);
 } else if($_SESSION['qlen'] == "en"){
 	$texts = array(
@@ -49,7 +51,9 @@ if($_SESSION['qlen'] == "es"){
 	"dia_filedel1" => "File",
 	"dia_filedel2" => "has been deleted",
 	"askReview" => "This homework needs to be reviewed: ",
-	"dontAskReview" => "This homework does not need a review: "
+	"dontAskReview" => "This homework does not need a review: ",
+	"grade_updated" => "Grade updated",
+	"grade_not_updated" => "A problem ocurred while updating the student's grade."
 	);
 } else if($_SESSION['qlen'] == "fr"){
 	$texts = array(
