@@ -46,7 +46,7 @@ oTable = $('.dTable').dataTable({
 	"bJQueryUI": false,
 	"bAutoWidth": false,
 	"sPaginationType": "full_numbers",
-	"sDom": '<"H"fl>t<"F"ip>',
+	"sDom": '<"H"fl>t<"F"ip>', 
 	"sAjaxSource": 'clases/profesor/professor_homework_review.php?qGroupId='+$('#qGroupId').text()+'&qcodetareas='+$('#qcodetareas').text(),
 	"fnRowCallback": function( nRow, aData, iDisplayIndex, iDisplayIndexFull ) {
 		$(nRow).attr('id', aData[0]);
@@ -70,44 +70,6 @@ oTable = $('.dTable').dataTable({
     	sName: "revisar"
     }] 
 
-}).makeEditable({
-	sAddURL: "clases/profesor/homework_add.php",
-	sDeleteURL: "clases/profesor/homework_delete.php",
-	sUpdateURL: "clases/profesor/homework_update.php",
-	fnOnAdding: function(){
-		return true;
-	},
-	fnOnAdded: function(status){
-		//reasign the code when the action completes
-		var newcode =  GL.generatePassword(16);
-		$( ".changecode" ).each(function( index ) {
-			$( this ).val(newcode);
-		});
-		
-		//we clear the filelist
-		$('#filelist').html('');
-	    $.jGrowl('Registro agregado: '+status);		    
-
-	    var editbtn = '<a href="#" onclick="assignme(\'profesor_homework_do?qid=ONE\',\'content\'); return false;" class="buttonM bBlue"><span>Editar</span></a>';
-	    var revbtn = '<a href="#" onclick="assignme(\'profesor_homework_review.php?qid=ONE\',\'content\'); return false;" class="buttonM bGreen"></span><span>Revisar</span></a>';
-
-	    //convert the buttons
-	    $( "td:contains('--edito--')" ).html(editbtn);
-	    $( "td:contains('--reviso--')" ).html(revbtn);
-
-	    /*
-	    //This is a hack #$%&#&
-		//we delete all instances of the iu-dialog and ui-datepicker in order to avoid repetitions
-		$( ".ui-dialog" ).remove();
-		$( ".ui-datepicker" ).remove();
-		*/
-    },
-    fnOnDeleted: function(){    
-        $.jGrowl("Registro eliminado.");
-    },
-    fnOnEdited: function(){     
-        $.jGrowl("Registro actualizado.");
-    }
 });
 
 //select on click
@@ -268,20 +230,42 @@ function setdel(qobj,qfile,qname){
 
 
 //new doc
-$('#mod_respuesta').dialog({
-    autoOpen: false, 
-    width: 400,
-    modal: true,
-    hide: { effect: "fade", duration: 200 },
-    buttons: {
-        "Actualizar calificación": function () {
-            $(this).dialog("close");
-        },
-        "Cancelar": function () {
-            $(this).dialog("close");
+function changeCalif(qid,qTarea,qAlumno){
+    $('#mod_respuesta').dialog('open');
+    $('#mod_respuesta').dialog({
+        autoOpen: true, 
+        width: 400,
+        modal: true,
+        hide: { effect: "fade", duration: 200 },
+        buttons: {
+            "Actualizar calificación": function () {
+                $.blockUI();                
+                var nuevaCalif = document.getElementById('qCalif').value;
+                $.post( 'clases/profesor/changeGrade.php', {
+                    qido: qid,
+                    nuevaCalifo: nuevaCalif
+                },
+                    function(rdata){
+                        if (rdata == '1'){
+                            if (qid){
+                                $.jGrowl($('#grade_updated').text());
+                            } else {
+                                $.jGrowl($('#grade_not_updated').text());
+                            }
+                        } else {
+                            $.jGrowl($('#grade_updated').text());
+                        }
+                        $.unblockUI();
+                });
+                
+                $(this).dialog("close");
+            },
+            "Cancelar": function () {
+                $(this).dialog("close");
+            }
         }
-    }
-});
+    });
+}
 
 /*$('#newpad').click(function () {
     //agarrar id del objeto
@@ -297,20 +281,23 @@ function openPoptareas(qid){
         //console.log("myidgot");
         //console.log("hola:"+myidgot['qCalif']);
         document.getElementById('qNombreAlumno').value = myidgot['qNombreAlumno']; 
-        document.getElementById('qRespuesta').value = myidgot['qRespuesta']; 
+        //document.getElementById('qRespuesta').value = myidgot['qRespuesta'];
+        document.getElementById('qRespuesta').innerHTML = "<br>"+myidgot['qRespuesta']; 
         document.getElementById('qTareaNombre').value = myidgot['qTareaNombre']; 
         document.getElementById('qCalif').value = myidgot['qCalif']; 
 
         if(parseInt(myidgot['qStatus']) == 2){
             $('#checkReview').prop('checked',true);
         }
-        
-
         nomTarea = myidgot['qTareaNombre'];
-        $('#mod_respuesta').dialog('open');
-        return false;
+        nomAlumno = myidgot['qNombreAlumno'];
+        //$('#mod_respuesta').dialog('open');
 
+        changeCalif(qid,nomTarea,nomAlumno);
     }
+
+    
+
     return false;
 }
 

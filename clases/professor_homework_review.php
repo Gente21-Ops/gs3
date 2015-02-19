@@ -44,6 +44,8 @@ header("Expires: Sat, 26 Jul 1997 05:00:00 GMT"); // Date in the past
 <div id="qdel2" style="display:none;"><?php echo $texts['dia_filedel2']; ?></div>
 <div id="ask_review" style="display:none;"><?php echo $texts['askReview']; ?></div>
 <div id="dont_ask_review" style="display:none;"><?php echo $texts['dontAskReview']; ?></div>
+<div id="grade_updated" style="display:none;"><?php echo $texts['grade_updated']; ?></div>
+<div id="grade_not_updated" style="display:none;"><?php echo $texts['grade_updated']; ?></div>
 
 <!-- Main content -->
 <div class="wrapper">
@@ -57,10 +59,10 @@ header("Expires: Sat, 26 Jul 1997 05:00:00 GMT"); // Date in the past
         <div class="widget">
             <div class="whead"><h6><?php echo $texts['tabletitle']; ?></h6><div class="clear"></div></div>
 
-            <ul class="tToolbar">
+            <!--<ul class="tToolbar">
                 <li id="btnAddNewRow"><a href="#" title=""><span class="icos-archive"></span><?php echo $texts['but_agregar']; ?></a></li>
                 <li id="btnDeleteRow"><a href="#" title=""><span class="icos-cross"></span><?php echo $texts['but_borrar']; ?></a></li>
-            </ul>
+            </ul>-->
 
             <div id="dyn2" class="shownpars">
 
@@ -86,75 +88,6 @@ header("Expires: Sat, 26 Jul 1997 05:00:00 GMT"); // Date in the past
 </div>
 <!-- Main content ends -->
 
-<form id="formAddNewRow" action="#" title="<?php echo $texts['dia_diatitle']; ?>">
-
-    <!--<input type="hidden" name="idGrupos" id="idGrupos" value="<?php echo $_GET['qcode']; ?>" />-->
-    <!--<input type="hidden" name="idMateria" id="idMateria" value="<?php echo $_GET['qmat']; ?>" />-->
-
-    <input type="hidden" name="edito" id="edito" value="--edito--" rel="5" />
-    <input type="hidden" name="reviso" id="reviso" value="--reviso--" rel="6" />
-    
-    <input type="hidden" name="code" class="changecode" value="<?php echo generatePassword(16); ?>" rel="1" />
-
-    <input type="hidden" name="allfiles" id="allfiles" value="" />
-    <input type="hidden" name="allnames" id="allnames" value="" />
-
-    <label for="name"><?php echo $texts['dia_title']; ?></label>
-    <input type="text" name="nombre" id="nombre" rel="2" />
-    
-    <label for="entrega"><?php echo $texts['dia_entrega']; ?></label>
-    <input type="text" class="datepicker1" name="fechaEntrega" id="fechaEntrega" rel="4" value="<?php echo date('Y-m-d'); ?>" />
-    
-    <label for="desc"><?php echo $texts['dia_desc']; ?></label>
-    <textarea rows="7" name="descripcion" id="descripcion" rel="3"></textarea>
-
-    <label for="desc"><?php echo $texts['dia_files']; ?></label>
-    <div>
-        <div id="container" style="margin-top:35px;">
-        	<!-- This is disabled until I get the dialog in two columns -->
-            <!-- <div class="dropFiles<?php if ($_SESSION['qlen'] == 'es'){ echo "_es"; } else if ($_SESSION['qlen'] == 'fr'){ echo "_fr"; } ?>" id="jalo" class="margin-bottom:10px;"></div> -->
-            <!-- FILE UPLOADING STUFF -->
-            <ul id="filelist" class="filesDown">
-                <?php 
-                    /*
-                    //already uploaded files                    
-                    $fid = 0;
-                    $html1 = '';                        
-                    while($rowf = mysqli_fetch_array($resultf)){
-                        $newname = str_replace('_', ' ', $rowf['name']);
-
-                        $html1 .= '<li class="currentFile" id="'.$fid.'">';
-                        $html1 .='<span class="fileSuccess"></span>'.$newname.' <span class="righto">';
-                        $html1 .='<a href="files/'.$_SESSION['qescuelacode'].'/'.$rowf['patho'].'" data-namo="'.$rowf['name'].'" id="prev_'.$fid.'" target="_blank"><span class="icos-inbox" style="padding:0; margin-right:10px;"></span></a> ';
-                        $html1 .='<a href="#" id="delo_'.$fid.'"><span class="icos-trash" style="padding:0; margin-right:0px;"></span></a></span>';
-                        $html1 .='</li>';
-                        $fid += 1;
-                    }
-                    echo $html1;
-                    while($rowf = mysqli_fetch_array($resultf)){
-                        echo $rowf['name']."<br>";
-                    } 
-                    */
-                ?>
-            </ul>
-            
-            <a class="buttonM bGreyish" id="browse"><span class="icon-download" style="color:#FFF;"></span><span style="color:#FFF;"><?php echo $texts['dia_filesup']; ?></span></a>
-            
-            <pre id="console"></pre>
-
-        </div>
-    </div>
-</form>
-
-
-
-<!-- FILE DELETING -->
-<div id="mod_del" title="Borrar archivo">
-    <div class="formRow" id="deltexto" style="padding-top:0px;">
-        &nbsp;
-    </div>
-</div>  
-
 
 <!-- PAD -->
 <div id="mod_respuesta" title="Tarea" class="dialog">
@@ -167,12 +100,12 @@ header("Expires: Sat, 26 Jul 1997 05:00:00 GMT"); // Date in the past
             <div class="divider"><span></span></div>
 
             <label>Contenido de la tarea:</label>
-            <textarea rows="8" cols="" name="qRespuesta" id="qRespuesta" class="auto" disabled></textarea>
+            <span name="qRespuesta" id="qRespuesta"></span>
 
             <div class="divider"><span></span></div>
             <div>       
                 <label>Calificación</label><input type="text" id="qCalif" name="qCalif" class="clear" />
-            </div> 
+            </div>
             <div class="divider"><span></span></div>
             <input type="checkbox" id="checkReview" onchange="askReview(this)" name="chbox" /><label>Solicitar Revisión</label>
             <span class="clear"></span>
