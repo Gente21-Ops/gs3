@@ -107,6 +107,11 @@ header("Expires: Sat, 26 Jul 1997 05:00:00 GMT"); // Date in the past
                 <label>Calificación</label><input type="text" id="qCalif" name="qCalif" class="clear" />
             </div>
             <div class="divider"><span></span></div>
-            <input type="checkbox" id="checkReview" onchange="askReview(this)" name="chbox" /><label>Solicitar Revisión</label>
+            <div class="grid9 on_off">
+                <div class="floatL mr10"><input type="checkbox" id="checkReview" onchange="askReview(this)" name="chbox" /></div>
+                <div class="floatL mr10"><input type="checkbox" id="check20" checked="checked" name="chbox" /></div>
+                <div class="floatL mr10">Solicitar Revisión</div>
+            </div>
+
             <span class="clear"></span>
 </div>

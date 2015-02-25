@@ -11,7 +11,7 @@ if($_SESSION['qlen'] == "es"){
 	"documentos" => "Documentos",
 	"lista" => "Alumnos",
 	"calificaciones" => "Calificaciones",
-	"statistics" => "Estadísticas de Estudiantes",
+	"statistics" => "Rendimiento de Estudiantes",
 	"faltas" => "Asistencias",
 	"configuracion" => "Configuraci&oacute;n");
 } else if($_SESSION['qlen'] == "en"){
@@ -22,7 +22,7 @@ if($_SESSION['qlen'] == "es"){
 	"documentos" => "Documents",
 	"lista" => "Students",
 	"calificaciones" => "Grades",
-	"statistics" => "Students Statistics",
+	"statistics" => "Students Performance",
 	"faltas" => "Attendance",
 	"configuracion" => "Settings");
 } else if($_SESSION['qlen'] == "fr"){
