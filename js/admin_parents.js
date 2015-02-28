@@ -10,6 +10,8 @@ if ($('#qlango').text() == 'es'){
 	qlen = "js/datatablesloc/dataTables.francais.txt";
 }
 
+GL.consol('q estudiante: '+$('#qestudiante').text);
+
 //EDITABLE
 oTable = $('.dTable').dataTable({
 	
@@ -17,7 +19,7 @@ oTable = $('.dTable').dataTable({
 	"bAutoWidth": false,
 	"sPaginationType": "full_numbers",
 	"sDom": '<"H"fl>t<"F"ip>',
-	"sAjaxSource": 'clases/admin/parents.php?qestudiante='+$('#qestudiante').text(),
+	"sAjaxSource": 'clases/admin/admin_parents.php?qestudiante='+$('#qestudiante').text(),
 	"fnRowCallback": function( nRow, aData, iDisplayIndex, iDisplayIndexFull ) {
 		$(nRow).attr('id', aData[0]);
 		return nRow;

@@ -310,6 +310,11 @@ function changeCalif(qid,qTarea,qAlumno){
 function openPoptareas(qid){
     selectedID = qid;
     GL.getter('clases/profesor/homework_review.php',{ qnewid:qid },'json',newgot);
+    $('.on_off :checkbox, .on_off :radio').iButton({
+        labelOn: "",
+        labelOff: "",
+        enableDrag: false 
+    });
     //GL.consol('el id es: '+selectedID);
     function newgot(myidgot) {
         //console.log("myidgot");
@@ -320,9 +325,17 @@ function openPoptareas(qid){
         document.getElementById('qTareaNombre').value = myidgot['qTareaNombre']; 
         document.getElementById('qCalif').value = myidgot['qCalif']; 
 
+        //GL.consol('el status '+myidgot['qStatus']);
+
         if(parseInt(myidgot['qStatus']) == 2){
             $('#checkReview').prop('checked',true);
+            GL.consol('funciona');
+        } else {
+            GL.consol('no funciona '+myidgot['qStatus']);
+
         }
+
+
         nomTarea = myidgot['qTareaNombre'];
         nomAlumno = myidgot['qNombreAlumno'];
         //$('#mod_respuesta').dialog('open');
@@ -336,13 +349,32 @@ function openPoptareas(qid){
 }
 
 function askReview(element){
+    /*if($("#checkReview").is(':checked')){
+        setmissed(selectedID,true,nomTarea);
+        GL.consol('checado');
+    } else {
+        setmissed(selectedID,false,nomTarea);
+        GL.consol('no checado');
+    }  */ 
+
+    if ($('#checkReview').prop('checked')){
+        setmissed(selectedID,true,nomTarea);
+        GL.consol('checado');
+    } else {
+        setmissed(selectedID,false,nomTarea);
+        GL.consol('no checado');
+    }   
+
+        
+        //console.log('Se inicializó');    
+        
     //document.getElementById('checkReview').onclick = function() {
         // access properties using this keyword
-        if ( element.checked ) {
+        /*if ( element.checked ) {
             setmissed(selectedID,true,nomTarea);
         } else {
             setmissed(selectedID,false,nomTarea);
-        }
+        }*/
     //};
 
     /*if ($('#checkReview').prop('checked')){

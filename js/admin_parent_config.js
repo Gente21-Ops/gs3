@@ -1,5 +1,5 @@
 
-console.log('STUDENTS_CONFIG LOADED 810');
+console.log('admin_parents_CONFIG LOADED 810');
 
 //----------------FORMA DE DATOS COMIENZA------------------//
 //form stuff
@@ -22,7 +22,7 @@ $( "#sendo" ).click(function(e) {
 	$( "#sendo" ).attr("disabled", "disabled");
 	$( "#sendo" ).hide();
 	
-	$.post( "clases/admin/admin_students_config.php", { 
+	$.post( "clases/admin/admin_parent_config.php", { 
 		name: $('#name').val(), 
 		last: $('#last').val(),
 		nick: $('#nick').val(),

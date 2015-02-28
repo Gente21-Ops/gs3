@@ -22,7 +22,7 @@ include('../dict/admin/parent_config.php');
     }
 
 
-    $query = "SELECT * FROM users WHERE idUsers = '".$_GET['qmaestro']."'";
+    $query = "SELECT * FROM users WHERE idUsers = '".$_GET['qfamiliar']."'";
     $result = mysql_query($query,$con);
     $row = mysql_fetch_assoc($result);
 
@@ -33,7 +33,7 @@ include('../dict/admin/parent_config.php');
     <div id="qimgchanged" style="display:none;"><?php echo $texts['imgchanged']; ?></div>
     <div id="qerror" style="display:none;"><?php echo $texts['savederror']; ?></div>
     <div style="display:none;" id="quser"><?php echo $_SESSION['code']; ?></div>
-    <div style="display:none;" id="qmaestro"><?php echo $_GET['qmaestro']; ?></div>
+    <div style="display:none;" id="qmaestro"><?php echo $_GET['qfamiliar']; ?></div>
     
     <!-- Main content -->
     <div class="wrapper">

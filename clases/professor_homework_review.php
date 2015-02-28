@@ -90,7 +90,7 @@ header("Expires: Sat, 26 Jul 1997 05:00:00 GMT"); // Date in the past
 
 
 <!-- PAD -->
-<div id="mod_respuesta" title="Tarea" class="dialog">
+<div id="mod_respuesta" title="Tarea" class="dialog" style="display:none">
             <label>Nombre del alumno:</label>
             <input type="text" id="qNombreAlumno" name="qNombreAlumno" class="clear" disabled/>
 
@@ -107,11 +107,11 @@ header("Expires: Sat, 26 Jul 1997 05:00:00 GMT"); // Date in the past
                 <label>Calificación</label><input type="text" id="qCalif" name="qCalif" class="clear" />
             </div>
             <div class="divider"><span></span></div>
-            <div class="grid9 on_off">
-                <div class="floatL mr10"><input type="checkbox" id="checkReview" onchange="askReview(this)" name="chbox" /></div>
-                <div class="floatL mr10"><input type="checkbox" id="check20" checked="checked" name="chbox" /></div>
-                <div class="floatL mr10">Solicitar Revisión</div>
+
+            <div class="on_off floatL mr10" onclick="askReview(this); return false;" >
+                <input type="checkbox" id="checkReview" name="chbox" />
             </div>
+            <div class="floatL mr10">Solicitar Revisión</div>
 
             <span class="clear"></span>
 </div>

@@ -53,10 +53,10 @@ function assignme(url,target){
 
 	//This is a hack #$%&#&, jquery dialogs tend to duplicate
     //so we'll get rid of this particular id in order to avoid repetitions
-    GL.consol('Getting rid of id formAddNewRow');
-    $("#formAddNewRow" ).dialog('destroy').remove();
+    //GL.consol('Getting rid of id formAddNewRow');
+    //$("#formAddNewRow" ).dialog('destroy').remove();
 
-	GL.consol('Trying to load: clases/'+url);
+	//GL.consol('Trying to load: clases/'+url);
 	var cach = Math.floor(Math.random()*8000);
 	//let's check if url has params (cache killer goes at the end)
 	var newurl = '';
@@ -77,7 +77,7 @@ function assignme(url,target){
 		var pageData = url.split('.')[0];
 		// Create a new history item.
 		history.pushState(pageData, 'TITULILLO', newurl);
-
+		GL.consol('JS LOADED: js/'+pageData+'.js?cual='+cach);
 		//let's load the processing js
 		$.getScript( 'js/'+pageData+'.js?cual='+cach, function() {
 			GL.consol('JS LOADED: js/'+pageData+'.js?cual='+cach);			

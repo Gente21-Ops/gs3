@@ -99,7 +99,7 @@ header("Expires: Sat, 26 Jul 1997 05:00:00 GMT"); // Date in the past
 <!-- TEMP CONTAINER -->
 <div id="plcont_tmp" title="View attached files">
     <!-- FORM CONTAINER -->
-    <div id="plconto">
+    <div id="plconto" style="display:none">
 
         <input type="hidden" name="idGrupos" id="idGrupos" value="<?php echo $_GET['qcode']; ?>" />
         <input type="hidden" name="idMateria" id="idMateria" value="<?php echo $_GET['qmat']; ?>" />

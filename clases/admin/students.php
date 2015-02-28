@@ -21,11 +21,11 @@ require_once('../mysqlcon.php');
         $chido[] = $row['apellidos'];
         $chido[] = $row['nombre'];
 
-        $chido[] = '<a href="#" onclick="assignme(\'admin_parents?qestudiante='.$row['idUsers'].'\',\'content\'); return false;" class="buttonM bGreen">
+        $chido[] = '<a href="#" onclick="" class="buttonM bGreen">
                     <span class="icon-inbox"></span><span>Enviar correo</span></a>';
-        $chido[] = '<a href="#" onclick="assignme(\'admin_parents?qestudiante='.$row['idUsers'].'\',\'content\'); return false;" class="buttonM bLightBlue">
+        $chido[] = '<a href="#" onclick="assignme(\'admin_parents.php?qestudiante='.$row['idUsers'].'\',\'content\'); return false;" class="buttonM bLightBlue">
                     <span class="icon-user"></span><span>Familiares</span></a>';
-        $chido[] = '<a href="#" onclick="assignme(\'admin_students_config?qestudiante='.$row['idUsers'].'\',\'content\'); return false;" class="buttonM bGold">
+        $chido[] = '<a href="#" onclick="assignme(\'admin_students_config.php?qestudiante='.$row['idUsers'].'\',\'content\'); return false;" class="buttonM bGold">
                     <span class="icon-cog"></span><span>Datos personales</span></a>';
         
         $output['aaData'][] = $chido;

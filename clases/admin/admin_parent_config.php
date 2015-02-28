@@ -1,6 +1,6 @@
 <?php
     
-    include("../logon.php");
+    //include("../logon.php");
     include("../mysqlcon.php");
 
     $quer = "UPDATE users SET 
