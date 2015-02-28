@@ -6,7 +6,7 @@
 
 
         <div class="user">
-            <a title="" class="leftUserDrop"><img id="elusero" original-title="<img src='images/users/320/<?php echo $_SESSION['code']; ?>.jpg?r=<?php echo rand(0,100); ?>' style='width:200px; height:200px;'>" src="images/users/72/<?php echo $_SESSION['code']; ?>.jpg" alt="" /><span><strong>3</strong></span></a><span><?php if (strlen($_SESSION['qnick']) < 2){ echo $_SESSION['nombre']; } else echo $_SESSION['qnick']; ?></span>
+            <a title="" class="leftUserDrop"><img id="elusero" original-title="<img src='images/users/320/<?php echo $_SESSION['code']; ?>.jpg?r=<?php echo rand(0,100); ?>' style='width:200px; height:200px;'>" src="images/users/72/<?php echo $_SESSION['code']; ?>.jpg" alt="" /><!--<span><strong>3</strong></span>--></a><span><?php if (strlen($_SESSION['qnick']) < 2){ echo $_SESSION['nombre']; } else echo $_SESSION['qnick']; ?></span>
 
           
         </div>

@@ -11,7 +11,7 @@ include('dict/sidebar_admin.php'); ?>
 
 
         <div class="user">
-            <a title="" class="leftUserDrop"><img id="elusero" src="images/users/72/<?php echo $_SESSION['code']; ?>.jpg" alt="" /><span><strong>3</strong></span></a><span><?php if (strlen($_SESSION['qnick']) < 2){ echo $_SESSION['nombre']; } else echo $_SESSION['qnick']; ?></span>
+            <a title="" class="leftUserDrop"><img id="elusero" src="images/users/72/<?php echo $_SESSION['code']; ?>.jpg" alt="" /><!--<span><strong>3</strong></span>--></a><span><?php if (strlen($_SESSION['qnick']) < 2){ echo $_SESSION['nombre']; } else echo $_SESSION['qnick']; ?></span>
 
             <!--
             <ul class="leftUser">
