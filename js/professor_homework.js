@@ -296,22 +296,22 @@ function teleTransport(to){
 
 //show editor
 function filer(qhwid){
-	$('#mod_files_inst').text('Loading files...');
-	$('#mod_files').dialog('open');
+    $('#mod_files_inst').text('Loading files...');
+    $('#mod_files').dialog('open');
 
     teleTransport('plcont_list');
 
     //clear list
     $('#filelist').html('');
 
-	//get all files for this
-	GL.getter('clases/profesor/getHwFiles.php',{ qhwid:qhwid },'json',returnData);
+    //get all files for this
+    GL.getter('clases/profesor/getHwFiles.php',{ qhwid:qhwid },'json',returnData);
     function returnData(param) {
-    	if (param.length > 0){
-    		GL.consol(param);
-    	} else {
-    		$('#mod_files_inst').text('There are no files attached to this homework, fell free to add some now.');
-    	}
+        if (param.length > 0){
+            GL.consol(param);
+        } else {
+            $('#mod_files_inst').text('There are no files attached to this homework, fell free to add some now.');
+        }
     }
 
     return false;

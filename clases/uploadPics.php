@@ -1,6 +1,6 @@
 <?php
 ob_start();
-//echo "UPLOADPICS INITIALIZES"
+ini_set('memory_limit', -1);
 /**
  * upload.php
  *
@@ -43,20 +43,12 @@ if (strpos($_REQUEST["name"],'jpeg') !== false) {
 	$_REQUEST["name"] = str_replace("jpeg","jpg",$_REQUEST["name"]);
 }
 
-/*
-$myFile = "testFile.txt";
-$fh = fopen($myFile, 'w') or die("can't open file");
-$stringData = $_REQUEST["name"]."\n";
-fwrite($fh, $stringData);
-fclose($fh);
-*/
-//echo $_REQUEST["chunk"];
 $chunks = isset($_REQUEST["chunks"]) ? intval($_REQUEST["chunks"]) : 0;
 
 $fileName = isset($_REQUEST["name"]) ? $_REQUEST["name"] : '';
 $prename = explode('.', $fileName);
 $fileName = $_GET['qcode'].'.'.$prename[1];
-echo "FIRSTFILENAME: ".$fileName."<br><br>";
+//echo "FIRSTFILENAME: ".$fileName."\r\n-----------------------------------------------\r\n";
 
 // Clean the fileName for security reasons
 $fileName = preg_replace('/[^\w\._]+/', '_', $fileName);
@@ -78,8 +70,6 @@ if ($chunks < 2 && file_exists($targetDir . DIRECTORY_SEPARATOR . $fileName)) {
 $filePath = $targetDir . DIRECTORY_SEPARATOR . $fileName;
 
 $filePath = str_replace('\\', '/', $filePath);
-
-echo $filePath;
 
 // Create target dir
 if (!file_exists($targetDir))
@@ -183,13 +173,6 @@ if (!$chunks || $chunk == $chunks - 1) {
 		$filePath = str_replace("png","jpg",$filePath);
 
 	}
-	/*
-	$myFile = "testFile.txt";
-	$fh = fopen($myFile, 'w') or die("can't open file");
-	$stringData = $filePath."\n";
-	fwrite($fh, $stringData);
-	fclose($fh);
-*/
 	
 	createthumb($filePath);
 }
@@ -225,16 +208,20 @@ function createthumb($name)
 		$dest_img = imagecreatetruecolor($new_w,$new_h);
 		imagecopyresampled($dest_img, $src_img, 0 , 0 , 0, 0, $crop_w, $crop_h, $orig_w, $orig_h);
 
-		//$thumbPath = $targetDir."/".$largo;
-		echo "<br>--------------".$largo."/".$qname."-----------------------<br>";
-		$thumbPath = "../images/users/".$largo."/";
-		$filename = $thumbPath.$qname;
+		$newfilename = "../images/users/".$largo."/".$qname;
 
-		imagejpeg($dest_img,$filename,$qual);
+		try {
+			imagejpeg($dest_img,$newfilename,$qual);
+		} catch (Exception $e) {
+		    echo $e->getMessage();
+		    echo 'ERRO';
+		}
+
+		
 		imagedestroy($dest_img);
+
 	}	
 
-	//$new_w = 194,$new_w320 = 320,$new_w194 = 194,$new_w800 = 800	;
 
 	//get name
 	$namet = explode('/', $name);
@@ -256,11 +243,12 @@ function createthumb($name)
 	
 	$system=explode(".",$name);
 	
-	squareme(120,$namet[4],90);
-	squareme(320,$namet[4],90);
-	squareme(37,$namet[4],90);
-	squareme(72,$namet[4],90);
+	squareme(120,end($namet),90);
+	squareme(320,end($namet),90);
+	squareme(37,end($namet),90);
+	squareme(72,end($namet),90);
 
 }
 
+ini_restore('memory_limit');
 die('{"jsonrpc" : "2.0", "result" : null, "id" : "id"}');

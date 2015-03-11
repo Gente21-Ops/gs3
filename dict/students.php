@@ -31,7 +31,9 @@ if($_SESSION['qlen'] == "es"){
 	"f_direccion" => "Direcci&oacute;n",
 	"f_telefono" => "Tel&eacute;fono",
 	"f_email" => "Email",
-	"table_attendance" => "Asistencias por materia"
+	"table_attendance" => "Asistencias por materia",
+	"mailSent" => "Su mensaje fue enviado correctamente.",
+	"mailNotSent" => "Su mensaje no fue enviado. Por favor, inténtelo más tarde."
 	);
 } else if($_SESSION['qlen'] == "en"){
 	$texts = array(
@@ -61,7 +63,9 @@ if($_SESSION['qlen'] == "es"){
 	"f_direccion" => "Address",
 	"f_telefono" => "Telephone number",
 	"f_email" => "Email",
-	"table_attendance" => "Attendance by subject"
+	"table_attendance" => "Attendance by subject",
+	"mailSent" => "Your message was sent successfully.",
+	"mailNotSent" => "Your message was not sent. Please try again later."
 	);
 } else if($_SESSION['qlen'] == "fr"){
 	$texts = array(

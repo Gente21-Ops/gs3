@@ -240,7 +240,7 @@ function changeCalif(qid,qTarea,qAlumno){
         buttons: {
             "Actualizar calificación": function () {
                 $.blockUI();                
-                var nuevaCalif = document.getElementById('qCalif').value;
+                var nuevaCalif = $("qCalif").value;
                 $.post( 'clases/profesor/changeGrade.php', {
                     qido: qid,
                     nuevaCalifo: nuevaCalif
@@ -255,39 +255,6 @@ function changeCalif(qid,qTarea,qAlumno){
                         } else {
                             $.jGrowl($('#grade_updated').text());
                         }
-                        //$('.dTable').DataTable().ajax.reload();
-                        //$('.dTable').dataTable()._fnAjaxUpdate();
-
-                        //////////////////
-                        /*// remove the old table
-                        $("#ajaxresponse").children().remove();
-
-                        // replace with the new table
-                        $("#ajaxresponse").html(data);
-
-                        // reinitialize the datatable
-                        $('#rankings').dataTable( {
-                        "sDom":'t<"bottom"filp><"clear">',
-                        "bAutoWidth": false,
-                        "sPaginationType": "full_numbers",
-                            "aoColumns": [ 
-                            { "bSortable": false, "sWidth": "10px" },
-                            null,
-                            null,
-                            null,
-                            null,
-                            null,
-                            null,
-                            null,
-                            null,
-                            null,
-                            null,
-                            null
-                            ]
-
-                        } 
-                        );
-                        /////////////////*/
                         $.unblockUI();
 
                 });
@@ -300,12 +267,6 @@ function changeCalif(qid,qTarea,qAlumno){
         }
     });
 }
-
-/*$('#newpad').click(function () {
-    //agarrar id del objeto
-    $('#mod_pad').dialog('open');
-    return false;
-});*/
 
 function openPoptareas(qid){
     selectedID = qid;

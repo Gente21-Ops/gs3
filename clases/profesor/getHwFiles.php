@@ -9,7 +9,8 @@ ini_set('display_errors', '1');
 //primero obtengo las matarias a las que estoy suscrito
 $elsql = "SELECT idFiles, name, patho FROM files WHERE code = '".$_POST['qhwid']."' ORDER BY idFiles ASC";
 
-//echo $elsql;
+//echo $elsql; exit();
+
 $sqlt = $con->query($elsql); 
 $sal = array();
 while ($aRow = $sqlt->fetch_assoc()) {

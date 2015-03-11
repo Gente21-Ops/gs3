@@ -207,12 +207,16 @@ $('#formWait').dialog({
 
 $('#sendof').click(function (e) {
 
-
+	//GL.consol('chido');
 	$.post( "clases/genpdf.php", {
+
+		
 
 		d_emisor: $('#p_emi').text(), d_rec:$('#p_rec').text(), d_items:getitems() },
 
 		function( data ) {
+
+			GL.consol('chido');
 			//exito
 			if (data == '1'){
 				//$.jGrowl('Se generó la factura exitosamente');
