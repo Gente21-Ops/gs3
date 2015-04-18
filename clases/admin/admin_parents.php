@@ -33,7 +33,7 @@ require_once('../mysqlcon.php');
         $chido[] = $row['apellidos'];
         $chido[] = $row['nombre'];
 
-        $chido[] = '<a href="#" onclick="" class="buttonM bGreen">
+        $chido[] = '<a href="#" onclick="openPoptareas('.$row['idUsers'].')" return false;" class="buttonM bGreen">
                     <span class="icon-inbox"></span><span>Enviar correo</span></a>';
         $chido[] = '<a href="#" onclick="assignme(\'admin_parent_config.php?qfamiliar='.$row['idUsers'].'\',\'content\'); return false;" class="buttonM bGold">
                     <span class="icon-cog"></span><span>Datos personales</span></a>';

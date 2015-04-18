@@ -9,6 +9,8 @@ include('../dict/admin/parents.php');
 ?>  
 
 <div id="qestudiante" style="display:none;"><?php echo $_GET['qestudiante']; ?></div> 
+<div id="mailSent" style="display:none;"><?php echo $texts['mailSent']; ?></div>
+<div id="mailNotSent" style="display:none;"><?php echo $texts['mailNotSent']; ?></div>
 
 
 <!-- Main content -->
@@ -83,3 +85,25 @@ include('../dict/admin/parents.php');
     <label for="name"><?php echo $texts['col_correo']; ?></label><input type="text" name="e_mail" id="e_mail" rel="4" />
 </form>
 
+<div id="mod_email" title="Enviar correo" class="dialog" style="display:none">
+            <input type="hidden" name="qEmailRemitente" id="qEmailRemitente" value="<?php echo $_SESSION['e_mail']; ?>" rel="0" />
+
+            <label>Remitente:</label>
+            <input type="text" id="qRemitente" name="qRemitente" class="clear" value="Administrador: <?php echo $_SESSION['nombre']; ?>"/>
+
+            <label>Destinatario (padre de familia):</label>
+            <input type="text" id="qNombre" name="qNombre" class="clear" disabled/>
+
+            <label>Email del alumno:</label>
+            <input type="text" id="qEmail" name="qEmail" class="clear" disabled/>
+
+            <div class="divider"><span></span></div>
+
+            <label>Asunto del mensaje:</label>
+            <input type="text" id="qAsunto" name="qAsunto" class="clear"/>
+
+            <label>Contenido del mensaje:</label>
+            <textarea cols="40" rows="5" name="qMensaje" id="qMensaje"></textarea>
+
+            <span class="clear"></span>
+</div>

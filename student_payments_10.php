@@ -1,4 +1,8 @@
 <?php
+
+error_reporting(E_ALL); 
+ini_set( 'display_errors','1');
+
 include("clases/logon.php");
 include('dict/student_payments_10.php');
 require_once('clases/mysqlcon.php');

@@ -28,7 +28,10 @@ if($_SESSION['qlen'] == "es"){
 	"table_registros" => "Inventario",
 	"agregar_nuevo" => "Agregar nuevo familiar",
 	"borrar_existente" => "Borrar familiar seleccionado",
-	"agregar" => "Agregar nuevo familiar");
+	"agregar" => "Agregar nuevo familiar",
+	"mailSent" => "Su mensaje fue enviado correctamente.",
+	"mailNotSent" => "Su mensaje no fue enviado. Por favor, inténtelo más tarde."
+	);
 } else if($_SESSION['qlen'] == "en"){
 	$texts = array(
 	"title" => "parents", 
@@ -45,7 +48,10 @@ if($_SESSION['qlen'] == "es"){
 	"table_registros" => "entries",
 	"agregar_nuevo" => "Add new parent",
 	"borrar_existente" => "Delete selected",
-	"agregar" => "Add new parent");
+	"agregar" => "Add new parent",
+	"mailSent" => "Your message was sent successfully.",
+	"mailNotSent" => "Your message was not sent. Please try again later."
+	);
 } else if($_SESSION['qlen'] == "fr"){
 	$texts = array(
 	"title" => "Accueil", 

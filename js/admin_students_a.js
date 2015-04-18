@@ -78,14 +78,14 @@ function openPoptareas(qid){
         labelOff: "",
         enableDrag: false 
     });
-    //GL.consol('el id es: '+selectedID);
+    GL.consol('el id es: '+selectedID);
     function newgot(myidgot) {
         //console.log("myidgot");
         //console.log("hola:"+myidgot['qNombre']);
         document.getElementById('qNombre').value = myidgot['qNombre']; 
         document.getElementById('qEmail').value = myidgot['qEmail']; 
 
-        //GL.consol('el status '+myidgot['qStatus']);
+        GL.consol('el status '+myidgot['qStatus']);
 
         nomUser = myidgot['qNombre'];
         emailUser = myidgot['qEmail'];
@@ -109,7 +109,7 @@ function sendEmail(qid,nomUser,emailUser){
         buttons: {
             "Enviar correo": function () {
                 //$.blockUI();        
-                GL.consol('chido');        
+                //GL.consol('chido');        
                 /*var qRemitente = document.getElementById('qRemitente').value;
                 var qNombre = document.getElementById('qNombre').value;
                 var qEmail = document.getElementById('qEmail').value;
@@ -124,7 +124,7 @@ function sendEmail(qid,nomUser,emailUser){
                 var qAsunto = $("#qAsunto").val();
                 var qMensaje = $("#qMensaje").val();
 
-                GL.consol("chido: "+qMensaje);
+                //GL.consol("chido: "+qMensaje);
                 
                 $.post( 'clases/sendEmail.php', {
                     remitente: qRemitente,
@@ -135,8 +135,8 @@ function sendEmail(qid,nomUser,emailUser){
                     mensaje: qMensaje
                 },
                     function(rdata){
-                    	GL.consol("dest: "+qEmail);
-                    	GL.consol("remit: "+qEmailRemitente);
+                    	//GL.consol("dest: "+qEmail);
+                    	//GL.consol("remit: "+qEmailRemitente);
                         if (rdata == '1'){
                             if (qid){
                                 $.jGrowl($('#mailSent').text());
